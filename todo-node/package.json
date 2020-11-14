@@ -5,6 +5,7 @@
   "scripts": {
     "nx": "nx",
     "start": "nx serve",
+    "start:api:dev": "nodemon apps/backend/todo-api/src/main.ts",
     "build": "nx build",
     "test": "nx test",
     "lint": "nx workspace-lint && nx lint",
@@ -64,6 +65,7 @@
     "eslint-config-prettier": "6.0.0",
     "jest": "26.2.2",
     "jest-preset-angular": "8.3.1",
+    "nodemon": "^2.0.6",
     "prettier": "2.0.4",
     "ts-jest": "26.4.0",
     "ts-node": "~7.0.0",
