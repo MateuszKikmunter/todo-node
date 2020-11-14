@@ -183,6 +183,36 @@
           }
         }
       }
+    },
+    "todo-web": {
+      "projectType": "library",
+      "root": "libs/todo-web",
+      "sourceRoot": "libs/todo-web/src",
+      "prefix": "todo-node",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/todo-web/tsconfig.lib.json",
+              "libs/todo-web/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/todo-web/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/todo-web/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {

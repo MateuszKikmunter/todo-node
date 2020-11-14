@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 //libs imports
 import { ClarityModule } from '@clr/angular';
 
-//applicotion imports
+//application imports
 import { AppComponent } from './app.component';
 
 
