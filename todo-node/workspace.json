@@ -125,6 +125,56 @@
           }
         }
       }
+    },
+    "backend-todo-api": {
+      "root": "apps/backend/todo-api",
+      "sourceRoot": "apps/backend/todo-api/src",
+      "projectType": "application",
+      "prefix": "backend-todo-api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/backend/todo-api",
+            "main": "apps/backend/todo-api/src/main.ts",
+            "tsConfig": "apps/backend/todo-api/tsconfig.app.json",
+            "assets": ["apps/backend/todo-api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/backend/todo-api/src/environments/environment.ts",
+                  "with": "apps/backend/todo-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "backend-todo-api:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/backend/todo-api/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/backend/todo-api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {
