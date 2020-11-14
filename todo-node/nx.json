@@ -22,5 +22,13 @@
       }
     }
   },
-  "projects": {}
+  "projects": {
+    "frontend-todo-app": {
+      "tags": []
+    },
+    "frontend/todo-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["frontend-todo-app"]
+    }
+  }
 }

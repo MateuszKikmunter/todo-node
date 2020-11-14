@@ -1,7 +1,143 @@
 {
   "version": 1,
-  "projects": {},
+  "projects": {
+    "frontend-todo-app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/frontend/todo-app",
+      "sourceRoot": "apps/frontend/todo-app/src",
+      "prefix": "todo-node",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/frontend/todo-app",
+            "index": "apps/frontend/todo-app/src/index.html",
+            "main": "apps/frontend/todo-app/src/main.ts",
+            "polyfills": "apps/frontend/todo-app/src/polyfills.ts",
+            "tsConfig": "apps/frontend/todo-app/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/frontend/todo-app/src/favicon.ico",
+              "apps/frontend/todo-app/src/assets"
+            ],
+            "styles": ["apps/frontend/todo-app/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/frontend/todo-app/src/environments/environment.ts",
+                  "with": "apps/frontend/todo-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "frontend-todo-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "frontend-todo-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "frontend-todo-app:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/frontend/todo-app/tsconfig.app.json",
+              "apps/frontend/todo-app/tsconfig.spec.json",
+              "apps/frontend/todo-app/tsconfig.editor.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/frontend/todo-app/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/frontend/todo-app/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "frontend/todo-app-e2e": {
+      "root": "apps/frontend/todo-app-e2e",
+      "sourceRoot": "apps/frontend/todo-app-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/frontend/todo-app-e2e/cypress.json",
+            "tsConfig": "apps/frontend/todo-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "frontend-todo-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "frontend-todo-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/frontend/todo-app-e2e/tsconfig.e2e.json"],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/frontend/todo-app-e2e/**/*"
+            ]
+          }
+        }
+      }
+    }
+  },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  }
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "frontend-todo-app"
 }
