@@ -20,4 +20,4 @@ Backend:
 - [NodeJS](https://nodejs.org/en/)
 - [Express](https://expressjs.com/)
 - [TypeORM](https://github.com/typeorm/typeorm)
-- [SQLite](https://www.sqlite.org/index.html)
+- [MongoDB](https://www.mongodb.com/)
