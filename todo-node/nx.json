@@ -32,12 +32,6 @@
     },
     "backend-todo-api": {
       "tags": []
-    },
-    "todo-web": {
-      "tags": []
-    },
-    "shared": {
-      "tags": []
     }
   }
 }
