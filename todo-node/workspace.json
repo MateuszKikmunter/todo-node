@@ -25,8 +25,16 @@
               "apps/frontend/todo-app/src/favicon.ico",
               "apps/frontend/todo-app/src/assets"
             ],
-            "styles": ["apps/frontend/todo-app/src/styles.scss"],
-            "scripts": []
+            "styles": [
+              "apps/frontend/todo-app/src/styles.scss",
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "node_modules/@clr/ui/clr-ui.min.css"
+            ],
+            "scripts": [
+              "node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js",
+              "node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
+              "node_modules/@clr/icons/clr-icons.min.js"
+            ]
           },
           "configurations": {
             "production": {

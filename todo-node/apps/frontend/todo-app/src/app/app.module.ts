@@ -1,16 +1,24 @@
+//Angular imports
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 
+//libs imports
+import { ClarityModule } from '@clr/angular';
+
+//applicotion imports
+import { AppComponent } from './app.component';
+
+
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([], { initialNavigation: 'enabled' }),
+    ClarityModule
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
