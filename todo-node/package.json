@@ -41,6 +41,7 @@
     "express": "4.17.1",
     "rxjs": "~6.5.5",
     "sqlite3": "^5.0.0",
+    "typeorm": "^0.2.29",
     "zone.js": "^0.10.2"
   },
   "devDependencies": {
