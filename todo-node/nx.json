@@ -35,6 +35,9 @@
     },
     "todo-web": {
       "tags": []
+    },
+    "shared": {
+      "tags": []
     }
   }
 }

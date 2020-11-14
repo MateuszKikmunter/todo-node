@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@todo-node/todo-web": ["libs/todo-web/src/index.ts"]
+      "@todo-node/todo-web": ["libs/todo-web/src/index.ts"],
+      "@todo-node/shared": ["libs/shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
