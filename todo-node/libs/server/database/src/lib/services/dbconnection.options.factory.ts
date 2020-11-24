@@ -1,5 +1,4 @@
 //libs imports
-import { env } from 'process';
 import { ConnectionOptions } from 'typeorm';
 
 //local lib imports
