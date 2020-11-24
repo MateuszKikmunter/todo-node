@@ -32,6 +32,9 @@
     },
     "backend-todo-api": {
       "tags": []
+    },
+    "server-database": {
+      "tags": []
     }
   }
 }

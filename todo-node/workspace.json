@@ -138,7 +138,7 @@
       "root": "apps/backend/todo-api",
       "sourceRoot": "apps/backend/todo-api/src",
       "projectType": "application",
-      "prefix": "backend-todo-api",
+      "prefix": "todo-api",
       "schematics": {},
       "architect": {
         "build": {
@@ -179,6 +179,27 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/backend/todo-api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "server-database": {
+      "root": "libs/server/database",
+      "sourceRoot": "libs/server/database/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/server/database/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/server/database/jest.config.js",
             "passWithNoTests": true
           }
         }

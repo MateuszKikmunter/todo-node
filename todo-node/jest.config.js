@@ -4,5 +4,6 @@ module.exports = {
     '<rootDir>/apps/backend/todo-api',
     '<rootDir>/libs/todo-web',
     '<rootDir>/libs/shared',
+    '<rootDir>/libs/server/database',
   ],
 };
