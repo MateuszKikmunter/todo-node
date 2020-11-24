@@ -1,5 +1,7 @@
+//libs imports
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
+//local lib imports
 import { Task } from './task';
 
 @Entity()

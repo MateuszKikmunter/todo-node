@@ -1,5 +1,7 @@
+//libs imports
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
+//local lib imports
 import { User } from './user';
 
 @Entity()
@@ -11,16 +13,16 @@ export class Task {
     @Column({ length: 255, type: "varchar" })
     name: string;
 
-    @Column({ type: "varchar" })
-    details: string;
+    @Column({ type: "varchar", nullable: true })
+    additionalDetails: string;
 
-    @Column({ type: "int" })
+    @Column({ type: "int", default: false })
     completed: boolean;
 
     @Column({ type: "datetime" })
     deadline: string;
 
-    @Column({ type: "datetime" })
+    @Column({ type: "datetime", default: new Date().toUTCString() })
     lastModified: string;
 
     @ManyToOne(type => User, owner => owner.todos)
