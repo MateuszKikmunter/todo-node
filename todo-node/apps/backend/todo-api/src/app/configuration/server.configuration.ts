@@ -1,5 +1,8 @@
+//local imports
+import { Route } from './../interfaces/route';
+
 export interface ServerConfiguration {
     port: string | number;
-    routes?: any[],
+    routes?: Route[],
     middleware?: any[]
 }
