@@ -5,6 +5,10 @@
 /tmp
 /out-tsc
 
+#local files
+/db
+.env
+
 # dependencies
 /node_modules
 
@@ -33,7 +37,6 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-/db
 
 # System Files
 .DS_Store

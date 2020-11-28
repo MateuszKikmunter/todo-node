@@ -23,9 +23,10 @@ export class DbConnectionOptionsFactory {
     private static actionDispatcher = (connectionType: DbType, entities: any[]) => ({
         'sqlite': () => {
             return {
+                name: connectionType,
                 type: connectionType,
                 entities,
-                database: '.\\db\\development.sqlite',
+                database: process.env.DB_LOCATION ?? ':memory:',
                 synchronize: true,
                 logging: true
             }
