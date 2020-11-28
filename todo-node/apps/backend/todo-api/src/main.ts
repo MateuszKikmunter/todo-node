@@ -10,8 +10,14 @@ SqlConnectionFactory.createConnection('sqlite').then((connection: Connection) =>
     const repo = connection.getRepository(User);
 
     app.get('/api', async (req, res) => {
-        const user = await repo.findOne(1);
-        res.json(user ?? { message: 'No data found!' });
+        try {
+            const users = await repo.find();
+    
+            res.json(users ?? { message: 'No data found!' });
+        } catch (error) {
+            console.log(error);
+            res.status(500).send({ error: error.message });
+        }
     });
 
     const port = process.env.port || 4000;
@@ -21,3 +27,8 @@ SqlConnectionFactory.createConnection('sqlite').then((connection: Connection) =>
     server.on('error', console.error);
     server.on('close', connection.close);
 }).catch(error => console.log(error));
+
+const start = async () => {
+    const dbConnection = await SqlConnectionFactory.createConnection('sqlite');
+    dbConnection;
+};

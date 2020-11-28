@@ -7,22 +7,22 @@ import { User } from './user';
 @Entity()
 export class Task {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid') 
+    id: string
 
-    @Column({ length: 255, type: "varchar" })
+    @Column({ length: 255, type: 'varchar' })
     name: string;
 
-    @Column({ type: "varchar", nullable: true })
+    @Column({ type: 'varchar', nullable: true })
     additionalDetails: string;
 
-    @Column({ type: "int", default: false })
+    @Column({ type: 'int', default: false })
     completed: boolean;
 
-    @Column({ type: "datetime" })
+    @Column({ type: 'datetime' })
     deadline: string;
 
-    @Column({ type: "datetime", default: new Date().toUTCString() })
+    @Column({ type: 'datetime', default: new Date().toUTCString() })
     lastModified: string;
 
     @ManyToOne(type => User, owner => owner.todos)

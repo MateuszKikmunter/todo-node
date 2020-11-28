@@ -7,14 +7,17 @@ import { Task } from './task';
 @Entity()
 export class User {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid') 
+    id: string
 
-    @Column({ length: 255, type: "varchar", unique: true })
+    @Column({ length: 255, type: 'varchar', unique: true })
     email: string;
 
-    @Column({ length: 255, type: "varchar" })
+    @Column({ length: 255, type: 'varchar' })
     password: string;
+
+    @Column({ type: 'datetime', default: new Date().toUTCString() })
+    creationDate: string;
     
     @OneToMany(type => Task, task => task.owner)
     todos: Task[];
