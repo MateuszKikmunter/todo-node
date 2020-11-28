@@ -1,17 +1,20 @@
-import * as express from 'express';
+import { TaskRoute } from './app/routes/task.route';
+import { UserRoute } from './app/routes/user.route';
+import { SqlConnectionFactory } from '@todo-node/server/database';
+import { Connection } from 'typeorm';
+import { App } from './app/app';
 
-const app = express();
+SqlConnectionFactory.createConnection("sqlite").then((connection: Connection) => {
 
-app.get('/api', async (req, res) => {
-    try {
-        res.json({ message: 'Welcome to the api!' });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send({ error: error.message });
-    }
-});
+    const app = new App({
+        port: process.env.PORT ?? 4000,
+        routes: [
+            new UserRoute(),
+            new TaskRoute()
+        ]
+    });
 
-const port = process.env.port || 4000;
-app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}/api`);
+    app.start();
+    app.healthCheck();
+    app.on('close', connection.close);
 });
