@@ -25,7 +25,7 @@ export class DbConnectionOptionsFactory {
             return {
                 type: connectionType,
                 entities,
-                database: ':memory:',
+                database: '.\\db\\development.sqlite',
                 synchronize: true,
                 logging: true
             }
