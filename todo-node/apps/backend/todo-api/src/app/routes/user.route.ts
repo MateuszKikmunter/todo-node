@@ -1,7 +1,6 @@
 //libs imports
-import { Request, Response, Router } from 'express';
+import { Router } from 'express';
 import { UserController } from '../controllers/user.controller';
-import { User } from '@todo-node/server/database';
 
 //local imports
 import { Route } from './../interfaces/route';
@@ -23,7 +22,8 @@ export class UserRoute implements Route {
         this.initRoutes();
     }
 
+    /** Initialize routes handled by this route. */
     private initRoutes(): void {
-        //TODO: init routes here (using user methods exposed by user controller )
+        //TODO: init routes here (using methods exposed by the user controller )
     }
 }

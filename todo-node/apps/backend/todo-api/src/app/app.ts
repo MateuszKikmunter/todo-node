@@ -8,6 +8,7 @@ import * as cors from 'cors';
 import { Route } from './interfaces/route';
 import { ServerConfiguration } from './configuration/server.configuration';
 
+
 export class App {
     private _application: Application;
     private _port: string | number;

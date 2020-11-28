@@ -1,7 +1,6 @@
 //libs imports
-import { Request, Response, Router } from 'express';
+import { Router } from 'express';
 import { TaskController } from './../controllers/task.controller';
-import { Task } from '@todo-node/server/database';
 
 //local imports
 import { Route } from './../interfaces/route';
@@ -23,7 +22,8 @@ export class TaskRoute implements Route {
         this.initRoutes();
     }
     
+    /** Initialize routes handled by this route. */
     private initRoutes(): void {
-        //TODO: init routes here (using user methods exposed by task controller )
+        //TODO: init routes here (using methods exposed by the task controller )
     }
 }
