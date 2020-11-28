@@ -2,7 +2,7 @@
 import { ConnectionOptions } from 'typeorm';
 
 //local lib imports
-import { DbConnectionType } from '../configuration/dbconnection.type';
+import { DbType } from './../types/db.type';
 
 export class DbConnectionOptionsFactory {
 
@@ -11,7 +11,7 @@ export class DbConnectionOptionsFactory {
      * @param dbType db type we want connect to, e.g. 'sqlite'
      * @param entities array of TypeORM entities
      */
-    public static create = (dbType: string, entities: any[]): ConnectionOptions => {
+    public static create = (dbType: DbType, entities: any[]): ConnectionOptions => {
         return DbConnectionOptionsFactory.actionDispatcher(dbType, entities);
     }
 
@@ -20,10 +20,10 @@ export class DbConnectionOptionsFactory {
      * @param connectionType db type we want connect to, e.g. 'sqlite'
      * @param entities array of TypeORM entities
      */
-    private static actionDispatcher = (connectionType: string, entities: any[]) => ({
+    private static actionDispatcher = (connectionType: DbType, entities: any[]) => ({
         'sqlite': () => {
             return {
-                type: DbConnectionType.SQLITE,
+                type: connectionType,
                 entities,
                 database: ':memory:',
                 synchronize: true,

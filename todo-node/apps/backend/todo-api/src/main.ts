@@ -10,7 +10,7 @@ SqlConnectionFactory.createConnection('sqlite').then((connection: Connection) =>
     const repo = connection.getRepository(User);
 
     app.get('/api', async (req, res) => {
-      const user = await repo.findOne(1);
+        const user = await repo.findOne(1);
         res.json(user ?? { message: 'No data found!' });
     });
 
