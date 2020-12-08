@@ -38,7 +38,7 @@ export class App {
                 return res.status(HttpCode.OK).json({ message: 'API is running.' });
             } catch (err) {
                 console.log(err);
-                res.status(HttpCode.SERVER_ERROR).json({ message: `Error occured: ${ err.message }`})
+                res.status(HttpCode.SERVER_ERROR).json({ error: `Error: ${ err.message }`})
             }
         });
     }

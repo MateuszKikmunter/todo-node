@@ -12,7 +12,7 @@ export class UserController {
             return res.status(HttpCode.OK).json(users);
         } catch (err) {
             console.log(err);
-            return res.status(HttpCode.BAD_REQUEST).json({ message: 'Something went wrong!' });
+            return res.status(HttpCode.BAD_REQUEST).json({ error: 'Something went wrong!' });
         }
     }
 }
