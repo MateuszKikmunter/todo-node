@@ -3,10 +3,11 @@ import { Application,  Request, Response } from 'express';
 import * as express from 'express';
 import * as helmet from 'helmet';
 import * as cors from 'cors';
+import { HttpCode } from '@todo-node/shared/utils';
 
 //local imports
-import { Route } from './interfaces/route';
 import { ServerConfiguration } from './configuration/server.configuration';
+import { Route } from './shared/interfaces/route';
 
 
 export class App {
@@ -30,14 +31,14 @@ export class App {
         );
     }
 
-    /** Handle request sent to /api and returns basic response. */
+    /** Handle request sent to /api and return basic response. */
     public healthCheck(): void {
         this._application.get('/api', (req: Request, res: Response) => {
             try {
-                return res.status(200).json({ message: 'API is running.' });
+                return res.status(HttpCode.OK).json({ message: 'API is running.' });
             } catch (err) {
                 console.log(err);
-                res.status(500).json({ message: `Error occured: ${ err.message }`})
+                res.status(HttpCode.SERVER_ERROR).json({ message: `Error occured: ${ err.message }`})
             }
         });
     }
