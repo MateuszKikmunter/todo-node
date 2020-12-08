@@ -28,7 +28,7 @@ export class DbConnectionOptionsFactory {
                 entities,
                 database: process.env.DB_LOCATION ?? ':memory:',
                 synchronize: true,
-                logging: true
+                logging: process.env.IS_PROD
             }
         }
     })[connectionType]()
