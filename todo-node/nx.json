@@ -1,40 +1,43 @@
 {
-  "npmScope": "todo-node",
-  "affected": {
-    "defaultBase": "master"
-  },
-  "implicitDependencies": {
-    "workspace.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
+    "npmScope": "todo-node",
+    "affected": {
+        "defaultBase": "master"
     },
-    "tsconfig.base.json": "*",
-    "tslint.json": "*",
-    ".eslintrc.json": "*",
-    "nx.json": "*"
-  },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
-      }
+    "implicitDependencies": {
+        "workspace.json": "*",
+        "package.json": {
+            "dependencies": "*",
+            "devDependencies": "*"
+        },
+        "tsconfig.base.json": "*",
+        "tslint.json": "*",
+        ".eslintrc.json": "*",
+        "nx.json": "*"
+    },
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "@nrwl/workspace/tasks-runners/default",
+            "options": {
+                "cacheableOperations": ["build", "lint", "test", "e2e"]
+            }
+        }
+    },
+    "projects": {
+        "frontend-todo-app": {
+            "tags": []
+        },
+        "frontend/todo-app-e2e": {
+            "tags": [],
+            "implicitDependencies": ["frontend-todo-app"]
+        },
+        "backend-todo-api": {
+            "tags": []
+        },
+        "server-database": {
+            "tags": []
+        },
+        "shared-utils": {
+            "tags": []
+        }
     }
-  },
-  "projects": {
-    "frontend-todo-app": {
-      "tags": []
-    },
-    "frontend/todo-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["frontend-todo-app"]
-    },
-    "backend-todo-api": {
-      "tags": []
-    },
-    "server-database": {
-      "tags": []
-    }
-  }
 }
