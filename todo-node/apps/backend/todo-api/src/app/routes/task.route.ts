@@ -1,9 +1,9 @@
 //libs imports
 import { Router } from 'express';
-import { TaskController } from './../controllers/task.controller';
 
 //local imports
-import { Route } from './../interfaces/route';
+import { Route } from '../shared/interfaces/route';
+import { TaskController } from './../controllers/task.controller';
 
 
 export class TaskRoute implements Route {

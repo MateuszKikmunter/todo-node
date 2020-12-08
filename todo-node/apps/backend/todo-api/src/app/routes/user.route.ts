@@ -1,9 +1,9 @@
 //libs imports
 import { Router } from 'express';
-import { UserController } from '../controllers/user.controller';
 
 //local imports
-import { Route } from './../interfaces/route';
+import { UserController } from '../controllers/user.controller';
+import { Route } from '../shared/interfaces/route';
 
 
 export class UserRoute implements Route {
@@ -24,6 +24,6 @@ export class UserRoute implements Route {
 
     /** Initialize routes handled by this route. */
     private initRoutes(): void {
-        //TODO: init routes here (using methods exposed by the user controller )
+        this._router.get(`${ this._url }/getAll`, [ this._userController.getAll ]);
     }
 }

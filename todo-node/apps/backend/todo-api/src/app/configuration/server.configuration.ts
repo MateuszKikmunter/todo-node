@@ -1,5 +1,6 @@
 //local imports
-import { Route } from './../interfaces/route';
+import { Route } from '../shared/interfaces/route';
+
 
 export interface ServerConfiguration {
     port: string | number;
