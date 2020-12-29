@@ -21,7 +21,7 @@ SqlConnectionFactory.createConnection('sqlite').then((connection: Connection) =>
         ],
         middleware: [
             bodyParser.json(),
-            bodyParser.urlencoded({ extended: false })
+            bodyParser.urlencoded({ extended: true })
         ]
     });
 
