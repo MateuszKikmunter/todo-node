@@ -1,8 +1,11 @@
+//libs imports
 import { Router } from 'express';
 
-
+//local imports
 import { AuthController } from '../controllers/auth.controller';
 import { Route } from '../shared/interfaces/route';
+import { validateRegistrationRequest, registrationValidationRules } from './../utils/user.validator';
+
 
 export class AuthRoute implements Route {
 
@@ -20,8 +23,11 @@ export class AuthRoute implements Route {
         this.initRoutes();
     }
 
+    /**
+     * Initialize routes related to authentication and authorization.
+     */
     private initRoutes(): void {
-        this._router.post(`${ this._url }/register`, this._authController.register);
+        this._router.post(`${ this._url }/register`, registrationValidationRules, [validateRegistrationRequest, this._authController.register]);
     }
 
 }
