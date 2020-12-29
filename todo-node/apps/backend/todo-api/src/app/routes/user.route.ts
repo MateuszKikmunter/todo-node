@@ -22,7 +22,7 @@ export class UserRoute implements Route {
         this.initRoutes();
     }
 
-    /** Initialize routes handled by this route. */
+    /** Initialize routes related to user. */
     private initRoutes(): void {
         this._router.get(`${ this._url }/getAll`, [ this._userController.getAll ]);
     }
