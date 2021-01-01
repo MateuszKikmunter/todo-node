@@ -27,7 +27,8 @@ export class AuthRoute implements Route {
      * Initialize routes related to authentication and authorization.
      */
     private initRoutes(): void {
-        this._router.post(`${ this._url }/register`, registrationValidationRules, [validateRegistrationRequest, this._authController.register]);
+        this._router.post(`${ this._url }/register`, registrationValidationRules, [validateRegistrationRequest, this._authController.register]);        
+        this._router.post(`${ this._url }/login`, this._authController.login);
     }
 
 }
