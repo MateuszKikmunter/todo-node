@@ -5,8 +5,18 @@ import { Request, Response } from 'express';
 import { User } from '@todo-node/server/database';
 import { HttpCode } from '@todo-node/shared/utils';
 
+//local imports
+import { JwtService } from './../shared/services/jwt.service';
+import { JwtPayload } from './../shared/types/jwt.playload';
+
 
 export class AuthController {
+
+    private _jwtService: JwtService;
+
+    constructor() {
+        this._jwtService = new JwtService();
+    }
 
     /**
      * Create an account for a user if correct details provided and validation rules passed.
@@ -32,7 +42,7 @@ export class AuthController {
         }
     }
 
-        /**
+    /**
      * Login user based on the provided username and password.
      * @param req request
      * @param res response
@@ -55,9 +65,12 @@ export class AuthController {
                 return res.status(HttpCode.BAD_REQUEST).send({ error: 'Invalid username or password!' });
             }
 
-            //TODO: return access and refresh tokens
-
-            return res.status(HttpCode.OK).json({ id: user.id, email: user.email });
+            //TODO: return refresh token
+            const jwtPayload: JwtPayload = { id: user.id, email: user.email };
+            return res.status(HttpCode.OK).json({ 
+                user: jwtPayload,
+                access_token: this._jwtService.getAccessToken(jwtPayload)
+            });
 
         } catch (err) {
             console.log(err);
