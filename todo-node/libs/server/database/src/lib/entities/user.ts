@@ -13,7 +13,7 @@ export class User {
     @Column({ length: 255, type: 'varchar', unique: true })
     email: string;
 
-    @Column({ length: 255, type: 'varchar', select: false })
+    @Column({ length: 255, type: 'varchar' })
     password: string;
 
     @Column({ type: 'datetime', default: new Date().toUTCString() })
