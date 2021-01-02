@@ -6,8 +6,7 @@ import { User } from '@todo-node/server/database';
 import { HttpCode } from '@todo-node/shared/utils';
 
 //local imports
-import { JwtService } from './../shared/services/jwt.service';
-import { JwtPayload } from './../shared/types/jwt.playload';
+import { JwtService } from '../services/jwt.service';
 
 
 export class AuthController {

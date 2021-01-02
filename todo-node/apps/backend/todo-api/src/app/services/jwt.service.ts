@@ -5,7 +5,7 @@ import * as jwt from 'jsonwebtoken';
 import { getConnection } from 'typeorm';
 
 //loval imports
-import { JwtPayload } from './../types/jwt.playload';
+import { JwtPayload } from '../shared/types/jwt.playload';
 
 
 export class JwtService {
