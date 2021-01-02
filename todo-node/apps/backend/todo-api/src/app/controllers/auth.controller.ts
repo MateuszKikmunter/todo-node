@@ -65,11 +65,13 @@ export class AuthController {
                 return res.status(HttpCode.BAD_REQUEST).send({ error: 'Invalid username or password!' });
             }
 
-            //TODO: return refresh token
-            const jwtPayload: JwtPayload = { id: user.id, email: user.email };
+            const jwtPayload = { id: user.id, email: user.email };
+            const accessToken = this._jwtService.getAccessToken(jwtPayload);
+            const refreshToken = await this._jwtService.getRefreshToken(jwtPayload);
             return res.status(HttpCode.OK).json({ 
                 user: jwtPayload,
-                access_token: this._jwtService.getAccessToken(jwtPayload)
+                access_token: accessToken,
+                refresh_token: refreshToken
             });
 
         } catch (err) {

@@ -1,6 +1,7 @@
 //libs imports
 import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
 
+//this could be saved in redis but for this project it's enough to store it in the SQLite db together with other entites
 @Entity()
 export class RefreshToken {
 
