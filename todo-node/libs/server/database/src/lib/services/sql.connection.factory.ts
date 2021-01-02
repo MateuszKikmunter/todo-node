@@ -4,6 +4,7 @@ import { Connection, createConnection } from 'typeorm';
 //local lib imports
 import { Task } from './../entities/task';
 import { User } from './../entities/user';
+import { RefreshToken } from './../entities/refresh.token';
 
 import { DbType } from './../types/db.type';
 import { DbConnectionOptionsFactory } from './dbconnection.options.factory';
@@ -16,7 +17,7 @@ export class SqlConnectionFactory {
      */
     public static async createConnection(databaseType: DbType): Promise<Connection> {
         try {
-            return await createConnection(DbConnectionOptionsFactory.create(databaseType, [User, Task]));
+            return await createConnection(DbConnectionOptionsFactory.create(databaseType, [User, Task, RefreshToken]));
         } catch (error) {
             console.log(error);
             throw new Error(`Can't create connection for the provided database type: ${ databaseType}`);
