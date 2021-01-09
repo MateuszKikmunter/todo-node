@@ -2,7 +2,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../../dist/out-tsc",
-    "types": ["node", "express"]
+    "types": ["node", "express"],
+    "typeRoots": [ "./src/app/shared/types" ]
   },
   "exclude": ["**/*.spec.ts"],
   "include": ["**/*.ts"]

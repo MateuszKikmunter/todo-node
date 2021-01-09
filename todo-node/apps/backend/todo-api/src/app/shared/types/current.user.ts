@@ -1,4 +1,4 @@
-export type JwtPayload = {
+export type CurrentUser = {
     id: string,
     email: string
 }

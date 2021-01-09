@@ -1,12 +1,11 @@
 //libs imports
 import { User } from '@todo-node/server/database';
 import { RefreshToken } from '@todo-node/server/database';
-import * as jwt from 'jsonwebtoken';
 import { getConnection } from 'typeorm';
+import * as jwt from 'jsonwebtoken';
 
-//loval imports
-import { JwtPayload } from '../shared/types/jwt.playload';
-
+//local imports
+import { CurrentUser } from './../shared/types/current.user';
 
 export class JwtService {
 
@@ -14,9 +13,9 @@ export class JwtService {
      * Returns access token.
      * @param payload - { id: string, email: string }
      */
-    public getAccessToken = (payload: JwtPayload): string => {
+    public getAccessToken = (payload: CurrentUser): string => {
         return jwt.sign(
-            payload,
+            { user: payload },
             process.env.ACCESS_TOKEN_SECRET, 
             { expiresIn: process.env.ACCESS_TOKEN_EXPIRATION_TIME ?? '15min' });
     }
@@ -25,7 +24,7 @@ export class JwtService {
      * Returns new refresh token.
      * @param payload - { id: string, email: string }
      */
-    public getRefreshToken = async (payload: JwtPayload): Promise<string> => {
+    public getRefreshToken = async (payload: CurrentUser): Promise<string> => {
 
         try {
             const user = await getConnection('sqlite').getRepository(User).findOne({ id: payload.id });
@@ -39,7 +38,7 @@ export class JwtService {
             }
 
             const refreshToken = jwt.sign(
-                payload,
+                { user: payload },
                 process.env.REFRESH_TOKEN_SECRET, 
                 { expiresIn: process.env.REFRESH_TOKEN_EXPIRATION_TIME ?? '30d' }
             );
