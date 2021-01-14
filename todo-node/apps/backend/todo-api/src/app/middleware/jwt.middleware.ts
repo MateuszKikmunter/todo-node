@@ -41,6 +41,7 @@ export class JwtMiddleware {
                 return reject('Invalid token');
             }
             // Remove Bearer from string
+            
             const rawToken = token.slice(this.BEARER_STRING_LENGTH, token.length);
             jwt.verify(rawToken, process.env.ACCESS_TOKEN_SECRET, (err: jwt.VerifyErrors, decodedToken: any) => {
                 if (err) {
