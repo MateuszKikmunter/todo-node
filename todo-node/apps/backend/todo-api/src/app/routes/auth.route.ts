@@ -29,6 +29,7 @@ export class AuthRoute implements Route {
     private initRoutes(): void {
         this._router.post(`${ this._url }/register`, registrationValidationRules, [validateRegistrationRequest, this._authController.register]);        
         this._router.post(`${ this._url }/login`, this._authController.login);
+        this._router.post(`${ this._url }/refresh-token`, this._authController.getNewTokens);
     }
 
 }

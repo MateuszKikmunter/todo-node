@@ -65,8 +65,8 @@ export class AuthController {
             }
 
             const jwtPayload = { id: user.id, email: user.email };
-            const accessToken = this._jwtService.getAccessToken(jwtPayload);
-            const refreshToken = await this._jwtService.getRefreshToken(jwtPayload);
+            const accessToken = this._jwtService.generateAccessToken(jwtPayload);
+            const refreshToken = await this._jwtService.generateRefreshToken(jwtPayload);
             return res.status(HttpCode.OK).json({ 
                 user: jwtPayload,
                 access_token: accessToken,
@@ -76,6 +76,28 @@ export class AuthController {
         } catch (err) {
             console.log(err);
             return res.status(HttpCode.SERVER_ERROR).json({ error: 'Something went wrong!' });
+        }
+    }
+
+    /**
+     * Generates new access and refresh tokens based on the refresh token in the request body.
+     * @param req reqest
+     * @param res response
+     */
+    public getNewTokens = async (req: Request, res: Response): Promise<Response> => {
+
+        const refreshToken = req.body.refresh_token;
+        if (!refreshToken) {
+            return res.status(HttpCode.FORBIDDEN).json({ error: 'Access is forbidden!' });
+        }
+
+        try {
+            const newTokens = await this._jwtService.getNewTokens(refreshToken);
+            return res.status(HttpCode.OK).json(newTokens);
+        } catch (err) {
+            const message = (err && err.message) || err;
+            console.log(message);
+            res.status(HttpCode.FORBIDDEN).json({ error: message });
         }
     }
 }
