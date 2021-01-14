@@ -25,8 +25,8 @@ export class UserRoute implements Route {
         this.initRoutes();
     }
 
-    /** Initialize routes related to user. */
+    /** Initialize user related routes. */
     private initRoutes(): void {
-        this._router.get(`${ this._url }/getAll`, this._jwtMiddleware.validateJwtToken, [ this._userController.getAll ]);
+        this._router.get(`${ this._url }/get-all`, this._jwtMiddleware.validateJwtToken, [ this._userController.getAll ]);
     }
 }
