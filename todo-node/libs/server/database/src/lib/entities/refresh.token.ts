@@ -12,6 +12,10 @@ export class RefreshToken {
     @Index()
     userId: string;
 
+    @Column({ unique: true })
+    @Index()
+    token: string;
+
     //TODO: add device print in the future
 
     @Column({ type: 'datetime', default: new Date().toUTCString() })
