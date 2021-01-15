@@ -3,7 +3,6 @@ import { ConnectionOptions } from 'typeorm';
 
 //local lib imports
 import { DbType } from './../types/db.type';
-import { environment } from './../../../../../../apps/backend/todo-api/src/environments/environment';
 
 
 export class DbConnectionOptionsFactory {
@@ -30,7 +29,7 @@ export class DbConnectionOptionsFactory {
                 entities,
                 database: process.env.DB_LOCATION ?? ':memory:',
                 synchronize: true,
-                logging: environment.production ?? false
+                logging: Boolean(process.env.DEVELOPMENT ?? false)
             }
         }
     })[connectionType]()
