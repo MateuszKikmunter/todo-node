@@ -32,5 +32,9 @@ export class TaskRoute implements Route {
             validateTaskAddOrUpdateRequest, 
             this._taskController.createTask 
         ]);        
+        this._router.put(`${ this._url }/update/:id`, this._jwtMiddleware.validateJwtToken, taskValidationRules, [ 
+            validateTaskAddOrUpdateRequest, 
+            this._taskController.updateTask 
+        ]);        
     }
 }
