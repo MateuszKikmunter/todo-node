@@ -15,8 +15,7 @@ export class UserController {
      */
     public async getAll(req: Request, res: Response): Promise<Response> {
         try {
-            const users: User[] = await getConnection('sqlite').getRepository(User).find({ relations: [ 'todos' ] });
-
+            const users = await getConnection('sqlite').getRepository(User).find({ relations: [ 'todos' ] });
             return res.status(HttpCode.OK).json(users?.map(user => {
                 return { 
                     id: user.id,
