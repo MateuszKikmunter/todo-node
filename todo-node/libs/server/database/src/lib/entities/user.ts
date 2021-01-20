@@ -19,6 +19,6 @@ export class User {
     @Column({ type: 'datetime', default: new Date().toUTCString() })
     creationDate: string;
     
-    @OneToMany(type => Task, task => task.owner)
+    @OneToMany(() => Task, task => task.user)
     todos: Task[];
 }
