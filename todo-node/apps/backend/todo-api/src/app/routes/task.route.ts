@@ -39,8 +39,8 @@ export class TaskRoute implements Route {
             this._taskController.updateTask 
         ]);
 
-        this._router.get(`${ this._url }/:id`, this._jwtMiddleware.validateJwtToken, this._taskController.getById );   
-
-        this._router.delete(`${ this._url }/:id`, this._jwtMiddleware.validateJwtToken, this._taskController.deleteTask );   
+        this._router.get(`${ this._url }/:id`, this._jwtMiddleware.validateJwtToken, this._taskController.getById );
+        this._router.get(`${ this._url }/user/:id`, this._jwtMiddleware.validateJwtToken, this._taskController.getUserTasks );
+        this._router.delete(`${ this._url }/:id`, this._jwtMiddleware.validateJwtToken, this._taskController.deleteTask );
     }
 }

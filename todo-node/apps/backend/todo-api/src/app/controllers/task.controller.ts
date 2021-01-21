@@ -79,7 +79,7 @@ export class TaskController {
         }    
     }
 
-        /**
+    /**
      * Deletes task with specific id.
      * @param req request
      * @param res response
@@ -98,6 +98,31 @@ export class TaskController {
 
             await getConnection('sqlite').getRepository(Task).delete({ id: task.id });
             return res.sendStatus(HttpCode.OK);
+        } catch (err) {
+            console.log(err);
+            return res.status(HttpCode.BAD_REQUEST).json({ error: err.message });
+        }    
+    }
+
+    /**
+     * Returns all tasks for a specific user.
+     * @param req request
+     * @param res response
+     */
+    public getUserTasks = async (req: Request, res: Response): Promise<Response> => {
+
+        try {                     
+            const tasks = await getConnection('sqlite')
+                .getRepository(Task)
+                .createQueryBuilder('task')
+                .where('userId = :id', { id: req.params.id })
+                .getMany();
+                
+            if(!tasks) {
+                return res.status(HttpCode.NOT_FOUND).json({ error: 'Task not found!' });
+            }          
+
+            return res.status(HttpCode.OK).json(tasks);
         } catch (err) {
             console.log(err);
             return res.status(HttpCode.BAD_REQUEST).json({ error: err.message });
