@@ -52,4 +52,30 @@ export class TaskController {
             return res.status(HttpCode.BAD_REQUEST).json({ error: err.message });
         }    
     }
+
+    /**
+     * Returns task by id.
+     * @param req request
+     * @param res response
+     */
+    public getById = async (req: Request, res: Response): Promise<Response> => {
+
+        try {
+            const task = await getConnection('sqlite').getRepository(Task).findOne({where: { id: req.params.id }, relations: [ 'user' ] });
+            if(!task) {
+                return res.status(HttpCode.NOT_FOUND).json({ error: 'Task not found!' });
+            }
+
+            if(task.user.id !== req.user?.id) {
+                return res.status(HttpCode.FORBIDDEN).json({ error: 'You can\'t access someone else\'s tasks!' });
+            }
+
+            //return only task properties and skip user
+            const { ['user']: remove, ...taskProps } = task;            
+            return res.status(HttpCode.OK).json(taskProps);
+        } catch (err) {
+            console.log(err);
+            return res.status(HttpCode.BAD_REQUEST).json({ error: err.message });
+        }    
+    }
 }
