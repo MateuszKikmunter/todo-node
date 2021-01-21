@@ -21,7 +21,7 @@ export const registrationValidationRules = [
  * @param res response
  * @param next next function
  */
-export const validateRegistrationRequest = (req: Request, res: Response, next: NextFunction) => {
+export const validateRegistrationRequest = (req: Request, res: Response, next: NextFunction): void | Response => {
     
     const validationErrors = validationResult(req);
     if(!validationErrors.isEmpty()) {

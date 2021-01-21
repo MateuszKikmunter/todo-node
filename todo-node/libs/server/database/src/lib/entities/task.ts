@@ -8,7 +8,7 @@ import { User } from './user';
 export class Task {
 
     @PrimaryGeneratedColumn('uuid') 
-    id: string
+    id: string;
 
     @Column({ length: 255, type: 'varchar' })
     name: string;
@@ -19,12 +19,12 @@ export class Task {
     @Column({ type: 'int', default: false })
     completed: boolean;
 
-    @Column({ type: 'datetime' })
+    @Column({ type: 'date' })
     deadline: string;
 
     @Column({ type: 'datetime', default: new Date().toUTCString() })
     lastModified: string;
 
-    @ManyToOne(type => User, owner => owner.todos)
-    owner: User;
+    @ManyToOne(() => User, user => user.todos, { onDelete: 'CASCADE' })
+    user: User;
 }
