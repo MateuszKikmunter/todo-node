@@ -231,26 +231,29 @@
                 }
             }
         },
-        "todo-app": {
+        "todo-app-core": {
             "projectType": "library",
-            "root": "libs/todo-app",
-            "sourceRoot": "libs/todo-app/src",
+            "root": "libs/todo-app/core",
+            "sourceRoot": "libs/todo-app/core/src",
             "prefix": "todo-node",
             "architect": {
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
                         "tsConfig": [
-                            "libs/todo-app/tsconfig.lib.json",
-                            "libs/todo-app/tsconfig.spec.json"
+                            "libs/todo-app/core/tsconfig.lib.json",
+                            "libs/todo-app/core/tsconfig.spec.json"
                         ],
-                        "exclude": ["**/node_modules/**", "!libs/todo-app/**/*"]
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!libs/todo-app/core/**/*"
+                        ]
                     }
                 },
                 "test": {
                     "builder": "@nrwl/jest:jest",
                     "options": {
-                        "jestConfig": "libs/todo-app/jest.config.js",
+                        "jestConfig": "libs/todo-app/core/jest.config.js",
                         "passWithNoTests": true
                     }
                 }

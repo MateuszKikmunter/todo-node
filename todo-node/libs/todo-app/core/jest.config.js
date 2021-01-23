@@ -1,6 +1,6 @@
 module.exports = {
-    displayName: 'todo-app',
-    preset: '../../jest.preset.js',
+    displayName: 'todo-app-core',
+    preset: '../../../jest.preset.js',
     setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
     globals: {
         'ts-jest': {
@@ -14,7 +14,7 @@ module.exports = {
             },
         },
     },
-    coverageDirectory: '../../coverage/libs/todo-app',
+    coverageDirectory: '../../../coverage/libs/todo-app/core',
     snapshotSerializers: [
         'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
         'jest-preset-angular/build/AngularSnapshotSerializer.js',
