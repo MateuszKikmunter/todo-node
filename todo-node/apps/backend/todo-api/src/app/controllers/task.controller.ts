@@ -4,6 +4,9 @@ import { HttpCode } from '@todo-node/shared/utils';
 import { Request, Response } from 'express';
 import { getConnection } from 'typeorm';
 
+//local imports
+import { messages } from './../utils/config';
+
 
 export class TaskController {
 
@@ -38,12 +41,10 @@ export class TaskController {
         try {
             const task = await getConnection('sqlite').getRepository(Task).findOne({where: { id: req.params.id }, relations: [ 'user' ] });
             if(!task) {
-                return res.status(HttpCode.NOT_FOUND).json({ error: 'Task not found!' });
+                return res.status(HttpCode.NOT_FOUND).json({ error: messages.taskNotFound });
             }
 
-            if(task.user.id !== req.user?.id) {
-                return res.status(HttpCode.FORBIDDEN).json({ error: 'Access denied, you can\'t modify someone else\'s tasks!' });
-            }
+            this.isUserAuthorizedToAccessTask(req, res, task);
 
             await getConnection('sqlite').getRepository(Task).save({ ...task, ...req.body });
             return res.sendStatus(HttpCode.OK);
@@ -63,12 +64,10 @@ export class TaskController {
         try {
             const task = await getConnection('sqlite').getRepository(Task).findOne({where: { id: req.params.id }, relations: [ 'user' ] });
             if(!task) {
-                return res.status(HttpCode.NOT_FOUND).json({ error: 'Task not found!' });
+                return res.status(HttpCode.NOT_FOUND).json({ error: messages.taskNotFound });
             }
 
-            if(task.user.id !== req.user?.id) {
-                return res.status(HttpCode.FORBIDDEN).json({ error: 'You can\'t access someone else\'s tasks!' });
-            }
+            this.isUserAuthorizedToAccessTask(req, res, task);
 
             //return only task properties and skip user
             const { ['user']: remove, ...taskProps } = task;            
@@ -89,12 +88,10 @@ export class TaskController {
         try {
             const task = await getConnection('sqlite').getRepository(Task).findOne({where: { id: req.params.id }, relations: [ 'user' ] });
             if(!task) {
-                return res.status(HttpCode.NOT_FOUND).json({ error: 'Task not found!' });
+                return res.status(HttpCode.NOT_FOUND).json({ error: messages.taskNotFound });
             }
 
-            if(task.user.id !== req.user?.id) {
-                return res.status(HttpCode.FORBIDDEN).json({ error: 'You can\'t access someone else\'s tasks!' });
-            }
+            this.isUserAuthorizedToAccessTask(req, res, task);
 
             await getConnection('sqlite').getRepository(Task).delete({ id: task.id });
             return res.sendStatus(HttpCode.OK);
@@ -119,7 +116,7 @@ export class TaskController {
                 .getMany();
                 
             if(!tasks) {
-                return res.status(HttpCode.NOT_FOUND).json({ error: 'Task not found!' });
+                return res.status(HttpCode.NOT_FOUND).json({ error: messages.userHasNoTasks });
             }          
 
             return res.status(HttpCode.OK).json(tasks);
@@ -127,5 +124,18 @@ export class TaskController {
             console.log(err);
             return res.status(HttpCode.BAD_REQUEST).json({ error: err.message });
         }    
+    }
+
+    /**
+     * * Checks if user can access specific task.
+     * * Returns 403 forbidden if user is not allowed to access the task.
+     * * Otherwise lets process to continue.
+     * @param req request
+     * @param task task
+    */
+    private isUserAuthorizedToAccessTask = (req: Request, res: Response, task: Task): Response => {
+        if(task.user.id !== req.user?.id) {
+            return res.status(HttpCode.FORBIDDEN).json({ error: messages.cantAccessSomeonesTask });
+        }
     }
 }

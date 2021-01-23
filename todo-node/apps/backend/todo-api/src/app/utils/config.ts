@@ -7,6 +7,9 @@ export const DD_MM_YYYY = 'DD/MM/YYYY';
 export const messages = {
     invalidCredentials: 'Invalid username or password!',
     userDoesNotExist: 'User does not exist!',
+    userHasNoTasks: 'You have no tasks!',
     forbiddenAccess: 'Forbidden access!',
-    somethingWentWrong: 'Something went wrong!'
+    somethingWentWrong: 'Something went wrong!',
+    taskNotFound: 'Task not found!',
+    cantAccessSomeonesTask: 'Access denied, you can\'t modify someone else\'s task!'
 };
