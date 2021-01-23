@@ -11,5 +11,5 @@ export const messages = {
     forbiddenAccess: 'Forbidden access!',
     somethingWentWrong: 'Something went wrong!',
     taskNotFound: 'Task not found!',
-    cantAccessSomeonesTask: 'Access denied, you can\'t modify someone else\'s task!'
+    cantAccessSomeonesTask: 'You can\'t access someone else\'s task!'
 };
