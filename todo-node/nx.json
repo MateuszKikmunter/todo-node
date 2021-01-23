@@ -38,6 +38,9 @@
         },
         "shared-utils": {
             "tags": []
+        },
+        "todo-app": {
+            "tags": []
         }
     }
 }

@@ -6,5 +6,6 @@ module.exports = {
         '<rootDir>/libs/shared',
         '<rootDir>/libs/server/database',
         '<rootDir>/libs/shared/utils',
+        '<rootDir>/libs/todo-app',
     ],
 };
