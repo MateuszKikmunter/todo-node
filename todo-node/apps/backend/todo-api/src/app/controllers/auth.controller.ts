@@ -7,6 +7,7 @@ import { HttpCode } from '@todo-node/shared/utils';
 
 //local imports
 import { JwtService } from '../services/jwt.service';
+import { messages } from './../utils/config';
 
 
 export class AuthController {
@@ -37,7 +38,7 @@ export class AuthController {
 
         } catch (err) {
             console.log(err);
-            return res.status(HttpCode.SERVER_ERROR).json({ error: 'Something went wrong!' });
+            return res.status(HttpCode.SERVER_ERROR).json({ error: messages.somethingWentWrong });
         }
     }
 
@@ -51,17 +52,17 @@ export class AuthController {
 
             const { email, password } = req.body;
             if(!email || !password) {
-                return res.status(HttpCode.BAD_REQUEST).send({ error: 'Invalid username or password!' });
+                return res.status(HttpCode.BAD_REQUEST).send({ error: messages.invalidCredentials });
             }
 
             const user = await getConnection('sqlite').getRepository(User).findOne({ email: email });
             if(!user) {
-                return res.status(HttpCode.BAD_REQUEST).send({ error: 'User does not exist!' });
+                return res.status(HttpCode.BAD_REQUEST).send({ error: messages.userDoesNotExist });
             }
 
             const passwordsMatch = await bcrypt.compare(password, user.password);
             if(!passwordsMatch) {
-                return res.status(HttpCode.BAD_REQUEST).send({ error: 'Invalid username or password!' });
+                return res.status(HttpCode.BAD_REQUEST).send({ error: messages.invalidCredentials });
             }
 
             const jwtPayload = { id: user.id, email: user.email };
@@ -75,7 +76,7 @@ export class AuthController {
 
         } catch (err) {
             console.log(err);
-            return res.status(HttpCode.SERVER_ERROR).json({ error: 'Something went wrong!' });
+            return res.status(HttpCode.SERVER_ERROR).json({ error: messages.somethingWentWrong });
         }
     }
 
@@ -88,7 +89,7 @@ export class AuthController {
 
         const refreshToken = req.body.refresh_token;
         if (!refreshToken) {
-            return res.status(HttpCode.FORBIDDEN).json({ error: 'Access is forbidden!' });
+            return res.status(HttpCode.FORBIDDEN).json({ error: messages.forbiddenAccess });
         }
 
         try {
