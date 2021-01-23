@@ -1,10 +1,9 @@
 //Angular imports
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 //libs imports
-import { ClarityModule } from '@clr/angular';
+import { TodoAppCoreModule } from '@todo-node/todo-app/core';
 
 //application imports
 import { AppComponent } from './app.component';
@@ -15,9 +14,8 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule,
     RouterModule.forRoot([], { initialNavigation: 'enabled' }),
-    ClarityModule
+    TodoAppCoreModule
   ],
   bootstrap: [AppComponent]
 })
