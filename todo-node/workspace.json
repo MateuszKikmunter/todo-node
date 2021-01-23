@@ -263,6 +263,39 @@
                     "style": "scss"
                 }
             }
+        },
+        "todo-app-shared": {
+            "projectType": "library",
+            "root": "libs/todo-app/shared",
+            "sourceRoot": "libs/todo-app/shared/src",
+            "prefix": "todo-node",
+            "architect": {
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/todo-app/shared/tsconfig.lib.json",
+                            "libs/todo-app/shared/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!libs/todo-app/shared/**/*"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/todo-app/shared/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            }
         }
     },
     "cli": {

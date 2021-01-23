@@ -41,6 +41,9 @@
         },
         "todo-app-core": {
             "tags": []
+        },
+        "todo-app-shared": {
+            "tags": []
         }
     }
 }
