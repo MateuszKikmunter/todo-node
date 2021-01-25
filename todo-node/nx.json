@@ -44,6 +44,9 @@
         },
         "todo-app-shared-util": {
             "tags": []
+        },
+        "todo-app-shared-ui-footer": {
+            "tags": []
         }
     }
 }

@@ -296,6 +296,39 @@
                     "style": "scss"
                 }
             }
+        },
+        "todo-app-shared-ui-footer": {
+            "projectType": "library",
+            "root": "libs/todo-app/shared/ui-footer",
+            "sourceRoot": "libs/todo-app/shared/ui-footer/src",
+            "prefix": "todo-node",
+            "architect": {
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/todo-app/shared/ui-footer/tsconfig.lib.json",
+                            "libs/todo-app/shared/ui-footer/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!libs/todo-app/shared/ui-footer/**/*"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/todo-app/shared/ui-footer/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            }
         }
     },
     "cli": {

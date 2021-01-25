@@ -10,5 +10,6 @@ module.exports = {
         '<rootDir>/libs/todo-app/core',
         '<rootDir>/libs/todo-app/shared',
         '<rootDir>/libs/todo-app/shared/util',
+        '<rootDir>/libs/todo-app/shared/ui-footer',
     ],
 };

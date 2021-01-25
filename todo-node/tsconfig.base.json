@@ -23,6 +23,9 @@
             "@todo-node/todo-app/shared": ["libs/todo-app/shared/src/index.ts"],
             "@todo-node/todo-app/shared/util": [
                 "libs/todo-app/shared/util/src/index.ts"
+            ],
+            "@todo-node/todo-app/shared/ui-footer": [
+                "libs/todo-app/shared/ui-footer/src/index.ts"
             ]
         }
     },

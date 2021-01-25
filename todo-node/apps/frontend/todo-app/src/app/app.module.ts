@@ -4,7 +4,8 @@ import { RouterModule } from '@angular/router';
 
 //libs imports
 import { TodoAppCoreModule } from '@todo-node/todo-app/core';
-import { TodoAppSharedUtilModule } from '@@todo-node/todo-app/shared/util';
+import { TodoAppSharedUtilModule } from '@todo-node/todo-app/shared/util';
+import { TodoAppSharedUiFooterModule } from '@todo-node/todo-app/shared/ui-footer';
 
 //application imports
 import { AppComponent } from './app.component';
@@ -17,7 +18,8 @@ import { AppComponent } from './app.component';
   imports: [
     RouterModule.forRoot([], { initialNavigation: 'enabled' }),
     TodoAppCoreModule,
-    TodoAppSharedUtilModule
+    TodoAppSharedUtilModule,
+    TodoAppSharedUiFooterModule
   ],
   bootstrap: [AppComponent]
 })
