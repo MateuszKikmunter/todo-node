@@ -20,7 +20,10 @@
             "@todo-node/shared/utils": ["libs/shared/utils/src/index.ts"],
             "@todo-node/todo-app": ["libs/todo-app/src/index.ts"],
             "@todo-node/todo-app/core": ["libs/todo-app/core/src/index.ts"],
-            "@todo-node/todo-app/shared": ["libs/todo-app/shared/src/index.ts"]
+            "@todo-node/todo-app/shared": ["libs/todo-app/shared/src/index.ts"],
+            "@todo-node/todo-app/shared/util": [
+                "libs/todo-app/shared/util/src/index.ts"
+            ]
         }
     },
     "exclude": ["node_modules", "tmp"]

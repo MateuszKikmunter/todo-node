@@ -9,5 +9,6 @@ module.exports = {
         '<rootDir>/libs/todo-app',
         '<rootDir>/libs/todo-app/core',
         '<rootDir>/libs/todo-app/shared',
+        '<rootDir>/libs/todo-app/shared/util',
     ],
 };

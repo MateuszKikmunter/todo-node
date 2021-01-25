@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 
 //libs imports
 import { TodoAppCoreModule } from '@todo-node/todo-app/core';
+import { TodoAppSharedUtilModule } from '@@todo-node/todo-app/shared/util';
 
 //application imports
 import { AppComponent } from './app.component';
@@ -15,7 +16,8 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     RouterModule.forRoot([], { initialNavigation: 'enabled' }),
-    TodoAppCoreModule
+    TodoAppCoreModule,
+    TodoAppSharedUtilModule
   ],
   bootstrap: [AppComponent]
 })
