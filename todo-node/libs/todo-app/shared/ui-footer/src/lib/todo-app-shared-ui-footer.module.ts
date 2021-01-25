@@ -1,8 +1,10 @@
 //Angular imports
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-    imports: [CommonModule]
+    imports: [CommonModule],
+    declarations: [FooterComponent]
 })
 export class TodoAppSharedUiFooterModule {}
