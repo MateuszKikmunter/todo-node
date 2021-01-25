@@ -4,10 +4,7 @@ import { NgModule } from '@angular/core';
 //libs imports
 import { ClarityModule } from '@clr/angular';
 
-
 @NgModule({
-    imports: [
-        ClarityModule        
-    ]
+    exports: [ClarityModule]
 })
 export class TodoAppSharedModule {}
