@@ -329,6 +329,105 @@
                     "style": "scss"
                 }
             }
+        },
+        "todo-app-shared-ui-header": {
+            "projectType": "library",
+            "root": "libs/todo-app/shared/ui-header",
+            "sourceRoot": "libs/todo-app/shared/ui-header/src",
+            "prefix": "todo-node",
+            "architect": {
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/todo-app/shared/ui-header/tsconfig.lib.json",
+                            "libs/todo-app/shared/ui-header/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!libs/todo-app/shared/ui-header/**/*"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/todo-app/shared/ui-header/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            }
+        },
+        "todo-app-shared-ui-layout": {
+            "projectType": "library",
+            "root": "libs/todo-app/shared/ui-layout",
+            "sourceRoot": "libs/todo-app/shared/ui-layout/src",
+            "prefix": "todo-node",
+            "architect": {
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/todo-app/shared/ui-layout/tsconfig.lib.json",
+                            "libs/todo-app/shared/ui-layout/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!libs/todo-app/shared/ui-layout/**/*"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/todo-app/shared/ui-layout/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            }
+        },
+        "todo-app-todo-todo-feature": {
+            "projectType": "library",
+            "root": "libs/todo-app/todo/todo-feature",
+            "sourceRoot": "libs/todo-app/todo/todo-feature/src",
+            "prefix": "todo-node",
+            "architect": {
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/todo-app/todo/todo-feature/tsconfig.lib.json",
+                            "libs/todo-app/todo/todo-feature/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!libs/todo-app/todo/todo-feature/**/*"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/todo-app/todo/todo-feature/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            }
         }
     },
     "cli": {

@@ -1,14 +1,12 @@
 //Angular imports
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 
 //libs imports
 import { TodoAppCoreModule } from '@todo-node/todo-app/core';
-import { TodoAppSharedUtilModule } from '@todo-node/todo-app/shared/util';
-import { TodoAppSharedUiFooterModule } from '@todo-node/todo-app/shared/ui-footer';
 
 //application imports
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app.routing.module';
 
 
 @NgModule({
@@ -16,10 +14,8 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    RouterModule.forRoot([], { initialNavigation: 'enabled' }),
-    TodoAppCoreModule,
-    TodoAppSharedUtilModule,
-    TodoAppSharedUiFooterModule
+    AppRoutingModule,
+    TodoAppCoreModule
   ],
   bootstrap: [AppComponent]
 })

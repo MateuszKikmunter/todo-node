@@ -26,6 +26,18 @@
             ],
             "@todo-node/todo-app/shared/ui-footer": [
                 "libs/todo-app/shared/ui-footer/src/index.ts"
+            ],
+            "@todo-node/todo-app/shared/ui-header": [
+                "libs/todo-app/shared/ui-header/src/index.ts"
+            ],
+            "@todo-node/todo-app/shared/ui-layout": [
+                "libs/todo-app/shared/ui-layout/src/index.ts"
+            ],
+            "@todo-node/todo-app/todo-feature": [
+                "libs/todo-app/todo-feature/src/index.ts"
+            ],
+            "@todo-node/todo-app/todo/todo-feature": [
+                "libs/todo-app/todo/todo-feature/src/index.ts"
             ]
         }
     },
