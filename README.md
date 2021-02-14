@@ -14,7 +14,7 @@ Whole project will be created with the following tech stack:
 
 Frontend:
 - [Angular](https://angular.io/) 
-- [Clarity](https://clarity.design/)
+- [PrimeNG](https://www.primefaces.org/primeng/)
 
 Backend:
 - [NodeJS](https://nodejs.org/en/)
