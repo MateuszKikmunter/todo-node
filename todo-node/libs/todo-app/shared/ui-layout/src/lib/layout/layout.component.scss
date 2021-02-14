@@ -1,0 +1,15 @@
+.page-wrapper {
+    position: relative;
+    min-height: 100%;
+    overflow-y: hidden;
+}
+
+.content-wrapper {
+    padding-bottom: 2.5rem;
+}
+
+::ng-deep todo-node-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
