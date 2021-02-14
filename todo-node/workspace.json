@@ -26,10 +26,12 @@
                             "apps/frontend/todo-app/src/assets"
                         ],
                         "styles": [
-                            "apps/frontend/todo-app/src/styles.scss"
+                            "apps/frontend/todo-app/src/styles.scss",
+                            "node_modules/primeicons/primeicons.css",
+                            "node_modules/primeng/resources/themes/arya-orange/theme.css",
+                            "node_modules/primeng/resources/primeng.min.css"
                         ],
-                        "scripts": [                            
-                        ]
+                        "scripts": []
                     },
                     "configurations": {
                         "production": {
