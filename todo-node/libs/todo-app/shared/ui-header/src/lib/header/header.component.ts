@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
         this.items = [
             { label: 'Home', icon: PrimeIcons.HOME },
             { label: 'Todos', icon: PrimeIcons.PENCIL },
-            { label: 'About', icon: PrimeIcons.QUESTION_CIRCLE },
+            { label: 'About', icon: PrimeIcons.QUESTION_CIRCLE }
         ];
     }
 }
