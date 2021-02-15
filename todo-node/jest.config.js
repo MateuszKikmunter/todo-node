@@ -14,7 +14,6 @@ module.exports = {
         '<rootDir>/libs/todo-app/shared/ui-header',
         '<rootDir>/libs/todo-app/shared/ui-layout',
         '<rootDir>/libs/todo-app/todo-feature',
-        '<rootDir>/libs/todo-app/todo/todo-feature',
-        '<rootDir>/libs/todo-app/auth',
+        '<rootDir>/libs/todo-app/todo/todo-feature'
     ],
 };
