@@ -38,6 +38,9 @@
             ],
             "@todo-node/todo-app/todo/todo-feature": [
                 "libs/todo-app/todo/todo-feature/src/index.ts"
+            ],
+            "@todo-node/todo-app/auth/login-feature": [
+                "libs/todo-app/auth/login-feature/src/index.ts"
             ]
         }
     },
