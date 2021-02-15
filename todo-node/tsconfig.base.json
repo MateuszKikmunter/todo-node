@@ -38,7 +38,8 @@
             ],
             "@todo-node/todo-app/todo/todo-feature": [
                 "libs/todo-app/todo/todo-feature/src/index.ts"
-            ]
+            ],
+            "@todo-node/todo-app/auth": ["libs/todo-app/auth/src/index.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"]

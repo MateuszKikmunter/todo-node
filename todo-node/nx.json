@@ -56,6 +56,9 @@
         },
         "todo-app-todo-todo-feature": {
             "tags": []
+        },
+        "todo-app-auth": {
+            "tags": []
         }
     }
 }

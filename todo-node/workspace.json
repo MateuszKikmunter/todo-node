@@ -425,6 +425,39 @@
                     "style": "scss"
                 }
             }
+        },
+        "todo-app-auth": {
+            "projectType": "library",
+            "root": "libs/todo-app/auth",
+            "sourceRoot": "libs/todo-app/auth/src",
+            "prefix": "todo-node",
+            "architect": {
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/todo-app/auth/tsconfig.lib.json",
+                            "libs/todo-app/auth/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!libs/todo-app/auth/**/*"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/todo-app/auth/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            }
         }
     },
     "cli": {
