@@ -1,5 +1,5 @@
 //Angular imports
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 //libs imports
 import { MenuItem, PrimeIcons } from 'primeng/api';
@@ -9,8 +9,7 @@ import { MenuItem, PrimeIcons } from 'primeng/api';
     selector: 'todo-node-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
     public items: MenuItem[];

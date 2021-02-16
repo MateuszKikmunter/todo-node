@@ -1,3 +1,7 @@
-.p-menubar {
+:host ::ng-deep .p-menubar {
     border-radius: 0px;
+}
+
+:host ::ng-deep .p-menuitem-icon {
+    color: #FFD54F !important;
 }
