@@ -1,0 +1,62 @@
+//icons
+i {
+    color: #ffd54f;
+}
+//icons end
+
+//card
+:host ::ng-deep div.p-card {
+    border-radius: 0px;
+    width: 40vw;
+}
+
+:host ::ng-deep div.p-card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+:host ::ng-deep .p-card-title {
+    margin-left: 0.5rem;
+    margin-bottom: 0;
+}
+//card end
+
+//form
+div.p-inputgroup {
+    padding: 0.2rem;
+}
+
+:host ::ng-deep .p-button {
+    width: 5rem;
+    margin-left: 0.2rem;
+    margin-top: 0.5rem;
+}
+//form end
+
+//media queries
+@media screen and (max-width: 600px) {
+    :host ::ng-deep div.p-card {
+        width: 70vw;
+    }
+}
+
+@media screen and (max-height: 460px) {
+    div.p-inputgroup {
+        padding: 0.2rem;
+    }
+
+    :host ::ng-deep .p-button {
+        margin-left: 0.2rem;
+    }
+}
+
+@media screen and (max-height: 320px) {
+    :host ::ng-deep div.p-card {
+        height: 65%;
+        left: 50%;
+        top: 50%
+    }
+}
+//media queries end
