@@ -1,6 +1,6 @@
 //icons
 i {
-    color: #ffd54f;
+    color: #FFD54F;
 }
 //icons end
 
@@ -36,16 +36,6 @@ div.p-inputgroup {
 @media screen and (max-width: 600px) {
     :host ::ng-deep div.p-card {
         width: 70vw;
-    }
-}
-
-@media screen and (max-height: 460px) {
-    div.p-inputgroup {
-        padding: 0.2rem;
-    }
-
-    :host ::ng-deep .p-button {
-        margin-left: 0.2rem;
     }
 }
 
