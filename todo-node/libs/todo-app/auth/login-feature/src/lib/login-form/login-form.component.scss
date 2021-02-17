@@ -8,9 +8,6 @@ i {
 :host ::ng-deep div.p-card {
     border-radius: 0px;
     width: 40vw;
-}
-
-:host ::ng-deep div.p-card {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -55,8 +52,6 @@ div.p-inputgroup {
 @media screen and (max-height: 320px) {
     :host ::ng-deep div.p-card {
         height: 65%;
-        left: 50%;
-        top: 50%
     }
 }
 //media queries end
