@@ -41,6 +41,9 @@
             ],
             "@todo-node/todo-app/auth/login-feature": [
                 "libs/todo-app/auth/login-feature/src/index.ts"
+            ],
+            "@todo-node/todo-app/auth/data-access": [
+                "libs/todo-app/auth/data-access/src/index.ts"
             ]
         }
     },
