@@ -1,4 +1,4 @@
-export type CurrentUser = {
+export interface CurrentUser {
     id: string,
     email: string
 }

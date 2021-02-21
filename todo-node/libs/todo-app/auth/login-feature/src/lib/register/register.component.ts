@@ -4,11 +4,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormAction } from '../enums/action';
 
 @Component({
-  selector: 'todo-node-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'todo-node-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
   get formAction(): typeof FormAction {
     return FormAction;
@@ -19,8 +19,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public onLogin(payload: AuthPayload) {
-    this.authFacade.login(payload);
+  public onRegister(payload: AuthPayload) {    
+    this.authFacade.register(payload);
   }
-
 }

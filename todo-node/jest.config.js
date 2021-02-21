@@ -17,5 +17,6 @@ module.exports = {
         '<rootDir>/libs/todo-app/todo/todo-feature',
         '<rootDir>/libs/todo-app/auth/login-feature',
         '<rootDir>/libs/todo-app/auth/data-access',
+        '<rootDir>/libs/todo-app/auth/domain',
     ],
 };

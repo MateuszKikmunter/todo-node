@@ -1,17 +1,19 @@
-<p-card header="Log In">
+<p-card header="{{ header }}">
     <div class="p-grid p-fluid">
-        <div class="p-col-12 p-md-4">
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                <input type="email" pInputText placeholder="Email">
+        <form [formGroup]="loginForm" autocomplete="off">
+            <div class="p-col-12 p-md-4">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                    <input type="email" pInputText placeholder="Email" formControlName="email">
+                </div>
             </div>
-        </div>
-        <div class="p-col-12 p-md-4">
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
-                <input type="password" pPassword placeholder="Password">
+            <div class="p-col-12 p-md-4">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+                    <input type="password" pPassword placeholder="Password" formControlName="password">
+                </div>
             </div>
-        </div>
-        <p-button label="Submit"></p-button>
+            <p-button label="Submit" (click)="submit()" [disabled]="loginForm?.invalid"></p-button>
+        </form>
     </div>
 </p-card>

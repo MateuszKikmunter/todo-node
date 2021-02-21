@@ -11,7 +11,7 @@ const routes: Routes = [
                 loadChildren: () => import('@todo-node/todo-app/todo/todo-feature').then((m) => m.TodoAppTodoTodoFeatureModule)
             },
             {
-                path: 'login',
+                path: 'account',
                 loadChildren: () => import('@todo-node/todo-app/auth/login-feature').then((m) => m.TodoAppAuthLoginFeatureModule)
             }
         ]

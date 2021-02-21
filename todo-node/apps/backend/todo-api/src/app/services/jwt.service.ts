@@ -1,11 +1,9 @@
 //libs imports
 import { User } from '@todo-node/server/database';
 import { RefreshToken } from '@todo-node/server/database';
+import { CurrentUser } from '@todo-node/shared/utils';
 import { getConnection } from 'typeorm';
 import * as jwt from 'jsonwebtoken';
-
-//local imports
-import { CurrentUser } from './../shared/types/current.user';
 
 export class JwtService {
 

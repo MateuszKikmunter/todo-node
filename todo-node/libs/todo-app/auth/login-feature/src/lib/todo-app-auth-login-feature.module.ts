@@ -1,6 +1,7 @@
 //Angular imports
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 //libs imports
 import { PasswordModule } from 'primeng/password';
@@ -13,11 +14,13 @@ import { ButtonModule } from 'primeng/button';
 import { LoginComponent } from './login/login.component';
 import { TodoAppAuthLoginRoutingModule } from './todo-app-auth-login-routing.module';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
     imports: [
         CommonModule,
+        ReactiveFormsModule,
         InputTextModule,
         TodoAppSharedUiLayoutModule,
         PasswordModule,
@@ -27,7 +30,8 @@ import { LoginFormComponent } from './login-form/login-form.component';
     ],
     declarations: [
         LoginComponent, 
-        LoginFormComponent
+        LoginFormComponent, 
+        RegisterComponent
     ]
 })
 export class TodoAppAuthLoginFeatureModule {}
