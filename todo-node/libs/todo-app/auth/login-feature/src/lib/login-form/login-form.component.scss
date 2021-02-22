@@ -30,6 +30,11 @@ div.p-inputgroup {
     margin-left: 0.2rem;
     margin-top: 0.5rem;
 }
+
+:host ::ng-deep .p-inline-message {
+    margin: 5px 3px;
+    border: none;
+}
 //form end
 
 //media queries

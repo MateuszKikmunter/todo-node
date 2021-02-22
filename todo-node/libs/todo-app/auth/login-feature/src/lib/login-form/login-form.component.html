@@ -6,11 +6,31 @@
                     <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                     <input type="email" pInputText placeholder="Email" formControlName="email">
                 </div>
+                <div *ngIf="email.touched && email.errors">
+                    <p-message *ngIf="email.errors.email" 
+                        severity='error' 
+                        text="Please enter a valid email">
+                    </p-message>
+                    <p-message *ngIf="email.errors.required" 
+                        severity='error' 
+                        text="Email is required">
+                    </p-message>
+                </div>
             </div>
             <div class="p-col-12 p-md-4">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
                     <input type="password" pPassword placeholder="Password" formControlName="password">
+                </div>
+                <div *ngIf="password.touched && password.errors">
+                    <p-message *ngIf="password.errors.required" 
+                        severity='error' 
+                        text="Password is required">
+                    </p-message>
+                    <p-message *ngIf="password.errors.minlength" 
+                        severity='error' 
+                        text="Please enter at least 8 characters">
+                    </p-message>
                 </div>
             </div>
             <p-button label="Submit" (click)="submit()" [disabled]="loginForm?.invalid"></p-button>

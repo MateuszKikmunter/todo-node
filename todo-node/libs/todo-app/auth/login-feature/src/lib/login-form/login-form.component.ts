@@ -1,7 +1,13 @@
-import { AuthPayload } from '@todo-node/shared/utils';
-import { FormAction } from './../enums/action';
+//Angular imports
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+//libs imports
+import { AuthPayload } from '@todo-node/shared/utils';
+
+//local imports
+import { FormAction } from './../enums/action';
+
 
 @Component({
   selector: 'todo-node-login-form',
@@ -16,6 +22,14 @@ export class LoginFormComponent implements OnInit {
 
   public loginForm: FormGroup;
 
+  get email(): AbstractControl {
+    return this.loginForm.get('email');
+  }
+
+  get password(): AbstractControl {
+    return this.loginForm.get('password');
+  }
+
   get header(): string {
     return this.action === FormAction.LOGIN
       ? 'Log In'
@@ -28,6 +42,7 @@ export class LoginFormComponent implements OnInit {
     this.buildForm();
   }
 
+  /** Emits login or register event depending on the action type provided. */
   public submit(): void {
     if(this.loginForm.valid) {
       this.action === FormAction.LOGIN
@@ -36,6 +51,7 @@ export class LoginFormComponent implements OnInit {
     }
   }
 
+  /** Builds login form group if it does not exist already. */
   private buildForm(): void {    
     if(!this.loginForm) {
       this.loginForm = this.formBuilder.group({
