@@ -4,7 +4,11 @@
             <div class="p-col-12 p-md-4">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                    <input type="email" pInputText placeholder="Email" formControlName="email">
+                    <input pInputText
+                        type="email"                        
+                        placeholder="Email" 
+                        formControlName="email"
+                    />
                 </div>
                 <div *ngIf="email.touched && email.errors">
                     <p-message *ngIf="email.errors.email" 
@@ -20,7 +24,12 @@
             <div class="p-col-12 p-md-4">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
-                    <input type="password" pPassword placeholder="Password" formControlName="password">
+                    <input pPassword 
+                        type="password"                         
+                        placeholder="Password" 
+                        formControlName="password"
+                        [feedback]="isRegisterMode()"
+                    />
                 </div>
                 <div *ngIf="password.touched && password.errors">
                     <p-message *ngIf="password.errors.required" 
@@ -33,7 +42,10 @@
                     </p-message>
                 </div>
             </div>
-            <p-button label="Submit" (click)="submit()" [disabled]="loginForm?.invalid"></p-button>
+            <p-button label="Submit"                 
+                [disabled]="loginForm?.invalid"
+                (click)="submit()">
+            </p-button>
         </form>
     </div>
 </p-card>

@@ -1,6 +1,6 @@
 //Angular imports
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 //libs imports
 import { AuthPayload } from '@todo-node/shared/utils';
@@ -22,7 +22,7 @@ export class LoginFormComponent implements OnInit {
 
   public loginForm: FormGroup;
 
-  get email(): AbstractControl {
+  get email(): AbstractControl { 
     return this.loginForm.get('email');
   }
 
@@ -49,6 +49,11 @@ export class LoginFormComponent implements OnInit {
         ? this.login.emit(this.loginForm.value)
         : this.register.emit(this.loginForm.value);
     }
+  }
+
+  /** Checks if form whether form is in register mode. */
+  public isRegisterMode(): boolean {
+    return this.action === FormAction.REGISTER;
   }
 
   /** Builds login form group if it does not exist already. */
