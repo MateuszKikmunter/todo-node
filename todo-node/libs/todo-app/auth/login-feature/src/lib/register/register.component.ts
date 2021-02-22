@@ -31,9 +31,9 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.eventBus.on(Action.REGISTER_SUCCESSFUL, () => {
         this.messageService.add({
-          severity: "success",
-          summary: "Registration successful!",
-          detail: "Redirecting to login page..."
+          severity: 'success',
+          summary: 'Registration successful!',
+          detail: 'Redirecting to login page...'
         });
 
         setTimeout(() => {
