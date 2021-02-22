@@ -25,29 +25,32 @@ export class AuthService {
     private eventBus: EventBusService,
     private localStorageService: LocalStorageService) { }
 
-  
+  /**
+   * Logs the user in and saves tokens in the local storage.
+   * @param loginPayload { email: string, password: string }
+   */
   public login(loginPayload: AuthPayload): void {
     this.http.post<LoginResponse>(`${this.apiUrl}/login`, loginPayload).subscribe((response: LoginResponse) => {
       this.user.next(response.user);
-      this.setToken('token', response.accessToken);
-      this.setToken('refreshToken', response.refreshToken);
+      this.localStorageService.setItem('token', response.accessToken);
+      this.localStorageService.setItem('refreshToken', response.refreshToken);      
     });
   }
 
+  /**
+   * Makes POST request to the server with user's credentials.
+   * @param registerPayload { email: string, password: string }
+   */
   public register(registerPayload: AuthPayload): void {
     this.http.post<string>(`${this.apiUrl}/register`, registerPayload).subscribe((response: string) => {
       this.eventBus.emit({ action: Action.REGISTER_SUCCESSFUL });
     });
   }
 
-
+  /** Logs current user out and clear saved tokens. */
   public logout(): void {
     this.localStorageService.removeItem('token');
     this.localStorageService.removeItem('refreshToken');
     this.user.next(null);
-  }
-
-  private setToken(key: string, token: string): void {
-    this.localStorageService.setItem(key, token);
   }
 }

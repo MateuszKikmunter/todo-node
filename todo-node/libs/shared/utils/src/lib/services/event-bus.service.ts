@@ -18,7 +18,7 @@ export class EventBusService {
   private subject$ = new Subject();
 
   /** Emits an event with some values.
-   * @param event event with unique name and action(s) to perform when it occurs
+   * @param event event with unique name and action to perform when it occurs
   */
   public emit(event: EventData): void {
     this.subject$.next(event);
@@ -26,7 +26,7 @@ export class EventBusService {
 
   /** Performs provided action when a specific event occurs.
    * @param eventName name of the event
-   * @param action action(s) to be performed
+   * @param action action to be performed
   */
   public on(eventName: Action, action: any): Subscription {
     return this.subject$.pipe(
