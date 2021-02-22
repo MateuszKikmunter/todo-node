@@ -9,6 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { TodoAppSharedUiLayoutModule } from '@todo-node/todo-app/shared/ui-layout';
 import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
 
 //local imports
 import { LoginComponent } from './login/login.component';
@@ -26,7 +27,8 @@ import { RegisterComponent } from './register/register.component';
         PasswordModule,
         CardModule,
         ButtonModule,
-        TodoAppAuthLoginRoutingModule
+        TodoAppAuthLoginRoutingModule,
+        ToastModule
     ],
     declarations: [
         LoginComponent, 

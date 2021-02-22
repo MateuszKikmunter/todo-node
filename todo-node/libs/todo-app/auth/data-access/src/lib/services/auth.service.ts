@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 //libs imports
-import { LocalStorageService } from '@todo-node/shared/utils';
+import { Action, EventBusService, LocalStorageService } from '@todo-node/shared/utils';
 import { LoginResponse } from '@todo-node/todo-app/auth/domain';
 import { CurrentUser } from '@todo-node/shared/utils';
 import { AuthPayload } from '@todo-node/shared/utils';
@@ -22,6 +22,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
+    private eventBus: EventBusService,
     private localStorageService: LocalStorageService) { }
 
   
@@ -35,7 +36,7 @@ export class AuthService {
 
   public register(registerPayload: AuthPayload): void {
     this.http.post<string>(`${this.apiUrl}/register`, registerPayload).subscribe((response: string) => {
-      console.log(response);
+      this.eventBus.emit({ action: Action.REGISTER_SUCCESSFUL });
     });
   }
 
