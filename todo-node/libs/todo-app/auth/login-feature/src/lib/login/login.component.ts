@@ -1,7 +1,13 @@
+//Angular imports
+import { Component, OnInit } from '@angular/core';
+
+//libs imports
 import { AuthFacadeService } from '@todo-node/todo-app/auth/data-access';
 import { AuthPayload } from '@todo-node/shared/utils';
-import { Component, OnInit } from '@angular/core';
+
+//local imports
 import { FormAction } from '../enums/action';
+
 
 @Component({
   selector: 'todo-node-login',
