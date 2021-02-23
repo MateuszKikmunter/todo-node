@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 //libs imports
 import { MenubarModule } from 'primeng/menubar';
+import { ButtonModule } from 'primeng/button';
 
 //local imports
 import { HeaderComponent } from './header/header.component';
@@ -12,7 +13,8 @@ import { HeaderComponent } from './header/header.component';
 @NgModule({
     imports: [
         CommonModule, 
-        MenubarModule
+        MenubarModule,
+        ButtonModule
     ],
     declarations: [HeaderComponent],
     exports: [HeaderComponent],
