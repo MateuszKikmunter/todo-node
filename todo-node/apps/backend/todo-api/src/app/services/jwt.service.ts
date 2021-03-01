@@ -80,8 +80,8 @@ export class JwtService {
         };
 
         return {
-            access_token: await this.generateAccessToken(payload),
-            refresh_token: await this.getUpdatedRefreshToken(currentRefreshToken, payload),
+            accessToken: await this.generateAccessToken(payload),
+            refreshToken: await this.getUpdatedRefreshToken(currentRefreshToken, payload)
         };
     }
 

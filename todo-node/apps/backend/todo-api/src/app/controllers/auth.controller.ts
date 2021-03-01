@@ -70,8 +70,8 @@ export class AuthController {
             const refreshToken = await this._jwtService.generateRefreshToken(jwtPayload);
             return res.status(HttpCode.OK).json({ 
                 user: jwtPayload,
-                access_token: accessToken,
-                refresh_token: refreshToken
+                accessToken: accessToken,
+                refreshToken: refreshToken
             });
 
         } catch (err) {
@@ -99,6 +99,26 @@ export class AuthController {
             const message = (err && err.message) || err;
             console.log(message);
             res.status(HttpCode.FORBIDDEN).json({ error: message });
+        }
+    }
+
+        /**
+     * Returns currently logged in user if JWT validation passed.
+     * @param req request
+     * @param res response
+     */
+    public async getCurrentUser(req: Request, res: Response): Promise<Response> {
+        try {
+            if(req.user) {
+                const user = await getConnection('sqlite').getRepository(User).findOne(req.user.id);
+                if(user) {
+                    return res.status(HttpCode.OK).json({ user });                    
+                }
+                return res.status(HttpCode.NOT_FOUND).json( 'User not found!');
+            }
+        } catch (err) {
+            console.log(err);
+            return res.status(HttpCode.BAD_REQUEST).json({ error: 'Something went wrong!' });
         }
     }
 }
