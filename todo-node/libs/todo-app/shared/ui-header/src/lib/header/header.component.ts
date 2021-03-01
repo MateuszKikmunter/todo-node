@@ -1,8 +1,10 @@
 //Angular imports
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 //libs imports
 import { MenuItem, PrimeIcons } from 'primeng/api';
+import { AuthFacadeService } from '@todo-node/todo-app/auth/data-access';
 
 
 @Component({
@@ -14,10 +16,16 @@ import { MenuItem, PrimeIcons } from 'primeng/api';
 export class HeaderComponent implements OnInit {
     public items: MenuItem[];
 
-    constructor() {}
+    constructor(readonly authFacade: AuthFacadeService,
+        private router: Router) {}
 
     ngOnInit(): void {
         this.initializeManuItems();
+    }
+
+    public logout(): void {
+        this.authFacade.logout();
+        this.router.navigateByUrl('/account/login');
     }
 
     private initializeManuItems(): void {

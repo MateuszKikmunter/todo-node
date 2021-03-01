@@ -7,7 +7,8 @@ import { Action, EventBusService, LocalStorageService } from '@todo-node/shared/
 import { LoginResponse } from '@todo-node/todo-app/auth/domain';
 import { CurrentUser } from '@todo-node/shared/utils';
 import { AuthPayload } from '@todo-node/shared/utils';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -15,10 +16,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class AuthService {
 
-  private readonly apiUrl = 'http://localhost:4000/api/auth';
+  private readonly authApiUrl = 'http://localhost:4000/api/auth';  
 
   private user: BehaviorSubject<CurrentUser> = new BehaviorSubject<CurrentUser>(null);
-  readonly user$: Observable<CurrentUser> = this.user.asObservable();
+  private user$: Observable<CurrentUser> = this.user.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -30,7 +31,7 @@ export class AuthService {
    * @param loginPayload { email: string, password: string }
    */
   public login(loginPayload: AuthPayload): void {
-    this.http.post<LoginResponse>(`${this.apiUrl}/login`, loginPayload).subscribe((response: LoginResponse) => {
+    this.http.post<LoginResponse>(`${this.authApiUrl}/login`, loginPayload).subscribe((response: LoginResponse) => {
       this.user.next(response.user);
       this.localStorageService.setItem('token', response.accessToken);
       this.localStorageService.setItem('refreshToken', response.refreshToken);      
@@ -42,7 +43,7 @@ export class AuthService {
    * @param registerPayload { email: string, password: string }
    */
   public register(registerPayload: AuthPayload): void {
-    this.http.post<string>(`${this.apiUrl}/register`, registerPayload).subscribe((response: string) => {
+    this.http.post<string>(`${this.authApiUrl}/register`, registerPayload).subscribe((response: string) => {
       this.eventBus.emit({ action: Action.REGISTER_SUCCESSFUL });
     });
   }
@@ -52,5 +53,50 @@ export class AuthService {
     this.localStorageService.removeItem('token');
     this.localStorageService.removeItem('refreshToken');
     this.user.next(null);
+  }
+
+  /** 
+   * Keeps user logged in if their token is still valid.
+   */
+  public getCurrentUser(): Observable<CurrentUser> {
+    return this.user$.pipe(
+      switchMap(user => {
+        // check if we already have user data
+        if (user) {
+          return of(user);
+        }
+
+        const token = this.localStorageService.getItem('token');
+        // if there is token then fetch the current user
+        if (token) {
+          return this.fetchCurrentUser();
+        }
+
+        return of(null);
+      })
+    );
+  }
+
+  /** Makes an HTTP call to the backed to check if user can be logged in. */
+  private fetchCurrentUser(): Observable<CurrentUser> {
+    return this.http.get<CurrentUser>(`${this.authApiUrl}/get-current-user`)
+      .pipe(
+        tap(user => {
+          this.user.next(user);
+        })
+      );
+  }
+
+  /** Gets fresh tokens if the old is already expired. */
+  public refreshToken(): Observable<{accessToken: string; refreshToken: string}> {
+    const refreshToken = this.localStorageService.getItem('refreshToken');
+
+    return this.http.post<{accessToken: string; refreshToken: string}>(
+      `${this.authApiUrl}/refresh-token`, { refreshToken }).pipe(
+        tap(response => {
+          this.localStorageService.setItem('token', response.accessToken);
+          this.localStorageService.setItem('refreshToken', response.refreshToken);
+        })
+    );
   }
 }

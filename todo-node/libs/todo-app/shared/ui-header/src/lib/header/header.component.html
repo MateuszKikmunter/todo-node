@@ -1,7 +1,9 @@
 <p-menubar [model]="items">
-        <button pButton 
+        <button *ngIf="authFacade?.getCurrentUser() | async"
+            pButton 
             icon="pi pi-power-off" 
             label="Logout" 
-            class="p-button-outlined">
+            class="p-button-outlined"
+            (click)="logout()">
         </button> 
 </p-menubar>
