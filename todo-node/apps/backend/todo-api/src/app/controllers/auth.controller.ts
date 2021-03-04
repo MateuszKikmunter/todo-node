@@ -112,7 +112,7 @@ export class AuthController {
             if(req.user) {
                 const user = await getConnection('sqlite').getRepository(User).findOne(req.user.id);
                 if(user) {
-                    return res.status(HttpCode.OK).json({ user });                    
+                    return res.status(HttpCode.OK).json({ id: user.id, email: user.email });                    
                 }
                 return res.status(HttpCode.NOT_FOUND).json( 'User not found!');
             }
