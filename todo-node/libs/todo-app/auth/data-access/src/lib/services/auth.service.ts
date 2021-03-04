@@ -33,8 +33,9 @@ export class AuthService {
   public login(loginPayload: AuthPayload): void {
     this.http.post<LoginResponse>(`${this.authApiUrl}/login`, loginPayload).subscribe((response: LoginResponse) => {
       this.user.next(response.user);
+      this.eventBus.emit({ action: Action.LOGIN_SUCCESSFUL });
       this.localStorageService.setItem('token', response.accessToken);
-      this.localStorageService.setItem('refreshToken', response.refreshToken);      
+      this.localStorageService.setItem('refreshToken', response.refreshToken);
     });
   }
 
