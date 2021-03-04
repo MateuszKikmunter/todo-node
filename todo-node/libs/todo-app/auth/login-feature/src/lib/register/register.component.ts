@@ -1,11 +1,12 @@
 //Angular imports
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 //libs imports
 import { AuthFacadeService } from '@todo-node/todo-app/auth/data-access';
 import { Action, AuthPayload, EventBusService } from '@todo-node/shared/utils';
 import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
 
 //local imports
 import { FormAction } from '../enums/action';
@@ -17,7 +18,9 @@ import { FormAction } from '../enums/action';
   styleUrls: ['./register.component.scss'],
   providers: [ MessageService ]
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
+
+  private subSink = new Subscription();
 
   get formAction(): typeof FormAction {
     return FormAction;
@@ -29,7 +32,8 @@ export class RegisterComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.eventBus.on(Action.REGISTER_SUCCESSFUL, () => {
+    this.subSink.add(
+      this.eventBus.on(Action.REGISTER_SUCCESSFUL, () => {
         this.messageService.add({
           severity: 'success',
           summary: 'Registration successful!',
@@ -39,7 +43,12 @@ export class RegisterComponent implements OnInit {
         setTimeout(() => {
           this.router.navigate(['/account/login']);
         }, 2000);
-    });
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subSink.unsubscribe();
   }
 
   public onRegister(payload: AuthPayload) {    
