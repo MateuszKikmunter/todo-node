@@ -32,6 +32,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit(): void {
+    this.onRegistrationSuccess();
+  }
+
+  ngOnDestroy(): void {
+    this.subSink.unsubscribe();
+  }
+
+  public onRegister(payload: AuthPayload) {    
+    this.authFacade.register(payload);
+  }
+
+  private onRegistrationSuccess(): void {
     this.subSink.add(
       this.eventBus.on(Action.REGISTER_SUCCESSFUL, () => {
         this.messageService.add({
@@ -45,13 +57,5 @@ export class RegisterComponent implements OnInit, OnDestroy {
         }, 2000);
       })
     );
-  }
-
-  ngOnDestroy(): void {
-    this.subSink.unsubscribe();
-  }
-
-  public onRegister(payload: AuthPayload) {    
-    this.authFacade.register(payload);
   }
 }
