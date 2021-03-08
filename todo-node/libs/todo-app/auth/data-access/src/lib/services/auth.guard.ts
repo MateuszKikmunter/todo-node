@@ -13,7 +13,7 @@ import { AuthFacadeService } from '@todo-node/todo-app/auth/data-access';
 })
 export class AuthGuard implements CanActivate {
   constructor(private authFacade: AuthFacadeService,
-              private router: Router) { }
+    private router: Router) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
