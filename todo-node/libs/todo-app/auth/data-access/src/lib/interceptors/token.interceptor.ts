@@ -26,8 +26,7 @@ export class TokenInterceptor implements HttpInterceptor {
     const accessToken = this.localStorageService.getItem('token');
 
     return next.handle(this.addAuthorizationHeader(req, accessToken)).pipe(
-      catchError(err => {        
-        console.log('in interceptor')
+      catchError(err => {                
         if (err instanceof HttpErrorResponse && err.status === HttpCode.UNAUTHORIZED) {          
           const refreshToken = this.localStorageService.getItem('refreshToken');
           if (refreshToken && accessToken) {
