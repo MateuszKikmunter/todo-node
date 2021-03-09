@@ -8,6 +8,7 @@ import { TodoAppSharedUiLayoutModule } from '@todo-node/todo-app/shared/ui-layou
 //local impports
 import { TodoAppRoutingModule } from './todo-app-todo-feature-routing.module';
 import { MainComponent } from './main/main.component';
+import { TodoTableComponent } from './todo-table/todo-table.component';
 
 
 @NgModule({
@@ -16,6 +17,6 @@ import { MainComponent } from './main/main.component';
         TodoAppSharedUiLayoutModule,
         TodoAppRoutingModule
     ],
-    declarations: [MainComponent]
+    declarations: [MainComponent, TodoTableComponent]
 })
 export class TodoAppTodoTodoFeatureModule {}

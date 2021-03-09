@@ -524,6 +524,39 @@
                     "style": "scss"
                 }
             }
+        },
+        "todo-app-todo-data-access": {
+            "projectType": "library",
+            "root": "libs/todo-app/todo/data-access",
+            "sourceRoot": "libs/todo-app/todo/data-access/src",
+            "prefix": "todo-node",
+            "architect": {
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/todo-app/todo/data-access/tsconfig.lib.json",
+                            "libs/todo-app/todo/data-access/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!libs/todo-app/todo/data-access/**/*"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/todo-app/todo/data-access/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            }
         }
     },
     "cli": {

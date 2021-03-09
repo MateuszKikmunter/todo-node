@@ -65,6 +65,9 @@
         },
         "todo-app-auth-domain": {
             "tags": []
+        },
+        "todo-app-todo-data-access": {
+            "tags": []
         }
     }
 }
