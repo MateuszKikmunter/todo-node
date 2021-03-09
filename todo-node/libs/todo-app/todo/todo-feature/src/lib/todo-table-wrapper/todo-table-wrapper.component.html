@@ -1,0 +1,9 @@
+<ng-container *ngIf="(tasks$ | async) as tasks; else noData">
+    <todo-node-todo-table [tasks]="tasks"></todo-node-todo-table>
+</ng-container>
+
+<ng-template #noData>
+    <div>
+        <p>No data found!</p>
+    </div>
+</ng-template>

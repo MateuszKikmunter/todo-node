@@ -4,12 +4,19 @@ import { RouterModule, Routes } from '@angular/router';
 
 //local imports
 import { MainComponent } from './main/main.component';
+import { TodoTableWrapperComponent } from './todo-table-wrapper/todo-table-wrapper.component';
 
 
 const routes: Routes = [
     {
         path: '',
-        component: MainComponent
+        component: MainComponent,
+        children: [
+            {
+                path: 'all',
+                component: TodoTableWrapperComponent
+            }
+        ]
     },
 ];
 

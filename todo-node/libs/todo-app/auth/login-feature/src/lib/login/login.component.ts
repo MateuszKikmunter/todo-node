@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         });
 
         setTimeout(() => {
-          this.router.navigate(['/todo']);
+          this.router.navigate(['/todo/all']);
         }, 2000);
       })
     );
