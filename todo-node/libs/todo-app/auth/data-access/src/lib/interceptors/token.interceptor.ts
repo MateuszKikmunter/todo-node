@@ -24,7 +24,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const accessToken = this.localStorageService.getItem('token');
-
+    
     return next.handle(this.addAuthorizationHeader(req, accessToken)).pipe(
       catchError(err => {                
         if (err instanceof HttpErrorResponse && err.status === HttpCode.UNAUTHORIZED) {          

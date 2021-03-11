@@ -87,7 +87,7 @@ export class AuthController {
      */
     public getNewTokens = async (req: Request, res: Response): Promise<Response> => {
 
-        const refreshToken = req.body.refresh_token;
+        const refreshToken = req.body.refreshToken;
         if (!refreshToken) {
             return res.status(HttpCode.FORBIDDEN).json({ error: messages.forbiddenAccess });
         }
