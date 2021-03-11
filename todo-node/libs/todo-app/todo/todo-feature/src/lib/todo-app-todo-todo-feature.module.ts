@@ -11,7 +11,6 @@ import { MainComponent } from './main/main.component';
 import { TodoTableComponent } from './todo-table-wrapper/todo-table/todo-table.component';
 import { TodoTableWrapperComponent } from './todo-table-wrapper/todo-table-wrapper.component';
 
-
 @NgModule({
     imports: [
         CommonModule,
@@ -19,8 +18,8 @@ import { TodoTableWrapperComponent } from './todo-table-wrapper/todo-table-wrapp
         TodoAppRoutingModule
     ],
     declarations: [
-        MainComponent, 
-        TodoTableComponent, 
+        MainComponent,
+        TodoTableComponent,
         TodoTableWrapperComponent
     ]
 })
