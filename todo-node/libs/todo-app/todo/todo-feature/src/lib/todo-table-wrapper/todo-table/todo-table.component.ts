@@ -6,7 +6,7 @@ import { Task } from '@todo-node/shared/utils';
 
 
 @Component({
-  selector: 'todo-node-todo-table',
+  selector: 'todo-table',
   templateUrl: './todo-table.component.html',
   styleUrls: ['./todo-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
