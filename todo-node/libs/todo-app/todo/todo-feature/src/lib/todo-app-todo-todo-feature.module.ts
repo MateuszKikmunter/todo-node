@@ -3,6 +3,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 //libs imports
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
+import { ToolbarModule } from 'primeng/toolbar';
 import { TodoAppSharedUiLayoutModule } from '@todo-node/todo-app/shared/ui-layout';
 
 //local impports
@@ -14,6 +20,12 @@ import { TodoTableWrapperComponent } from './todo-table-wrapper/todo-table-wrapp
 @NgModule({
     imports: [
         CommonModule,
+        ButtonModule,
+        CardModule,
+        ConfirmDialogModule,
+        InputTextModule,
+        TableModule,
+        ToolbarModule,
         TodoAppSharedUiLayoutModule,
         TodoAppRoutingModule
     ],
@@ -21,6 +33,6 @@ import { TodoTableWrapperComponent } from './todo-table-wrapper/todo-table-wrapp
         MainComponent,
         TodoTableComponent,
         TodoTableWrapperComponent
-    ]
+    ],
 })
 export class TodoAppTodoTodoFeatureModule {}
