@@ -17,8 +17,7 @@
             </div>        
     </p-toolbar>
 
-
-    <p-table [value]="tasks" 
+    <p-table [value]="tasks"
         [lazy]="true"         
         [paginator]="true" 
         [rows]="10" 
@@ -43,7 +42,7 @@
             <td>{{ task.name }}</td>
             <td>{{ task.deadline }}</td>
             <td>{{ task.lastModified }}</td>
-            <td (click)="colClicked(task.id)"><i style="margin-left: 35px;" [ngClass]="{'pi pi-check success': task.completed, 'pi pi-times warning': !task.completed}"></i></td>
+            <td (click)="colClicked(task.id)"><i class="ml-35" [ngClass]="{'pi pi-check success': task.completed, 'pi pi-times warning': !task.completed}"></i></td>
         </tr>
     </ng-template>
 </p-table>
