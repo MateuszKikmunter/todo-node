@@ -14,10 +14,11 @@ import { LazyLoadEvent } from 'primeng/api';
     selector: 'todo-table',
     templateUrl: './todo-table.component.html',
     styleUrls: ['./todo-table.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoTableComponent implements OnInit {
-    @Input() tasks: Task[];
+  
+    @Input() tasks: Task[];    
 
     public loading: boolean;
     public totalRecords: number;

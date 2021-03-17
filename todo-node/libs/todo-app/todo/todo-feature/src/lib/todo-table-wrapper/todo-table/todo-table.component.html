@@ -12,41 +12,47 @@
             <div class="p-toolbar-group-right">
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input type="text" pInputText placeholder="Search">         
+                    <input type="text" pInputText placeholder="Search">
                 </span>
-            </div>        
-    </p-toolbar>
+            </div>
+        </p-toolbar>
 
-    <p-table [value]="tasks"
-        [lazy]="true"         
-        [paginator]="true" 
-        [rows]="10" 
-        [totalRecords]="totalRecords" 
-        [loading]="loading" 
-        selectionMode="single"         
-        dataKey="id"        
-        [globalFilterFields]="['name','deadline', 'lastModified', 'completed']"        
-        (onRowSelect)="onRowSelect($event)" 
-        (onRowUnselect)="onRowUnselect($event)"
-        (onLazyLoad)="loadTasks($event)">
-    <ng-template pTemplate="header">
-        <tr>
-            <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-            <th pSortableColumn="deadline">Deadline <p-sortIcon field="deadline"></p-sortIcon></th>
-            <th pSortableColumn="lastModified">Last Modified <p-sortIcon field="lastModified"></p-sortIcon></th>
-            <th pSortableColumn="comleted">Completed <p-sortIcon field="completed"></p-sortIcon></th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-task>
-        <tr [pSelectableRow]="task">
-            <td>{{ task.name }}</td>
-            <td>{{ task.deadline }}</td>
-            <td>{{ task.lastModified }}</td>
-            <td (click)="colClicked(task.id)"><i class="ml-35" [ngClass]="{'pi pi-check success': task.completed, 'pi pi-times warning': !task.completed}"></i></td>
-        </tr>
-    </ng-template>
-</p-table>
+        <p-table [value]="tasks" 
+            [lazy]="true" 
+            [paginator]="true" 
+            [rows]="10" 
+            [totalRecords]="totalRecords"
+            [loading]="loading" 
+            selectionMode="single" 
+            dataKey="id"
+            [globalFilterFields]="['name','deadline', 'lastModified', 'completed']" 
+            (onRowSelect)="onRowSelect($event)"
+            (onRowUnselect)="onRowUnselect($event)" 
+            (onLazyLoad)="loadTasks($event)">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="deadline">Deadline <p-sortIcon field="deadline"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="lastModified">Last Modified <p-sortIcon field="lastModified"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="comleted">Completed <p-sortIcon field="completed"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-task>
+                <tr [pSelectableRow]="task">
+                    <td>{{ task.name }}</td>
+                    <td>{{ task.deadline }}</td>
+                    <td>{{ task.lastModified }}</td>
+                    <td (click)="colClicked(task.id)">
+                        <i *ngIf="task.completed" class="ml-35 pi pi-check success"></i>
+                        <i *ngIf="!task.completed" class="ml-35 pi pi-times warning"></i>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
     </p-card>
-
 
 </ng-container>
