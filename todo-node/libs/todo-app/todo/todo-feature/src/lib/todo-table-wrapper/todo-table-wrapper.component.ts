@@ -109,13 +109,18 @@ export class TodoTableWrapperComponent implements OnInit {
     }
 
     /** Sends task to the store for deletion. */
-    public onTaskDelete(event: Task): void {
-        this.showConfirmDialog(event);
+    public onTaskDelete(task: Task): void {
+        this.showConfirmDialog(task);
     }
 
     //TODO: to implement
-    public onTaskEdit(event: Task): void {
+    public onTaskEdit(task: Task): void {
 
+    }
+
+    /** Sends filter value to the store to get tasks containing search phrase. */
+    public onTasksFilter(search: string): void {
+        //TODO: to implement
     }
 
     /** Sends selected task to the store.  */

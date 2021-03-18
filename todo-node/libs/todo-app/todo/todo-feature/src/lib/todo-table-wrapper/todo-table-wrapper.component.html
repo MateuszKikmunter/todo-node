@@ -1,6 +1,7 @@
 <todo-table 
     [tasks]="tasks$ | async"
     [selectedTask]="todoFacade?.selectedTask$ | async"
+    (filterTasks)="onTasksFilter($event)"
     (selectTask)="onTaskSelect($event)"
     (editTask)="onTaskEdit($event)"
     (deleteTask)="onTaskDelete($event)">
