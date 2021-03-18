@@ -3,20 +3,27 @@ import { Component, OnInit } from '@angular/core';
 
 //libs imports
 import { Observable, of } from 'rxjs';
+import { ConfirmationService } from 'primeng/api';
 import { Task } from '@todo-node/shared/utils';
 import { TodoFacadeService } from '@todo-node/todo-app/todo/data-access';
+
 
 @Component({
     selector: 'todo-table-wrapper',
     templateUrl: './todo-table-wrapper.component.html',
     styleUrls: ['./todo-table-wrapper.component.scss'],
+    providers: [ ConfirmationService ]
 })
 export class TodoTableWrapperComponent implements OnInit {
+
     public tasks$: Observable<Task[]>;
+    public selectedTask$: Observable<Task>;
 
-    constructor(private todoFacade: TodoFacadeService) {}
+    constructor(
+        readonly todoFacade: TodoFacadeService,
+        private confirmationService: ConfirmationService) {}
 
-    ngOnInit(): void {
+    ngOnInit(): void {        
         this.tasks$ = of([
             {
                 name: 'learn some node and nestjs development',
@@ -99,5 +106,35 @@ export class TodoTableWrapperComponent implements OnInit {
                 id: 'j',
             }
         ]);
+    }
+
+    /** Sends task to the store for deletion. */
+    public onTaskDelete(event: Task): void {
+        this.showConfirmDialog(event);
+    }
+
+    //TODO: to implement
+    public onTaskEdit(event: Task): void {
+
+    }
+
+    /** Sends selected task to the store.  */
+    public onTaskSelect(event: Task | null): void {        
+        this.todoFacade.selectTask(event);
+    }
+
+    /** Shows delete dialog and handles selected action. */
+    private showConfirmDialog(task: Task) {
+        this.confirmationService.confirm({
+            message: 'Do you want to delete this record?',
+            header: 'Delete Confirmation',
+            icon: 'pi pi-info-circle',
+            accept: () => {
+                this.todoFacade.deleteTask(task.id);
+            },
+            reject: () => {
+                //do nothing, user cancelled
+            }
+        });
     }
 }
