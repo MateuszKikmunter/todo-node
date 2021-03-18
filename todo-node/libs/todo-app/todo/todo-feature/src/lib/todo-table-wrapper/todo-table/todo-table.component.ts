@@ -5,12 +5,17 @@ import {
     Input,
     OnInit,
     Output,
-    EventEmitter
+    EventEmitter,
+    ViewChild,
+    ElementRef,
+    AfterViewInit
 } from '@angular/core';
 
 //libs imports
 import { Task } from '@todo-node/shared/utils';
 import { LazyLoadEvent } from 'primeng/api';
+import { fromEvent } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
 
 
 @Component({
@@ -19,20 +24,27 @@ import { LazyLoadEvent } from 'primeng/api';
     styleUrls: ['./todo-table.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TodoTableComponent implements OnInit {
-
+export class TodoTableComponent implements OnInit, AfterViewInit {
+    
     @Input() tasks: Task[];
     @Input() selectedTask: Task;
 
     @Output() selectTask: EventEmitter<Task> = new EventEmitter<Task>();
+    @Output() filterTasks: EventEmitter<string> = new EventEmitter<string>();
     @Output() deleteTask: EventEmitter<string> = new EventEmitter<string>();
     @Output() editTask: EventEmitter<string> = new EventEmitter<string>();
-    @Output() createTask: EventEmitter<void> = new EventEmitter<void>();
+    @Output() createTask: EventEmitter<void> = new EventEmitter<void>();  
+    
+    @ViewChild('search') searchInput: ElementRef;
 
     public loading: boolean;
     public totalRecords: number;
 
     ngOnInit(): void {}
+
+    ngAfterViewInit(): void {
+      this.onSearchChange();
+    }
 
     loadTasks(event: LazyLoadEvent) {        
       console.log('in lazy load')
@@ -74,5 +86,17 @@ export class TodoTableComponent implements OnInit {
       if(this.selectedTask) {
         this.deleteTask.emit(this.selectedTask.id);
       }      
+    }
+
+    /** Handles search input value change. */
+    private onSearchChange(): void {
+      fromEvent(this?.searchInput?.nativeElement, 'keyup').pipe(
+        debounceTime(500),        
+        map((search: any) => search.target.value)
+      ).subscribe((value: string) => {       
+        if(value?.trim()) {          
+          this.filterTasks.emit(value);
+        } 
+      });
     }
 }
