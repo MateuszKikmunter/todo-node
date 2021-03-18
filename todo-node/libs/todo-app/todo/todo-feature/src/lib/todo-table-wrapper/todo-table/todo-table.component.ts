@@ -56,6 +56,11 @@ export class TodoTableComponent implements OnInit {
     }
 
     //TODO: to implement
+    public edit(): void {
+
+    }
+
+    //TODO: to implement
     public colClicked(id): void {
       this.tasks.forEach(task => {
         if(task.id === id) {
