@@ -31,6 +31,7 @@ export class TodoTableComponent implements OnInit, AfterViewInit {
 
     @Output() selectTask: EventEmitter<Task> = new EventEmitter<Task>();
     @Output() filterTasks: EventEmitter<string> = new EventEmitter<string>();
+    @Output() taskStateChange: EventEmitter<string> = new EventEmitter<string>();
     @Output() deleteTask: EventEmitter<string> = new EventEmitter<string>();
     @Output() editTask: EventEmitter<string> = new EventEmitter<string>();
     @Output() createTask: EventEmitter<void> = new EventEmitter<void>();  
@@ -72,13 +73,9 @@ export class TodoTableComponent implements OnInit, AfterViewInit {
 
     }
 
-    //TODO: to implement
-    public colClicked(id): void {
-      this.tasks.forEach(task => {
-        if(task.id === id) {
-          task.completed = !task.completed;
-        }
-      })      
+    /** Tells parent that task's completion state changed. */
+    public changeTaskState(taskId: string): void {
+      this.taskStateChange.emit(taskId);
     }
 
     /** Tells parent what task should be deleted. */

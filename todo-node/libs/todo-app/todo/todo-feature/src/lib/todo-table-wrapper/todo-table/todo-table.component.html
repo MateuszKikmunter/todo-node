@@ -46,7 +46,7 @@
                     <td>{{ task.name }}</td>
                     <td>{{ task.deadline }}</td>
                     <td>{{ task.lastModified }}</td>
-                    <td (click)="colClicked(task.id)">
+                    <td (click)="changeTaskState(task.id)">
                         <i *ngIf="task.completed" class="ml-35 pi pi-check success"></i>
                         <i *ngIf="!task.completed" class="ml-35 pi pi-times warning"></i>
                     </td>

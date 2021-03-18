@@ -16,7 +16,7 @@ export class TodoFacadeService {
     constructor(private store: TodoStore) {}
 
     /** Returns tasks for currently logged in user. */
-    readonly userTasks$ = this.store.tasks$;
+    readonly tasks$ = this.store.tasks$;
 
     /** Returns currently selected task. */
     readonly selectedTask$ = this.store.selectedTask$;
@@ -24,6 +24,11 @@ export class TodoFacadeService {
     /** Sets/clears currently selected task in the store. */
     public selectTask(task: Task): void {
         this.store.selectTask(task);
+    }
+
+    /** Changes task completion state. */
+    public changeTaskState(taskId: string): void {
+      this.store.changeTaskState(taskId);
     }
 
     //TODO: to implent

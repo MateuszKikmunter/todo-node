@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 
 //libs imports
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ConfirmationService } from 'primeng/api';
 import { Task } from '@todo-node/shared/utils';
 import { TodoFacadeService } from '@todo-node/todo-app/todo/data-access';
@@ -15,98 +15,14 @@ import { TodoFacadeService } from '@todo-node/todo-app/todo/data-access';
     providers: [ ConfirmationService ]
 })
 export class TodoTableWrapperComponent implements OnInit {
-
-    public tasks$: Observable<Task[]>;
+    
     public selectedTask$: Observable<Task>;
 
     constructor(
         readonly todoFacade: TodoFacadeService,
         private confirmationService: ConfirmationService) {}
 
-    ngOnInit(): void {        
-        this.tasks$ = of([
-            {
-                name: 'learn some node and nestjs development',
-                additionalDetails: 'dupa details',
-                completed: false,
-                lastModified: '11/03/2021',
-                deadline: '25/05/2021',
-                id: 'a',
-            },
-            {
-                name: 'buy milk',
-                additionalDetails: 'buy some whole milk for cereal',
-                completed: false,
-                lastModified: '12/03/2021',
-                deadline: '31/03/2021',
-                id: 'b',
-            },
-            {
-                name: 'become jedi master',
-                additionalDetails: 'STAR WARS!',
-                completed: false,
-                lastModified: '12/03/2021',
-                deadline: '31/03/2021',
-                id: 'c',
-            },
-            {
-                name: 'watch out, zombies!',
-                additionalDetails: 'braaains!',
-                completed: false,
-                lastModified: '12/03/2021',
-                deadline: '31/03/2021',
-                id: 'd',
-            },
-            {
-                name: 'hello world!',
-                additionalDetails: 'whats up?',
-                completed: false,
-                lastModified: '12/03/2021',
-                deadline: '31/03/2021',
-                id: 'e',
-            },
-            {
-                name: 'typescript',
-                additionalDetails: 'ts is cool',
-                completed: false,
-                lastModified: '12/03/2021',
-                deadline: '31/03/2021',
-                id: 'f',
-            },
-            {
-                name: 'JS',
-                additionalDetails: 'JavaScript',
-                completed: false,
-                lastModified: '12/03/2021',
-                deadline: '31/03/2021',
-                id: 'g',
-            },
-            {
-                name: 'blah',
-                additionalDetails: 'blah details',
-                completed: false,
-                lastModified: '12/03/2021',
-                deadline: '31/03/2021',
-                id: 'h',
-            },
-            {
-                name: 'Im Batman!',
-                additionalDetails: 'Batman would kick Supermans ass!',
-                completed: false,
-                lastModified: '12/03/2021',
-                deadline: '31/03/2021',
-                id: 'i',
-            },
-            {
-                name: 'trololololololo',
-                additionalDetails: 'singining Russian guy',
-                completed: false,
-                lastModified: '12/03/2021',
-                deadline: '31/03/2021',
-                id: 'j',
-            }
-        ]);
-    }
+    ngOnInit(): void {}
 
     /** Sends task to the store for deletion. */
     public onTaskDelete(task: Task): void {
@@ -121,6 +37,11 @@ export class TodoTableWrapperComponent implements OnInit {
     /** Sends filter value to the store to get tasks containing search phrase. */
     public onTasksFilter(search: string): void {
         //TODO: to implement
+    }
+
+    /** Sends taskId to the store so it's completion state can be changed. */
+    public onTaskStateChange(taskId: string): void {
+        this.todoFacade.changeTaskState(taskId);
     }
 
     /** Sends selected task to the store.  */
