@@ -1,0 +1,11 @@
+<todo-table 
+    [tasks]="todoFacade?.tasks$ | async"
+    [selectedTask]="todoFacade?.selectedTask$ | async"
+    (filterTasks)="onTasksFilter($event)"
+    (taskStateChange)="onTaskStateChange($event)"
+    (selectTask)="onTaskSelect($event)"
+    (editTask)="onTaskEdit($event)"
+    (deleteTask)="onTaskDelete($event)">
+</todo-table>
+
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>

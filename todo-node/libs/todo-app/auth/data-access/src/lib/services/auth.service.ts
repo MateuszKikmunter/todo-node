@@ -31,11 +31,11 @@ export class AuthService {
    * @param loginPayload { email: string, password: string }
    */
   public login(loginPayload: AuthPayload): void {
-    this.http.post<LoginResponse>(`${this.authApiUrl}/login`, loginPayload).subscribe((response: LoginResponse) => {
-      this.user.next(response.user);
-      this.eventBus.emit({ action: Action.LOGIN_SUCCESSFUL });
+    this.http.post<LoginResponse>(`${this.authApiUrl}/login`, loginPayload).subscribe((response: LoginResponse) => {      
       this.localStorageService.setItem('token', response.accessToken);
       this.localStorageService.setItem('refreshToken', response.refreshToken);
+      this.user.next(response.user);
+      this.eventBus.emit({ action: Action.LOGIN_SUCCESSFUL });
     });
   }
 

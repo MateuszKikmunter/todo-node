@@ -1,0 +1,38 @@
+//palettes
+.success {
+    color: green;
+}
+
+.warning {
+    color: orange;
+}
+//palettes end
+
+//positioning
+.mr-5 {
+    margin-right: 5px !important;
+}
+
+.ml-35 {
+    margin-left: 35px;
+}
+//positioning end
+
+//media queries
+@media screen and (max-width: 950px) {
+    :host ::ng-deep div.p-card {
+        width: 100%;        
+    }
+}
+
+@media screen and (min-width: 951px) {
+    :host ::ng-deep div.p-card {
+        border-radius: 0px;
+        width: 75%;
+        position: absolute;
+        left: 50%;
+        top: 50.5%;
+        transform: translate(-50%, -50%);
+    }
+}
+//media queries end
