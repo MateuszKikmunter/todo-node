@@ -1,6 +1,7 @@
 export * from './lib/shared-utils';
 export * from './lib/enums/http.code';
 export * from './lib/enums/action';
+export * from './lib/enums/mode';
 export * from './lib/interfaces/event.data';
 export * from './lib/interfaces/current.user';
 export * from './lib/interfaces/auth.payload';
