@@ -64,8 +64,8 @@ export class TodoTableComponent implements OnInit, AfterViewInit {
     }
 
     //TODO: to implement
-    public openNew(): void {
-
+    public add(): void {
+      this.createTask.emit();
     }
 
     //TODO: to implement

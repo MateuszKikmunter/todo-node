@@ -4,8 +4,14 @@
     (filterTasks)="onTasksFilter($event)"
     (taskStateChange)="onTaskStateChange($event)"
     (selectTask)="onTaskSelect($event)"
+    (createTask)="onCreateTask()"
     (editTask)="onTaskEdit($event)"
     (deleteTask)="onTaskDelete($event)">
 </todo-table>
 
 <p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+
+<node-todo-form 
+[formVisible]="showForm$ | async"
+(modalClosed)="onModalClose()"
+></node-todo-form>

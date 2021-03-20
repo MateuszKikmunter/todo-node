@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs';
 //Angular imports
 import { Component, OnInit } from '@angular/core';
 
@@ -18,6 +19,9 @@ export class TodoTableWrapperComponent implements OnInit {
     
     public selectedTask$: Observable<Task>;
 
+    private showForm: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    readonly showForm$: Observable<boolean> = this.showForm.asObservable();
+
     constructor(
         readonly todoFacade: TodoFacadeService,
         private confirmationService: ConfirmationService) {}
@@ -34,6 +38,11 @@ export class TodoTableWrapperComponent implements OnInit {
 
     }
 
+    //TODO: to implement
+    public onCreateTask(): void {        
+        this.showForm.next(true);
+    }
+
     /** Sends filter value to the store to get tasks containing search phrase. */
     public onTasksFilter(search: string): void {
         //TODO: to implement
@@ -47,6 +56,10 @@ export class TodoTableWrapperComponent implements OnInit {
     /** Sends selected task to the store.  */
     public onTaskSelect(event: Task | null): void {        
         this.todoFacade.selectTask(event);
+    }
+
+    public onModalClose(): void {
+        this.showForm.next(false);
     }
 
     /** Shows delete dialog and handles selected action. */

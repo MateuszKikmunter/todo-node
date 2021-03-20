@@ -4,7 +4,7 @@
         <p-toolbar styleClass="p-mb-4">
             <div class="p-toolbar-group-left">
                 <span class="p-buttonset">
-                    <button pButton type="button" label="New" icon="pi pi-check"></button>
+                    <button pButton type="button" label="New" icon="pi pi-check" (click)="add()"></button>
                     <button pButton type="button" label="Edit" icon="pi pi-pencil" [disabled]="!selectedTask" (click)="edit()"></button>
                     <button pButton type="button" label="Delete" icon="pi pi-trash" [disabled]="!selectedTask" (click)="delete()"></button>
                 </span>
