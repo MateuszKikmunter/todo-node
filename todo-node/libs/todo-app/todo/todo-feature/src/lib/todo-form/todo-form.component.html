@@ -1,4 +1,4 @@
-<p-dialog [(visible)]="formVisible" [style]="{width: '450px'}" header="Task Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="formVisible" [style]="{width: '450px'}" header="Task Details" [modal]="true" styleClass="p-fluid" (onHide)="hideDialog()">
     <ng-template pTemplate="content">
         <div class="p-formgrid p-grid">
             <div class="p-field">
