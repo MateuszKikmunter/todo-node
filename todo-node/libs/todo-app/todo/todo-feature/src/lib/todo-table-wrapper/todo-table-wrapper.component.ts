@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 //libs imports
 import { Observable } from 'rxjs';
 import { ConfirmationService } from 'primeng/api';
-import { Task } from '@todo-node/shared/utils';
+import { Task, Mode } from '@todo-node/shared/utils';
 import { TodoFacadeService } from '@todo-node/todo-app/todo/data-access';
 
 
@@ -22,6 +22,9 @@ export class TodoTableWrapperComponent implements OnInit {
     private showForm: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     readonly showForm$: Observable<boolean> = this.showForm.asObservable();
 
+    private formMode: BehaviorSubject<Mode> = new BehaviorSubject<Mode>(Mode.DEFAULT);
+    readonly formMode$: Observable<Mode> = this.formMode.asObservable();
+
     constructor(
         readonly todoFacade: TodoFacadeService,
         private confirmationService: ConfirmationService) {}
@@ -29,18 +32,25 @@ export class TodoTableWrapperComponent implements OnInit {
     ngOnInit(): void {}
 
     /** Sends task to the store for deletion. */
-    public onTaskDelete(task: Task): void {
+    public onDeleteTask(task: Task): void {
         this.showFormDialog(task);
     }
 
     //TODO: to implement
-    public onTaskEdit(task: Task): void {
-
+    public onEditTask(task: Task): void {
+        this.formMode.next(Mode.DEFAULT);
     }
 
     //TODO: to implement
     public onCreateTask(): void {        
         this.showForm.next(true);
+        this.formMode.next(Mode.DEFAULT);
+    }
+
+    //TODO: to implement
+    public onViewTask(event): void {
+        this.showForm.next(true);
+        this.formMode.next(Mode.READONLY);
     }
 
     /** Sends filter value to the store to get tasks containing search phrase. */
@@ -54,7 +64,7 @@ export class TodoTableWrapperComponent implements OnInit {
     }
 
     /** Sends selected task to the store.  */
-    public onTaskSelect(event: Task | null): void {        
+    public onSelectTask(event: Task | null): void {        
         this.todoFacade.selectTask(event);
     }
 

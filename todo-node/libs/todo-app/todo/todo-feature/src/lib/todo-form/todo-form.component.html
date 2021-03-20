@@ -33,7 +33,7 @@
     </ng-template>
         
     <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button" (click)="save()"></button>
+        <button pButton pRipple label="{{ formMode === mode.READONLY ? 'Close' : 'Cancel' }}" icon="pi pi-times" class="p-button" (click)="hideDialog()"></button>
+        <button *ngIf="formMode === mode.DEFAULT" pButton pRipple label="Save" icon="pi pi-check" class="p-button" (click)="save()"></button>
     </ng-template>
 </p-dialog>

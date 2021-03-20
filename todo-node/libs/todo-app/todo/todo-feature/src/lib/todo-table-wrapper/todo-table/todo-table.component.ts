@@ -34,7 +34,8 @@ export class TodoTableComponent implements OnInit, AfterViewInit {
     @Output() taskStateChange: EventEmitter<string> = new EventEmitter<string>();
     @Output() deleteTask: EventEmitter<string> = new EventEmitter<string>();
     @Output() editTask: EventEmitter<string> = new EventEmitter<string>();
-    @Output() createTask: EventEmitter<void> = new EventEmitter<void>();  
+    @Output() createTask: EventEmitter<void> = new EventEmitter<void>();
+    @Output() viewTask: EventEmitter<string> = new EventEmitter<string>();
     
     @ViewChild('search') searchInput: ElementRef;
 
@@ -70,7 +71,12 @@ export class TodoTableComponent implements OnInit, AfterViewInit {
 
     //TODO: to implement
     public edit(): void {
+      this.createTask.emit();
+    }
 
+        //TODO: to implement
+    public view(): void {
+      this.viewTask.emit();
     }
 
     /** Tells parent that task's completion state changed. */

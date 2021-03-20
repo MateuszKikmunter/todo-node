@@ -3,15 +3,17 @@
     [selectedTask]="todoFacade?.selectedTask$ | async"
     (filterTasks)="onTasksFilter($event)"
     (taskStateChange)="onTaskStateChange($event)"
-    (selectTask)="onTaskSelect($event)"
+    (selectTask)="onSelectTask($event)"
     (createTask)="onCreateTask()"
-    (editTask)="onTaskEdit($event)"
-    (deleteTask)="onTaskDelete($event)">
+    (editTask)="onEditTask($event)"
+    (deleteTask)="onDeleteTask($event)"
+    (viewTask)="onViewTask($event)">
 </todo-table>
 
 <p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
 
 <node-todo-form 
-[formVisible]="showForm$ | async"
-(dialogClosed)="onDialogClose()"
+    [formVisible]="showForm$ | async"
+    [formMode]="formMode$ | async"
+    (dialogClosed)="onDialogClose()"
 ></node-todo-form>
