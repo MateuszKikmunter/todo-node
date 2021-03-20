@@ -8,8 +8,8 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 export class TodoFormComponent implements OnInit {
 
   @Input() formVisible: boolean;
-
-  @Output() modalClosed: EventEmitter<void> = new EventEmitter<void>();
+  
+  @Output() dialogClosed: EventEmitter<void> = new EventEmitter<void>();
 
   readonly minDate = new Date();
 
@@ -19,7 +19,7 @@ export class TodoFormComponent implements OnInit {
   }
 
   public hideDialog(): void {
-    this.modalClosed.emit();
+    this.dialogClosed.emit();
   }
 
   public save(): void {

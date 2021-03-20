@@ -30,7 +30,7 @@ export class TodoTableWrapperComponent implements OnInit {
 
     /** Sends task to the store for deletion. */
     public onTaskDelete(task: Task): void {
-        this.showConfirmDialog(task);
+        this.showFormDialog(task);
     }
 
     //TODO: to implement
@@ -58,12 +58,12 @@ export class TodoTableWrapperComponent implements OnInit {
         this.todoFacade.selectTask(event);
     }
 
-    public onModalClose(): void {
+    public onDialogClose(): void {
         this.showForm.next(false);
     }
 
     /** Shows delete dialog and handles selected action. */
-    private showConfirmDialog(task: Task) {
+    private showFormDialog(task: Task) {
         this.confirmationService.confirm({
             message: 'Do you want to delete this record?',
             header: 'Delete Confirmation',
