@@ -113,9 +113,7 @@ export class TaskController {
                 .getRepository(Task)
                 .createQueryBuilder('task')
                 .where('userId = :id', { id: req.params.id })
-                .getMany();
-
-                console.log(tasks);
+                .getMany(); 
                 
             if(!tasks) {
                 return res.status(HttpCode.NOT_FOUND).json({ error: messages.userHasNoTasks });
