@@ -38,21 +38,8 @@ export class TodoFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    if(changes.formMode) {
-      const currentMode: Mode = changes.formMode.currentValue;
-      if(currentMode === Mode.READONLY) {       
-        this.todoForm?.patchValue(this?.task ?? {});
-        this.todoForm?.disable();
-      }
-
-      if(currentMode === Mode.EDIT) {       
-        this.todoForm?.patchValue(this?.task ?? {});
-        this.todoForm?.enable();        
-      }
-
-      if(currentMode === Mode.ADD) {        
-        this.todoForm?.reset();        
-      }
+    if (changes.formMode) {
+      this.onModeChange(changes.formMode.currentValue);
     }
   }
 
@@ -81,6 +68,24 @@ export class TodoFormComponent implements OnInit, OnChanges {
         completed: [ false ]
       });
     }
+  }
+
+  /** 
+   * Enables/disables/clears/patches form whenever formMode inout value changes.
+   * @param mode current formMode value
+  */
+  private onModeChange(mode: Mode): void {
+    if(mode === Mode.READONLY || mode === Mode.EDIT) {       
+      this.todoForm?.patchValue(this?.task ?? {});
+    }
+
+    if(mode === Mode.ADD) {        
+      this.todoForm?.reset();        
+    }
+    
+    mode === Mode.READONLY
+      ? this.todoForm?.disable()
+      : this.todoForm?.enable();
   }
 
 }
