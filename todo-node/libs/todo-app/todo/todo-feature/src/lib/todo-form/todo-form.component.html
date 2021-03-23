@@ -1,39 +1,43 @@
 <p-dialog [(visible)]="formVisible" [style]="{width: '450px'}" header="Task Details" [modal]="true" styleClass="p-fluid" (onHide)="hideDialog()">
     <ng-template pTemplate="content">
-        <div class="p-formgrid p-grid">
-            <div class="p-field">
-                <label for="name">Name</label>
-                <input type="text" pInputText id="name" />
-                <!-- <small class="p-error">Name is required.</small> -->                
-            </div>
-        </div>
-
-        <div class="p-formgrid p-grid mt-15">
-            <div class="p-field">
-                <label for="additional-details">Additional Details</label>
-                <textarea id="additional-details" pInputTextarea rows="10" cols="20"></textarea>
-            </div>
-        </div>
-
-        <div class="p-formgrid p-grid mt-15">
-            <div class="p-field">
-                <label for="deadline">Deadline</label>
-                <p-calendar id="deadline" appendTo="body" [minDate]="minDate" dateFormat="dd/mm/yy"></p-calendar>
-            </div>
-        </div>
-
-        <div class="p-formgrid p-grid mt-15">
-            <div class="p-field">
-                <div class="p-field-checkbox">
-                    <p-checkbox binary="true" inputId="task-completed"></p-checkbox>
-                    <label class="ml-10" for="task-completed">Completed</label>
+        <form [formGroup]="todoForm" autocomplete="off">
+            <div class="p-formgrid p-grid">
+                <div class="p-field">
+                    <label for="name">Name</label>
+                    <input type="text" pInputText id="name" formControlName="name" />
+                    <small class="p-error" *ngIf="name?.touched && name?.errors?.required">Name is required.</small>    
+                    <small class="p-error" *ngIf="name?.touched && name?.errors?.maxlength">Maximum {{ nameMaxLength }} characters allowed.</small>    
                 </div>
             </div>
-        </div>
+    
+            <div class="p-formgrid p-grid mt-15">
+                <div class="p-field">
+                    <label for="additional-details">Additional Details</label>
+                    <textarea id="additional-details" pInputTextarea rows="10" cols="20" formControlName="additionalDetails"></textarea>
+                </div>
+            </div>
+    
+            <div class="p-formgrid p-grid mt-15">
+                <div class="p-field">
+                    <label for="deadline">Deadline</label>
+                    <p-calendar id="deadline" appendTo="body" [minDate]="minDate" dateFormat="dd/mm/yy" placeholder="DD/MM/YYYY" formControlName="deadline"></p-calendar>
+                    <small class="p-error" *ngIf="deadline?.touched && name?.errors?.required">Deadline is required.</small>                    
+                </div>
+            </div>
+    
+            <div class="p-formgrid p-grid mt-15">
+                <div class="p-field">
+                    <div class="p-field-checkbox">
+                        <p-checkbox binary="true" inputId="task-completed" formControlName="completed"></p-checkbox>
+                        <label class="ml-10" for="task-completed">Completed</label>
+                    </div>
+                </div>
+            </div>
+        </form>
     </ng-template>
         
     <ng-template pTemplate="footer">
         <button pButton pRipple label="{{ formMode === mode.READONLY ? 'Close' : 'Cancel' }}" icon="pi pi-times" class="p-button" (click)="hideDialog()"></button>
-        <button *ngIf="formMode === mode.DEFAULT" pButton pRipple label="Save" icon="pi pi-check" class="p-button" (click)="save()"></button>
+        <button *ngIf="formMode !== mode.READONLY" pButton pRipple label="Save" icon="pi pi-check" class="p-button" [disabled]="todoForm?.invalid" (click)="save()"></button>
     </ng-template>
 </p-dialog>

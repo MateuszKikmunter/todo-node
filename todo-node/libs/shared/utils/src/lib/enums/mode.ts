@@ -1,4 +1,5 @@
 export enum Mode {
-    DEFAULT,
+    ADD,
+    EDIT,
     READONLY
 }

@@ -15,5 +15,7 @@
 <node-todo-form 
     [formVisible]="showForm$ | async"
     [formMode]="formMode$ | async"
-    (dialogClosed)="onDialogClose()"
-></node-todo-form>
+    [task]="todoFacade?.selectedTask$ | async"
+    (saveTask)="onSaveTask($event)"
+    (dialogClosed)="onDialogClose()">
+</node-todo-form>

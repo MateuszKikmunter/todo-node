@@ -17,13 +17,11 @@ import { TodoFacadeService } from '@todo-node/todo-app/todo/data-access';
 })
 export class TodoTableWrapperComponent implements OnInit {
     
-    public selectedTask$: Observable<Task>;
-
     private showForm: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     readonly showForm$: Observable<boolean> = this.showForm.asObservable();
 
-    private formMode: BehaviorSubject<Mode> = new BehaviorSubject<Mode>(Mode.DEFAULT);
-    readonly formMode$: Observable<Mode> = this.formMode.asObservable();
+    private formMode: BehaviorSubject<Mode> = new BehaviorSubject<Mode>(Mode.ADD);
+    readonly formMode$: Observable<Mode> = this.formMode.asObservable();    
 
     constructor(
         readonly todoFacade: TodoFacadeService,
@@ -33,24 +31,28 @@ export class TodoTableWrapperComponent implements OnInit {
 
     /** Sends task to the store for deletion. */
     public onDeleteTask(task: Task): void {
-        this.showFormDialog(task);
+        this.showDeleteDialog(task);
     }
 
     //TODO: to implement
     public onEditTask(task: Task): void {
-        this.formMode.next(Mode.DEFAULT);
+        this.showForm.next(true);
+        this.formMode.next(Mode.EDIT);
     }
-
-    //TODO: to implement
+    
     public onCreateTask(): void {        
         this.showForm.next(true);
-        this.formMode.next(Mode.DEFAULT);
+        this.formMode.next(Mode.ADD);
     }
 
     //TODO: to implement
-    public onViewTask(event): void {
+    public onViewTask(task: Task): void {
         this.showForm.next(true);
         this.formMode.next(Mode.READONLY);
+    }
+
+    public onSaveTask(task: Task): void {
+        console.log(task);
     }
 
     /** Sends filter value to the store to get tasks containing search phrase. */
@@ -73,7 +75,7 @@ export class TodoTableWrapperComponent implements OnInit {
     }
 
     /** Shows delete dialog and handles selected action. */
-    private showFormDialog(task: Task) {
+    private showDeleteDialog(task: Task) {
         this.confirmationService.confirm({
             message: 'Do you want to delete this record?',
             header: 'Delete Confirmation',

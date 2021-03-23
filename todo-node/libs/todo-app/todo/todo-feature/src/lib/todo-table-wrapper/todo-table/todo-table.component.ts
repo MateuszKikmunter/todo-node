@@ -71,7 +71,7 @@ export class TodoTableComponent implements OnInit, AfterViewInit {
 
     //TODO: to implement
     public edit(): void {
-      this.createTask.emit();
+      this.editTask.emit();
     }
 
         //TODO: to implement

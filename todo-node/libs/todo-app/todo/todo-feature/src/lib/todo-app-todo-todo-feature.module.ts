@@ -1,5 +1,6 @@
 //Angular imports
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 //libs imports
@@ -34,6 +35,7 @@ import { TodoFormComponent } from './todo-form/todo-form.component';
         DialogModule,
         InputTextareaModule,
         InputTextModule,
+        ReactiveFormsModule,
         TableModule,
         ToolbarModule,
         TodoAppSharedUiLayoutModule,
