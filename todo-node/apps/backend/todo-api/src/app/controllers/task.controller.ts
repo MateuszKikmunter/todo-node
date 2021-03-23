@@ -20,10 +20,10 @@ export class TaskController {
             const task = {         
                 ...req.body,
                 user: await getConnection('sqlite').getRepository(User).findOne({ id: req?.user.id })
-            } as Task;      
+            } as Task;
 
             await getConnection('sqlite').getRepository(Task).insert(task);
-            return res.sendStatus(HttpCode.OK);
+            return res.status(HttpCode.OK).send();
             
         } catch (err) {
             console.log(err);
@@ -114,6 +114,8 @@ export class TaskController {
                 .createQueryBuilder('task')
                 .where('userId = :id', { id: req.params.id })
                 .getMany();
+
+                console.log(tasks);
                 
             if(!tasks) {
                 return res.status(HttpCode.NOT_FOUND).json({ error: messages.userHasNoTasks });
