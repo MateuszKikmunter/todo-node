@@ -1,3 +1,4 @@
+export * from './lib/constants/config';
 export * from './lib/shared-utils';
 export * from './lib/enums/http.code';
 export * from './lib/enums/action';

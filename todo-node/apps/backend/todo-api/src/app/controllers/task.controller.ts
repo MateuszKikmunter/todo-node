@@ -4,6 +4,7 @@ import { HttpCode } from '@todo-node/shared/utils';
 import { Request, Response } from 'express';
 import { getConnection } from 'typeorm';
 
+
 //local imports
 import { messages } from './../utils/config';
 
@@ -113,7 +114,7 @@ export class TaskController {
                 .getRepository(Task)
                 .createQueryBuilder('task')
                 .where('userId = :id', { id: req.params.id })
-                .getMany(); 
+                .getMany();
                 
             if(!tasks) {
                 return res.status(HttpCode.NOT_FOUND).json({ error: messages.userHasNoTasks });

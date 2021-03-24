@@ -1,12 +1,9 @@
 //libs imports
-import { HttpCode } from '@todo-node/shared/utils';
+import { DD_MM_YYYY, HttpCode } from '@todo-node/shared/utils';
 import { NextFunction, Request, Response } from 'express';
 import { validationResult, check } from 'express-validator';
 import * as dayjs from 'dayjs';
 import * as customParseFormat from 'dayjs/plugin/customParseFormat';
-
-//local imports
-import { DD_MM_YYYY } from '../../utils/config';
 
 
 /**
