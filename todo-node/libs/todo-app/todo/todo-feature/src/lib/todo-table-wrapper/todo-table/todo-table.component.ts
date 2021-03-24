@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 
 //libs imports
-import { Task } from '@todo-node/shared/utils';
+import { dd_MM_yyyy, Task } from '@todo-node/shared/utils';
 import { LazyLoadEvent } from 'primeng/api';
 import { fromEvent } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
@@ -41,6 +41,8 @@ export class TodoTableComponent implements OnInit, AfterViewInit {
 
     public loading: boolean;
     public totalRecords: number;
+
+    readonly dateFormat = dd_MM_yyyy;
 
     ngOnInit(): void {}
 

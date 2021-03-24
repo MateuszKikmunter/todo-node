@@ -1,6 +1,8 @@
+//Angular imports
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 
+//libs imports
 import { Mode, Task } from '@todo-node/shared/utils';
 
 
@@ -37,7 +39,6 @@ export class TodoFormComponent implements OnInit, OnChanges {
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-
     if (changes.formMode) {
       this.onModeChange(changes.formMode.currentValue);
     }
@@ -47,14 +48,20 @@ export class TodoFormComponent implements OnInit, OnChanges {
     this.buildForm();    
   }
 
+  /** Tells the parent to close form dialog */
   public hideDialog(): void {
     this.dialogClosed.emit();
   }
 
+  /** 
+   * * Tells the parent to save form values to the store.
+   * * Clears form and closes the form dialog.
+  */
   public save(): void {
     if(this.todoForm.valid) {
       this.saveTask.emit({ ...this.todoForm.value });
       this.todoForm.reset();
+      this.dialogClosed.emit();
     }
   }  
 

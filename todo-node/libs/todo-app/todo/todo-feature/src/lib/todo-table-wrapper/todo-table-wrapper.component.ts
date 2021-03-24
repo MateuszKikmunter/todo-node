@@ -34,25 +34,27 @@ export class TodoTableWrapperComponent implements OnInit {
         this.showDeleteDialog(task);
     }
 
-    //TODO: to implement
+    /** Opens task form dialog in EDIT mode. */
     public onEditTask(task: Task): void {
         this.showForm.next(true);
         this.formMode.next(Mode.EDIT);
     }
     
+    /** Opens task form dialog in ADD mode. */
     public onCreateTask(): void {        
         this.showForm.next(true);
         this.formMode.next(Mode.ADD);
     }
 
-    //TODO: to implement
+    /** Opens task form dialog in READONLY mode. */
     public onViewTask(task: Task): void {
         this.showForm.next(true);
         this.formMode.next(Mode.READONLY);
     }
 
+    /** Saves task to the store on task form dialog submit. */
     public onSaveTask(task: Task): void {
-        console.log(task);
+        this.todoFacade.createTask(task);
     }
 
     /** Sends filter value to the store to get tasks containing search phrase. */
@@ -70,6 +72,7 @@ export class TodoTableWrapperComponent implements OnInit {
         this.todoFacade.selectTask(event);
     }
 
+    /** Tells child component to close task form dialog. */
     public onDialogClose(): void {
         this.showForm.next(false);
     }
