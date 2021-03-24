@@ -20,10 +20,10 @@ export class Task {
     completed: boolean;
 
     @Column({ type: 'date' })
-    deadline: string;
+    deadline: Date;
 
     @Column({ type: 'datetime', default: new Date().toUTCString() })
-    lastModified: string;
+    lastModified: Date;
 
     @ManyToOne(() => User, user => user.todos, { onDelete: 'CASCADE' })
     user: User;
