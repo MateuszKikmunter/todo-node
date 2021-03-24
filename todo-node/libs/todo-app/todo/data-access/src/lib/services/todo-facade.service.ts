@@ -2,7 +2,10 @@
 import { Injectable } from '@angular/core';
 
 //libs imports
+import { DD_MM_YYYY } from '@todo-node/shared/utils';
 import { Task } from '@todo-node/shared/utils';
+import * as dayjs from 'dayjs';
+import * as customParseFormat from 'dayjs/plugin/customParseFormat';
 
 //local imports
 import { TodoStore } from './todo.store';
@@ -28,7 +31,7 @@ export class TodoFacadeService {
 
     /** Changes task completion state. */
     public changeTaskState(taskId: string): void {
-      this.store.changeTaskState(taskId);
+        this.store.changeTaskState(taskId);
     }
 
     //TODO: to implent
@@ -36,8 +39,11 @@ export class TodoFacadeService {
 
     }
 
-    //TODO: to implement
+    /** Sends request to the server and saves task in the store on success.
+     * @param task task to save
+     */
     public createTask(task: Task): void {
-
+        dayjs.extend(customParseFormat);           
+        this.store.createTask({  ...task, deadline: dayjs(task.deadline).format(DD_MM_YYYY) });
     }
 }
