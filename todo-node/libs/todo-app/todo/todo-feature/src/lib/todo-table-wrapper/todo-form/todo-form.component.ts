@@ -4,6 +4,7 @@ import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChange
 
 //libs imports
 import { Mode, Task } from '@todo-node/shared/utils';
+import { SaveTaskEvent } from '@todo-node/todo-app/todo/domain';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class TodoFormComponent implements OnInit, OnChanges {
   @Input() formVisible: boolean;
   @Input() formMode: Mode;
   @Input() task: Task;
-  @Output() saveTask: EventEmitter<Task> = new EventEmitter<Task>();
+  @Output() saveTask: EventEmitter<SaveTaskEvent> = new EventEmitter<SaveTaskEvent>();
   @Output() dialogClosed: EventEmitter<void> = new EventEmitter<void>();  
 
   public todoForm: FormGroup;
@@ -57,9 +58,9 @@ export class TodoFormComponent implements OnInit, OnChanges {
    * * Tells the parent to save form values to the store.
    * * Clears form and closes the form dialog.
   */
-  public save(): void {
+  public submit(): void {
     if(this.todoForm.valid) {
-      this.saveTask.emit({ ...this.todoForm.value });
+      this.saveTask.emit({ task: { ...this.todoForm.value }, action: this.formMode });
       this.todoForm.reset({ completed: false });
       this.dialogClosed.emit();
     }

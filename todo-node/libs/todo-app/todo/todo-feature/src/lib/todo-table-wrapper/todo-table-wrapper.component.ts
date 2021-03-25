@@ -5,6 +5,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { SaveTaskEvent } from '@todo-node/todo-app/todo/domain';
 import { Task, Mode, EventBusService, Action, SUCCESS_EMOJI } from '@todo-node/shared/utils';
 import { TodoFacadeService } from '@todo-node/todo-app/todo/data-access';
 
@@ -65,9 +66,14 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
         this.formMode.next(Mode.READONLY);
     }
 
-    /** Saves task to the store on task form dialog submit. */
-    public onSaveTask(task: Task): void {
-        this.todoFacade.createTask(task);
+    /** 
+     * Sends create/edit request to the store based on the event action.
+     * @param event - { task: Task, action: Mode }
+     */
+    public onSaveTask(event: SaveTaskEvent): void {
+        event.action === Mode.ADD
+            ? this.todoFacade.createTask(event.task)
+            : this.todoFacade.editTask(event.task);
     }
 
     /** Sends filter value to the store to get tasks containing search phrase. */

@@ -40,6 +40,15 @@ export class TodoFacadeService {
     }
 
     /** Sends request to the server and saves task in the store on success.
+     * @param task task to edit
+     */    
+    public editTask(task: Task): void {
+        console.log('in todo-facade-service - editTask method');
+        dayjs.extend(customParseFormat);
+        this.store.editTask({ ...task, deadline: dayjs(task.deadline).format(DD_MM_YYYY) });
+    }
+
+    /** Sends request to the server and saves task in the store on success.
      * @param task task to save
      */
     public createTask(task: Task): void {

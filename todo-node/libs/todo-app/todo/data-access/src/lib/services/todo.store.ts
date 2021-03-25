@@ -41,6 +41,11 @@ export class TodoStore {
         error => console.log(error))
     }
 
+    //TODO: to implement
+    public editTask(task: Task): void {
+      console.log('task to update', task);
+    }
+
     /** Changes completion state (true/false) for a particular task. */
     public changeTaskState(taskId: string): void {
       //TODO: temp solution, will call backend later      
