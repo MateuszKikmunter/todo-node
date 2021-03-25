@@ -49,23 +49,23 @@ export class TodoFormComponent implements OnInit, OnChanges {
     this.buildForm();    
   }
 
-  /** Tells the parent to close form dialog */
+  /** 
+   * * Tells the parent to close form dialog.
+   * * Clears the form on dialog close if formMode === ADD.
+   */
   public hideDialog(): void {
+    this.clearFormIfAddMode();
     this.dialogClosed.emit();
   }
 
   /** 
    * * Tells the parent to save form values to the store.
-   * * Clears form and closes the form dialog.
+   * * Clears the form (if in ADD mode) and closes dialog.
   */
   public submit(): void {
     if(this.todoForm.valid) {
       this.saveTask.emit({ task: { ...this.todoForm.value }, action: this.formMode });
-      //TODO: fix completed value drop when adding after edit
-      console.log('form value', this.todoForm.value)
-      if(this.formMode === Mode.ADD) {
-        this.todoForm.reset({ completed: false });
-      }      
+      this.clearFormIfAddMode();
       this.dialogClosed.emit();
     }
   }  
@@ -91,13 +91,20 @@ export class TodoFormComponent implements OnInit, OnChanges {
       this.todoForm?.patchValue(this?.task ?? {});
     }
 
-    if(mode === Mode.ADD) {        
-      this.todoForm?.reset();        
-    }
+    this.clearFormIfAddMode();
     
     mode === Mode.READONLY
       ? this.todoForm?.disable()
       : this.todoForm?.enable();
+  }
+
+  /** Clears the form with default values if formMode === ADD. */
+  private clearFormIfAddMode(): void {
+    if(this.formMode === Mode.ADD) {        
+      //primeNG dialog is not destroyed on close
+      //so we have to reset form when in ADD mode
+      this.todoForm?.reset({ completed: false });      
+    }
   }
 
 }
