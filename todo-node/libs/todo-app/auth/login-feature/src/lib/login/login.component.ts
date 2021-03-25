@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { AuthFacadeService } from '@todo-node/todo-app/auth/data-access';
-import { Action, AuthPayload, EventBusService } from '@todo-node/shared/utils';
+import { Action, AuthPayload, EventBusService, SUCCESS_EMOJI } from '@todo-node/shared/utils';
 
 //local imports
 import { FormAction } from '../enums/action';
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.eventBus.on(Action.LOGIN_SUCCESSFUL, () => {
         this.messageService.add({
           severity: 'success',
-          summary: 'Logged in successfully!',
+          summary: `Logged in successfully!${ SUCCESS_EMOJI }`,
           detail: 'Redirecting to your TODOs...'
         });
 
