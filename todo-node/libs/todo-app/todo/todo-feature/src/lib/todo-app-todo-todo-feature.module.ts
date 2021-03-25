@@ -22,7 +22,7 @@ import { TodoAppRoutingModule } from './todo-app-todo-feature-routing.module';
 import { MainComponent } from './main/main.component';
 import { TodoTableComponent } from './todo-table-wrapper/todo-table/todo-table.component';
 import { TodoTableWrapperComponent } from './todo-table-wrapper/todo-table-wrapper.component';
-import { TodoFormComponent } from './todo-form/todo-form.component';
+import { TodoFormComponent } from './todo-table-wrapper/todo-form/todo-form.component';
 
 
 @NgModule({
