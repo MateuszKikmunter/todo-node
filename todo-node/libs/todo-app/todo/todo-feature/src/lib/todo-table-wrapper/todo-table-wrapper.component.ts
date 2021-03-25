@@ -1,11 +1,11 @@
-import { BehaviorSubject } from 'rxjs';
 //Angular imports
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 //libs imports
 import { Observable } from 'rxjs';
-import { ConfirmationService } from 'primeng/api';
-import { Task, Mode } from '@todo-node/shared/utils';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Task, Mode, EventBusService, Action, SUCCESS_EMOJI } from '@todo-node/shared/utils';
 import { TodoFacadeService } from '@todo-node/todo-app/todo/data-access';
 
 
@@ -13,21 +13,34 @@ import { TodoFacadeService } from '@todo-node/todo-app/todo/data-access';
     selector: 'todo-table-wrapper',
     templateUrl: './todo-table-wrapper.component.html',
     styleUrls: ['./todo-table-wrapper.component.scss'],
-    providers: [ ConfirmationService ]
+    providers: [ 
+        ConfirmationService,
+        MessageService
+    ]
 })
-export class TodoTableWrapperComponent implements OnInit {
+export class TodoTableWrapperComponent implements OnInit, OnDestroy {
     
     private showForm: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     readonly showForm$: Observable<boolean> = this.showForm.asObservable();
 
     private formMode: BehaviorSubject<Mode> = new BehaviorSubject<Mode>(Mode.ADD);
-    readonly formMode$: Observable<Mode> = this.formMode.asObservable();    
+    readonly formMode$: Observable<Mode> = this.formMode.asObservable();
+
+    private subSink: Subscription = new Subscription();
 
     constructor(
         readonly todoFacade: TodoFacadeService,
-        private confirmationService: ConfirmationService) {}
+        private messageService: MessageService,
+        private confirmationService: ConfirmationService,
+        private eventBus: EventBusService) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.onTaskCreateSuccess();
+    }
+
+    ngOnDestroy(): void {
+        this.subSink.unsubscribe();
+    }
 
     /** Sends task to the store for deletion. */
     public onDeleteTask(task: Task): void {
@@ -90,5 +103,21 @@ export class TodoTableWrapperComponent implements OnInit {
                 //do nothing, user cancelled
             }
         });
+    }
+
+    /** 
+     * * Shows success toast on successful task creation.
+     * * Tells table component to refresh its data.
+    */
+    private onTaskCreateSuccess(): void {        
+        this.subSink.add(            
+            this.eventBus.on(Action.TASK_CREATED, () => {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: `Task created!${ SUCCESS_EMOJI }`,
+                });
+                //TODO: tell table component to refresh its data
+            })
+        );
     }
 }

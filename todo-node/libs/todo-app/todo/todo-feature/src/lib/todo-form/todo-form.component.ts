@@ -60,7 +60,7 @@ export class TodoFormComponent implements OnInit, OnChanges {
   public save(): void {
     if(this.todoForm.valid) {
       this.saveTask.emit({ ...this.todoForm.value });
-      this.todoForm.reset();
+      this.todoForm.reset({ completed: false });
       this.dialogClosed.emit();
     }
   }  

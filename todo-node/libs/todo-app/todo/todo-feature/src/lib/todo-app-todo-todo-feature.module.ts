@@ -13,6 +13,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TodoAppSharedUiLayoutModule } from '@todo-node/todo-app/shared/ui-layout';
 
@@ -37,6 +38,7 @@ import { TodoFormComponent } from './todo-form/todo-form.component';
         InputTextModule,
         ReactiveFormsModule,
         TableModule,
+        ToastModule,
         ToolbarModule,
         TodoAppSharedUiLayoutModule,
         TodoAppRoutingModule

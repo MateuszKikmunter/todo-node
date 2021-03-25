@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { BehaviorSubject, of } from 'rxjs';
 import { switchMap, withLatestFrom } from 'rxjs/operators';
 import { AuthFacadeService } from '@todo-node/todo-app/auth/data-access';
-import { Task, EventBusService, CurrentUser } from '@todo-node/shared/utils';
+import { Task, EventBusService, CurrentUser, Action } from '@todo-node/shared/utils';
 
 
 @Injectable({
@@ -35,9 +35,8 @@ export class TodoStore {
     }
 
     public createTask(task: Task): void {
-      this.http.post<void>(`${this.taskApiUrl}/create`, task).subscribe(        
-        //TODO: emit event from event buss to show toast
-        () => {},
+      this.http.post<void>(`${this.taskApiUrl}/create`, task).subscribe(
+        () => this.eventBus.emit({ action: Action.TASK_CREATED }),
         //TODO: handle error (show toast), if validation errors, emit with event bus
         error => console.log(error))
     }
