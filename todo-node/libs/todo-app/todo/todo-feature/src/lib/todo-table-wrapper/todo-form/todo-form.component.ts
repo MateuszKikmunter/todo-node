@@ -61,7 +61,6 @@ export class TodoFormComponent implements OnInit, OnChanges {
   public submit(): void {
     if(this.todoForm.valid) {
       this.saveTask.emit({ task: { ...this.todoForm.value }, action: this.formMode });
-      //TODO: fix invalid date error on edit
       //TODO: fix completed value drop when adding after edit
       console.log('form value', this.todoForm.value)
       if(this.formMode === Mode.ADD) {

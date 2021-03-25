@@ -43,9 +43,7 @@ export class TodoFacadeService {
      * @param task task to edit
      */    
     public editTask(task: Task): void {
-        console.log('in todo-facade-service - editTask method');
-        dayjs.extend(customParseFormat);
-        this.store.editTask({ ...task, deadline: dayjs(task.deadline).format(DD_MM_YYYY) });
+        this.store.editTask({ ...task, deadline: this.formatDeadline(task.deadline) });
     }
 
     /** Sends request to the server and saves task in the store on success.
@@ -53,6 +51,16 @@ export class TodoFacadeService {
      */
     public createTask(task: Task): void {
         dayjs.extend(customParseFormat);           
-        this.store.createTask({  ...task, deadline: dayjs(task.deadline).format(DD_MM_YYYY) });
+        this.store.createTask({  ...task, deadline: this.formatDeadline(task.deadline) });
+    }
+
+    /** 
+     * * Sets task deadline to DD/MM/YYYY
+     * * Deadline comes either as string or object depending if user updated it in the form.
+     * @param deadline - passing deadline as any as any so dayjs can access it as param in the constructor but it's string | object
+     */
+    private formatDeadline(deadline: any): string {
+        dayjs.extend(customParseFormat);
+        return typeof deadline === 'object' ? dayjs(deadline).format(DD_MM_YYYY) : dayjs(deadline, DD_MM_YYYY).format(DD_MM_YYYY)
     }
 }
