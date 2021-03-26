@@ -43,7 +43,7 @@ export class TodoFacadeService {
      * @param task task to edit
      */    
     public editTask(task: Task): void {
-        this.store.editTask({ ...task, deadline: this.formatDeadline(task.deadline) });
+        this.store.editTask({ ...task, deadline: this.formatDeadline(task.deadline), lastModified: new Date().toDateString() });
     }
 
     /** Sends request to the server and saves task in the store on success.
@@ -51,7 +51,7 @@ export class TodoFacadeService {
      */
     public createTask(task: Task): void {
         dayjs.extend(customParseFormat);           
-        this.store.createTask({  ...task, deadline: this.formatDeadline(task.deadline) });
+        this.store.createTask({  ...task, deadline: this.formatDeadline(task.deadline), lastModified: new Date().toDateString() });
     }
 
     /** 
