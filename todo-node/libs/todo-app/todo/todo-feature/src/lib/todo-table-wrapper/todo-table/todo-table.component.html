@@ -45,7 +45,7 @@
             <ng-template pTemplate="body" let-task>
                 <tr [pSelectableRow]="task">
                     <td>{{ task.name }}</td>
-                    <td [taskPastDeadline]="task.deadline">{{ task.deadline | missedDeadline }}</td>
+                    <td [taskPastDeadline]="task.deadline">{{ task.deadline }}</td>
                     <td>{{ task.lastModified | date: dateFormat }}</td>
                     <td (click)="changeTaskState(task.id)">
                         <i class="ml-35" [ngClass]="(task.completed) ? 'pi pi-thumbs-up success' : 'pi pi-thumbs-down warning'"></i>
