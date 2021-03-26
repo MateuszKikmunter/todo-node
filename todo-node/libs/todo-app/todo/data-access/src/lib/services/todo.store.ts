@@ -36,7 +36,10 @@ export class TodoStore {
 
     public createTask(task: Task): void {
       this.http.post<void>(`${this.taskApiUrl}/create`, task).subscribe(
-        () => this.eventBus.emit({ action: Action.TASK_CREATED }),
+        () => {
+          this.eventBus.emit({ action: Action.TASK_CREATED });
+          this._tasks.next([ ...this._tasks.getValue(), task ]);
+        },
         //TODO: handle error (show toast), if validation errors, emit with event bus
         error => console.log(error))
     }
