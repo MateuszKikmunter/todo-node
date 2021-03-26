@@ -1,9 +1,13 @@
-import { Directive } from '@angular/core';
+import { Directive, ElementRef, OnInit } from '@angular/core';
 
 @Directive({
-    selector: '[todoPastDeadline]'    
+  selector: '[taskPastDeadline]'
 })
-export class PastDeadlineDirective {
+export class PastDeadlineDirective implements OnInit {
 
-    constructor() {}
+  constructor(private elementRef: ElementRef) { }
+
+  ngOnInit(): void {
+  }
+
 }

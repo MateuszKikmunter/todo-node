@@ -45,9 +45,7 @@
             <ng-template pTemplate="body" let-task>
                 <tr [pSelectableRow]="task">
                     <td>{{ task.name }}</td>
-                    <!-- TODO: add pipe to show deadline in red orange if task not completed and it's past deadline -->
-                    <td>{{ task.deadline }}</td>
-                    <!-- TODO: add pipe to show deadline in red orange if task not completed and it's past deadline -->
+                    <td [taskPastDeadline]="'task.deadline'">{{ task.deadline }}</td>
                     <td>{{ task.lastModified | date: dateFormat }}</td>
                     <td (click)="changeTaskState(task.id)">
                         <i class="ml-35" [ngClass]="(task.completed) ? 'pi pi-thumbs-up success' : 'pi pi-thumbs-down warning'"></i>
