@@ -61,6 +61,8 @@ export class TodoFacadeService {
      */
     private formatDeadline(deadline: any): string {
         dayjs.extend(customParseFormat);
-        return typeof deadline === 'object' ? dayjs(deadline).format(DD_MM_YYYY) : dayjs(deadline, DD_MM_YYYY).format(DD_MM_YYYY)
+        return typeof deadline === 'object' 
+            ? dayjs(deadline).format(DD_MM_YYYY) 
+            : dayjs(deadline, DD_MM_YYYY).format(DD_MM_YYYY);
     }
 }
