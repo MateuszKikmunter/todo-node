@@ -23,6 +23,7 @@ import { MainComponent } from './main/main.component';
 import { TodoTableComponent } from './todo-table-wrapper/todo-table/todo-table.component';
 import { TodoTableWrapperComponent } from './todo-table-wrapper/todo-table-wrapper.component';
 import { TodoFormComponent } from './todo-table-wrapper/todo-form/todo-form.component';
+import { PastDeadlineDirective } from './directives/past-deadline.directive';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { TodoFormComponent } from './todo-table-wrapper/todo-form/todo-form.comp
         MainComponent,
         TodoTableComponent,
         TodoTableWrapperComponent,
-        TodoFormComponent
+        TodoFormComponent,
+        PastDeadlineDirective
     ],
 })
 export class TodoAppTodoTodoFeatureModule {}
