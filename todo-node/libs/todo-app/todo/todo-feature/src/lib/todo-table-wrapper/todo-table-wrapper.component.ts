@@ -49,7 +49,7 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
     }
 
     /** Opens task form dialog in EDIT mode. */
-    public onEditTask(task: Task): void {
+    public onEditTask(): void {
         this.showForm.next(true);
         this.formMode.next(Mode.EDIT);
     }
@@ -117,10 +117,10 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
     */
     private onTaskCreateSuccess(): void {        
         this.subSink.add(            
-            this.eventBus.on(Action.TASK_CREATED, () => {
+            this.eventBus.on(Action.TASK_SAVED, () => {
                 this.messageService.add({
                     severity: 'success',
-                    summary: `Task created!${ SUCCESS_EMOJI }`,
+                    summary: `Success!${ SUCCESS_EMOJI }`,
                 });
                 //TODO: tell table component to refresh its data
             })

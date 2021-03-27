@@ -33,7 +33,7 @@ export class TodoTableComponent implements OnInit, AfterViewInit {
     @Output() filterTasks: EventEmitter<string> = new EventEmitter<string>();
     @Output() taskStateChange: EventEmitter<string> = new EventEmitter<string>();
     @Output() deleteTask: EventEmitter<string> = new EventEmitter<string>();
-    @Output() editTask: EventEmitter<string> = new EventEmitter<string>();
+    @Output() editTask: EventEmitter<void> = new EventEmitter<void>();
     @Output() createTask: EventEmitter<void> = new EventEmitter<void>();
     @Output() viewTask: EventEmitter<string> = new EventEmitter<string>();
     
@@ -66,17 +66,17 @@ export class TodoTableComponent implements OnInit, AfterViewInit {
         this.selectTask.emit(null);
     }
 
-    //TODO: to implement
+    /** Emits event to the parent to show dialog in ADD mode. */
     public add(): void {
       this.createTask.emit();
     }
 
-    //TODO: to implement
+    /** Emits event to the parent to show dialog in EDIT mode. */
     public edit(): void {
       this.editTask.emit();
     }
 
-        //TODO: to implement
+    /** Emits event to the parent to show dialog in READONLY mode. */
     public view(): void {
       this.viewTask.emit();
     }

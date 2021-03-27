@@ -43,7 +43,7 @@ export class TodoFacadeService {
      * @param task task to edit
      */    
     public editTask(task: Task): void {
-        this.store.editTask({ ...task, deadline: this.formatDeadline(task.deadline), lastModified: new Date().toDateString() });
+        this.store.editTask({ ...task, deadline: this.formatDeadline(task.deadline) });
     }
 
     /** Sends request to the server and saves task in the store on success.

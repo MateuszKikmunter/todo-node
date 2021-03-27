@@ -64,7 +64,7 @@ export class TodoFormComponent implements OnInit, OnChanges {
   */
   public submit(): void {
     if(this.todoForm.valid) {
-      this.saveTask.emit({ task: { ...this.todoForm.value }, action: this.formMode });
+      this.saveTask.emit({ task: { ...this.todoForm.value, id: this.task?.id }, action: this.formMode });
       this.clearFormIfAddMode();
       this.dialogClosed.emit();
     }

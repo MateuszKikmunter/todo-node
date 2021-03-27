@@ -34,19 +34,37 @@ export class TodoStore {
       this._selectedTask.next(task ? { ...task } : null);   
     }
 
+    /** 
+     * Sends POST request to the server and emits new values on success.
+     * @param task - task to create
+    */
     public createTask(task: Task): void {
-      this.http.post<void>(`${this.taskApiUrl}/create`, task).subscribe(
-        () => {
-          this.eventBus.emit({ action: Action.TASK_CREATED });
-          this._tasks.next([ ...this._tasks.getValue(), task ]);
+      this.http.post<{ id: string }>(`${this.taskApiUrl}/create`, task).subscribe(
+        (result: { id: string }) => {          
+          this.eventBus.emit({ action: Action.TASK_SAVED });
+          this._tasks.next([ ...this._tasks.getValue(), { ...task, id: result.id }]);          
         },
         //TODO: handle error (show toast), if validation errors, emit with event bus
         error => console.log(error))
     }
 
-    //TODO: to implement
+    /** 
+     * Sends PUT request to the server and emits new values on success.
+     * @param task - task to update
+    */
     public editTask(task: Task): void {
-      console.log('task to update', task);
+      this.http.put<void>(`${this.taskApiUrl}/update/${task?.id}`, task).subscribe(
+        () => {          
+          this._tasks.getValue().forEach((item, index) => {
+            if(item.id === task.id) {              
+              this._tasks.value[index] = { ...task, lastModified: new Date().toDateString() };
+              this._tasks.next([ ...this._tasks.value ]);
+              this.eventBus.emit({ action: Action.TASK_SAVED });
+            }
+          });
+        },
+        //TODO: handle error (show toast), if validation errors, emit with event bus
+        error => console.log(error))
     }
 
     /** Changes completion state (true/false) for a particular task. */
