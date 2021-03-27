@@ -56,30 +56,6 @@ export class TaskController {
     }
 
     /**
-     * Returns task by id.
-     * @param req request
-     * @param res response
-     */
-    public getById = async (req: Request, res: Response): Promise<Response> => {
-
-        try {
-            const task = await getConnection('sqlite').getRepository(Task).findOne({where: { id: req.params.id }, relations: [ 'user' ] });
-            if(!task) {
-                return res.status(HttpCode.NOT_FOUND).json({ error: messages.taskNotFound });
-            }
-
-            this.isUserAuthorizedToAccessTask(req, res, task);
-
-            //return only task properties and skip user
-            const { ['user']: remove, ...taskProps } = task;            
-            return res.status(HttpCode.OK).json(taskProps);
-        } catch (err) {
-            console.log(err);
-            return res.status(HttpCode.BAD_REQUEST).json({ error: err.message });
-        }    
-    }
-
-    /**
      * Deletes task with specific id.
      * @param req request
      * @param res response
