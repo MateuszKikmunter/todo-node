@@ -47,8 +47,11 @@
                     <td>{{ task.name }}</td>
                     <td [taskPastDeadline]="task.deadline">{{ task.deadline }}</td>
                     <td>{{ task.lastModified | date: dateFormat }}</td>
-                    <td (click)="changeTaskState(task.id)">
-                        <i class="ml-35" [ngClass]="(task.completed) ? 'pi pi-thumbs-up success' : 'pi pi-thumbs-down warning'"></i>
+                    <td>
+                        <i class="ml-35" 
+                            (click)="changeTaskState(task.id)" 
+                            [ngClass]="(task.completed) ? 'pi pi-thumbs-up success' : 'pi pi-thumbs-down warning'">
+                        </i>
                     </td>
                 </tr>
             </ng-template>
