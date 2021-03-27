@@ -39,13 +39,13 @@ export class TodoStore {
      * @param task - task to create
     */
     public createTask(task: Task): void {
-      this.http.post<{ id: string }>(`${this.taskApiUrl}/create`, task).subscribe(
+      this.http.post<{ id: string }>(`${this.taskApiUrl}`, task).subscribe(
         (result: { id: string }) => {          
           this.eventBus.emit({ action: Action.TASK_SAVED });
           this._tasks.next([ ...this._tasks.getValue(), { ...task, id: result.id }]);          
         },
         //TODO: handle error (show toast), if validation errors, emit with event bus
-        error => console.log(error))
+        error => console.log(error));
     }
 
     /** 
@@ -53,7 +53,7 @@ export class TodoStore {
      * @param task - task to update
     */
     public editTask(task: Task): void {
-      this.http.put<void>(`${this.taskApiUrl}/update/${task?.id}`, task).subscribe(
+      this.http.put<void>(`${this.taskApiUrl}/${task?.id}`, task).subscribe(
         () => {          
           this._tasks.getValue().forEach((item, index) => {
             if(item.id === task.id) {              
@@ -64,7 +64,21 @@ export class TodoStore {
           });
         },
         //TODO: handle error (show toast), if validation errors, emit with event bus
-        error => console.log(error))
+        error => console.log(error));
+    }
+
+    /** 
+     * Sends DELETE request to the server and emits new values on success.
+     * @param taskId - id of task to delete
+    */
+    public deleteTask(taskId: string): void {
+      this.http.delete<void>(`${this.taskApiUrl}/${taskId}`).subscribe(
+        () => {
+          this._tasks.next(this._tasks.value.filter(task => task.id !== taskId));
+          this.eventBus.emit({ action: Action.TASK_SAVED });
+        },        
+        //TODO: handle error (show toast)
+        error => console.log(error));
     }
 
     /** Changes completion state (true/false) for a particular task. */

@@ -29,17 +29,16 @@ export class TaskRoute implements Route {
     /** Initialize routes handled by this route. */
     private initRoutes(): void {
 
-        this._router.post(`${ this._url }/create`, this._jwtMiddleware.validateJwtToken, taskValidationRules, [ 
+        this._router.post(`${ this._url }`, this._jwtMiddleware.validateJwtToken, taskValidationRules, [ 
             validateTaskAddOrUpdateRequest, 
             this._taskController.createTask 
         ]);
 
-        this._router.put(`${ this._url }/update/:id`, this._jwtMiddleware.validateJwtToken, taskValidationRules, [ 
+        this._router.put(`${ this._url }/:id`, this._jwtMiddleware.validateJwtToken, taskValidationRules, [ 
             validateTaskAddOrUpdateRequest, 
             this._taskController.updateTask 
         ]);
 
-        this._router.get(`${ this._url }/:id`, this._jwtMiddleware.validateJwtToken, this._taskController.getById );
         this._router.get(`${ this._url }/user/:id`, this._jwtMiddleware.validateJwtToken, this._taskController.getUserTasks );
         this._router.delete(`${ this._url }/:id`, this._jwtMiddleware.validateJwtToken, this._taskController.deleteTask );
     }

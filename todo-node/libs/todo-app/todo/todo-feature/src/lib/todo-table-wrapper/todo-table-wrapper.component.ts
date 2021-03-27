@@ -43,9 +43,9 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
         this.subSink.unsubscribe();
     }
 
-    /** Sends task to the store for deletion. */
-    public onDeleteTask(task: Task): void {
-        this.showDeleteDialog(task);
+    /** Sends taskId to the store to identify task that should be deleted. */
+    public onDeleteTask(taskId: string): void {
+        this.showDeleteDialog(taskId);
     }
 
     /** Opens task form dialog in EDIT mode. */
@@ -97,13 +97,13 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
     }
 
     /** Shows delete dialog and handles selected action. */
-    private showDeleteDialog(task: Task) {
+    private showDeleteDialog(taskId: string) {
         this.confirmationService.confirm({
             message: 'Do you want to delete this record?',
             header: 'Delete Confirmation',
             icon: 'pi pi-info-circle',
             accept: () => {
-                this.todoFacade.deleteTask(task.id);
+                this.todoFacade.deleteTask(taskId);
             },
             reject: () => {
                 //do nothing, user cancelled

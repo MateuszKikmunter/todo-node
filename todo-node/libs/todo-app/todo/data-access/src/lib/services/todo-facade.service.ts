@@ -34,14 +34,16 @@ export class TodoFacadeService {
         this.store.changeTaskState(taskId);
     }
 
-    //TODO: to implent
+    /** Sends request to the server to remove selected task.
+     * @param taskId id of task to delete
+     */
     public deleteTask(taskId: string): void {
-
+        this.store.deleteTask(taskId);
     }
 
     /** Sends request to the server and saves task in the store on success.
      * @param task task to edit
-     */    
+     */
     public editTask(task: Task): void {
         this.store.editTask({ ...task, deadline: this.formatDeadline(task.deadline) });
     }

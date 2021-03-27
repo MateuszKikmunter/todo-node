@@ -71,7 +71,7 @@ export class TaskController {
             this.isUserAuthorizedToAccessTask(req, res, task);
 
             await getConnection('sqlite').getRepository(Task).delete({ id: task.id });
-            return res.sendStatus(HttpCode.OK);
+            return res.status(HttpCode.OK).send();
         } catch (err) {
             console.log(err);
             return res.status(HttpCode.BAD_REQUEST).json({ error: err.message });
