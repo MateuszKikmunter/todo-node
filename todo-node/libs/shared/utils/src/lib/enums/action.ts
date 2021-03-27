@@ -1,5 +1,5 @@
 export enum Action {
     REGISTER_SUCCESSFUL,
     LOGIN_SUCCESSFUL,
-    TASK_CREATED
+    TASK_SAVED
 }
