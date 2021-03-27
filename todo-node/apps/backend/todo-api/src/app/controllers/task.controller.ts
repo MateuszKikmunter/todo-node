@@ -23,8 +23,8 @@ export class TaskController {
                 user: await getConnection('sqlite').getRepository(User).findOne({ id: req?.user.id })
             } as Task;
 
-            await getConnection('sqlite').getRepository(Task).insert(task);
-            return res.status(HttpCode.OK).send();
+            const result = await getConnection('sqlite').getRepository(Task).save(task);            
+            return res.status(HttpCode.OK).send({ id: result.id });
             
         } catch (err) {
             console.log(err);
