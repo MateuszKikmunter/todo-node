@@ -56,8 +56,8 @@ export class TodoStore {
       this.http.put<void>(`${this.taskApiUrl}/${task?.id}`, task).subscribe(
         () => {          
           this._tasks.getValue().forEach((item, index) => {
-            if(item.id === task.id) {              
-              this._tasks.value[index] = { ...task, lastModified: new Date().toDateString() };
+            if(item.id === task.id) {
+              this._tasks.value[index] = { ...task };
               this._tasks.next([ ...this._tasks.value ]);
               this.eventBus.emit({ action: Action.TASK_SAVED });
             }
@@ -81,16 +81,23 @@ export class TodoStore {
         error => console.log(error));
     }
 
-    /** Changes completion state (true/false) for a particular task. */
+    /** 
+     * * Sends PUT request to the server and emits new values on success.
+     * * Changes completion state (true/false) for a particular task.
+     * @param taskId - id of task to change
+    */
     public changeTaskState(taskId: string): void {
-      //TODO: temp solution, will call backend later      
-      this._tasks.value.forEach((task: Task) => {
-        if(task.id === taskId) {
-          task.completed = !task.completed;
-        }
-      });
-      
-      this._tasks.next([...this._tasks.value]);
+      this.http.put<void>(`${this.taskApiUrl}/change-state/${taskId}`, null).subscribe(() => {
+        this._tasks.value.forEach((task: Task) => {
+          if(task.id === taskId) {
+            task.completed = !task.completed;
+            task.lastModified = new Date().toDateString();
+          }
+          this._tasks.next([...this._tasks.value]);
+        });
+      },
+      //TODO: handle error (show toast)
+      error => console.log(error));
     }
 
     /** Gets currently logged in user tasks via HTTP and saves the result in the store. */

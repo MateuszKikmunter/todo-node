@@ -56,6 +56,28 @@ export class TaskController {
     }
 
     /**
+     * Updates task completion state.
+     * @param req request
+     * @param res response
+     */
+    public changeTaskState = async(req: Request, res: Response): Promise<Response> => {
+        try {
+            const task = await getConnection('sqlite').getRepository(Task).findOne({where: { id: req.params.id }, relations: [ 'user' ] });
+            if(!task) {
+                return res.status(HttpCode.NOT_FOUND).json({ error: messages.taskNotFound });
+            }
+
+            this.isUserAuthorizedToAccessTask(req, res, task);
+            
+            await getConnection('sqlite').getRepository(Task).save({ ...task, completed: !task.completed, lastModified: new Date() });
+            return res.status(HttpCode.OK).send();
+        } catch (err) {
+            console.log(err);
+            return res.status(HttpCode.BAD_REQUEST).json({ error: err.message });
+        }
+    }
+
+    /**
      * Deletes task with specific id.
      * @param req request
      * @param res response
