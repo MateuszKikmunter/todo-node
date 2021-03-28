@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 
 //libs imports
-import { DD_MM_YYYY } from '@todo-node/shared/utils';
+import { DD_MM_YYYY, Mode } from '@todo-node/shared/utils';
 import { Task } from '@todo-node/shared/utils';
 import * as dayjs from 'dayjs';
 import * as customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -45,15 +45,14 @@ export class TodoFacadeService {
      * @param task task to edit
      */
     public editTask(task: Task): void {
-        this.store.editTask({ ...task, deadline: this.formatDeadline(task.deadline) });
+        this.createOrUpdateTask(task, Mode.EDIT);
     }
 
     /** Sends request to the server and saves task in the store on success.
      * @param task task to save
      */
-    public createTask(task: Task): void {
-        dayjs.extend(customParseFormat);           
-        this.store.createTask({  ...task, deadline: this.formatDeadline(task.deadline), lastModified: new Date().toDateString() });
+    public createTask(task: Task): void {        
+        this.createOrUpdateTask(task, Mode.ADD);
     }
 
     /** 
@@ -66,5 +65,18 @@ export class TodoFacadeService {
         return typeof deadline === 'object' 
             ? dayjs(deadline).format(DD_MM_YYYY) 
             : dayjs(deadline, DD_MM_YYYY).format(DD_MM_YYYY);
+    }
+
+
+    /**
+     * Creates or updates task based on the provided mode (ADD/EDIT)
+     * @param task - task to add/edit
+     * @param mode - action mode (ADD/EDIT)
+     */
+    private createOrUpdateTask(task: Task, mode: Mode): void {
+        const payload = { ...task, deadline: this.formatDeadline(task.deadline), lastModified: new Date().toDateString() };
+        mode === Mode.ADD
+            ? this.store.createTask(payload)
+            : this.store.editTask(payload);
     }
 }
