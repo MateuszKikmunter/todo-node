@@ -83,6 +83,7 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
         this.createTask.emit();
     }
 
+    //TODO: fix data EDIT (old record is selected all the time)
     /** Emits event to the parent to show dialog in EDIT mode. */
     public edit(): void {
         this.editTask.emit();
