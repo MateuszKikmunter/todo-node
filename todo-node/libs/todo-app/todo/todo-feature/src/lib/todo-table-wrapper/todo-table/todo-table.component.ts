@@ -126,10 +126,10 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
      * @param data Task[] emitted in onChanges
      */
     private handleDataSourceChange(data: Task[]): void {
-      this?.table?.onLazyLoad.emit({
-          first: this?.table?._first,
-          rows: 10,
-      });
-      this.totalRecords = data.length;
+        this?.table?.onLazyLoad.emit({
+            first: this?.table?._first,
+            rows: 10,
+        });
+        this.totalRecords = data.length;
     }
 }
