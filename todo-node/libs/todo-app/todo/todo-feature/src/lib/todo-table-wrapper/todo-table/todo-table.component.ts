@@ -48,11 +48,11 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
 
     readonly dateFormat = dd_MM_yyyy;
 
-    ngOnChanges(changes: SimpleChanges): void {      
-      if (changes.tasks && changes.tasks.currentValue) {
-        this.handleDataSourceChange(changes.tasks.currentValue);
-      }
-  }
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.tasks && changes.tasks.currentValue) {
+            this.handleDataSourceChange(changes.tasks.currentValue);
+        }
+    }
 
     ngAfterViewInit(): void {
         this.onSearchChange();
