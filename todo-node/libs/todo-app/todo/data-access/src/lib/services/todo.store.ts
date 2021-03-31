@@ -68,7 +68,7 @@ export class TodoStore {
     }
 
     /** 
-     * Sends DELETE request to the server and emits new values on success.
+     * Sends DELETE request to the server and clears current selection on success.
      * @param taskId - id of task to delete
     */
     public deleteTask(taskId: string): void {
