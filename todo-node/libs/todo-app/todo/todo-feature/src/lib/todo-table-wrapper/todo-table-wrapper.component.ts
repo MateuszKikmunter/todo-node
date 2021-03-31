@@ -122,7 +122,6 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
                     severity: 'success',
                     summary: `Success!${ SUCCESS_EMOJI }`,
                 });
-                //TODO: tell table component to refresh its data
             })
         );
     }

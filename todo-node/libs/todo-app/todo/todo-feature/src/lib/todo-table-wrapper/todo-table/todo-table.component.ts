@@ -15,7 +15,7 @@ import {
 //libs imports
 import { dd_MM_yyyy, Task } from '@todo-node/shared/utils';
 import { LazyLoadEvent } from 'primeng/api';
-import { Table } from 'primeng/table';
+import { SelectableRow, Table } from 'primeng/table';
 import { fromEvent } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 
@@ -69,7 +69,7 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
     }
 
     /** Tells parent what task has been selected. */
-    public onRowSelect(event) {
+    public onRowSelect(event: SelectableRow) {
         this.selectTask.emit(event.data);
     }
 
@@ -82,8 +82,7 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
     public add(): void {
         this.createTask.emit();
     }
-
-    //TODO: fix data EDIT (old record is selected all the time)
+    
     /** Emits event to the parent to show dialog in EDIT mode. */
     public edit(): void {
         this.editTask.emit();

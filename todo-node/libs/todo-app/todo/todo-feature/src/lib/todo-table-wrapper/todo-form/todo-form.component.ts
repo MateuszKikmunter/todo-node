@@ -64,7 +64,7 @@ export class TodoFormComponent implements OnInit, OnChanges {
   */
   public submit(): void {
     if(this.todoForm.valid) {
-      this.saveTask.emit({ task: { ...this.todoForm.value, id: this.task?.id }, action: this.formMode });
+      this.saveTask.emit(this.buildPayload());
       this.clearFormIfAddMode();
       this.dialogClosed.emit();
     }
@@ -88,7 +88,7 @@ export class TodoFormComponent implements OnInit, OnChanges {
   */
   private onModeChange(mode: Mode): void {
     if(mode === Mode.READONLY || mode === Mode.EDIT) {       
-      this.todoForm?.patchValue(this?.task ?? {});
+      this.todoForm?.patchValue(this?.task);
     }
 
     this.clearFormIfAddMode();
@@ -104,6 +104,17 @@ export class TodoFormComponent implements OnInit, OnChanges {
       //primeNG dialog is not destroyed on close
       //so we have to reset form when in ADD mode
       this.todoForm?.reset({ completed: false });      
+    }
+  }
+
+  /** Builds payload to be emitted to the parent on form submission. */
+  private buildPayload(): SaveTaskEvent {
+    return {
+      task: {
+        ...this.todoForm.value,
+        id: this.formMode === Mode.ADD ? undefined : this.task?.id
+      },
+      action: this.formMode
     }
   }
 
