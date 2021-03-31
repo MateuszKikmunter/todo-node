@@ -55,11 +55,6 @@ export class TodoFacadeService {
         this.createOrUpdateTask(task, Mode.ADD);
     }
 
-    /** Clears currently selected task. */
-    public clearSelection(): void {
-        this.selectTask(null);
-    }
-
     /** 
      * * Sets task deadline to DD/MM/YYYY
      * * Deadline comes either as string or object depending if user updated it in the form.
