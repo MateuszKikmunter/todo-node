@@ -75,6 +75,7 @@ export class TodoStore {
       this.http.delete<void>(`${this.taskApiUrl}/${taskId}`).subscribe(
         () => {
           this._tasks.next(this._tasks.value.filter(task => task.id !== taskId));
+          this._selectedTask.next(undefined);
           this.eventBus.emit({ action: Action.TASK_SAVED });
         },        
         //TODO: handle error (show toast)
