@@ -12,7 +12,10 @@ import { AppRoutingModule } from './app.routing.module';
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [AppRoutingModule, TodoAppCoreModule],
+    imports: [
+        AppRoutingModule, 
+        TodoAppCoreModule
+    ],
     bootstrap: [AppComponent],
     providers: [
         {
@@ -20,6 +23,6 @@ import { AppRoutingModule } from './app.routing.module';
             useClass: TokenInterceptor,
             multi: true,
         }
-    ],
+    ]
 })
 export class AppModule {}

@@ -43,6 +43,10 @@ export class TodoFormComponent implements OnInit, OnChanges {
     if (changes.formMode) {
       this.onModeChange(changes.formMode.currentValue);
     }
+
+    if(changes.task && changes.task.currentValue) {
+      this.todoForm?.patchValue(changes.task.currentValue);
+    }
   }
 
   ngOnInit(): void {
@@ -87,10 +91,6 @@ export class TodoFormComponent implements OnInit, OnChanges {
    * @param mode current formMode value
   */
   private onModeChange(mode: Mode): void {
-    if(mode === Mode.READONLY || mode === Mode.EDIT) {       
-      this.todoForm?.patchValue(this?.task);
-    }
-
     this.clearFormIfAddMode();
     
     mode === Mode.READONLY
