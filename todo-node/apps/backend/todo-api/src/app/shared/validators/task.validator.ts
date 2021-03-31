@@ -23,6 +23,7 @@ export const taskValidationRules = [
         const todaydayjs = dayjs(dayjs().format(DD_MM_YYYY), DD_MM_YYYY);
 
         return !deadline.isBefore(todaydayjs);
+        //TODO: allow user to update deadline if it's in the past but do not allow create task with deadline in the past
     }).withMessage('Deadline can\'t be in the past.')
 ];
 
