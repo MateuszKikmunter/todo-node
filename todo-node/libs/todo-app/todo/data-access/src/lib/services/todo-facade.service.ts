@@ -25,7 +25,7 @@ export class TodoFacadeService {
     readonly selectedTask$ = this.store.selectedTask$;
 
     /** Sets/clears currently selected task in the store. */
-    public selectTask(task: Task | null): void {
+    public selectTask(task: Task | undefined): void {
         this.store.selectTask(task);
     }
 

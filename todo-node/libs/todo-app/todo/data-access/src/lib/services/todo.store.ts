@@ -30,8 +30,8 @@ export class TodoStore {
     }
 
     /** Sets currently selected task in the store. */
-    public selectTask(task: Task | null): void {     
-      this._selectedTask.next({ ...task });   
+    public selectTask(task: Task | undefined): void {     
+      this._selectedTask.next(task ? { ...task } : undefined);   
     }
 
     /** 

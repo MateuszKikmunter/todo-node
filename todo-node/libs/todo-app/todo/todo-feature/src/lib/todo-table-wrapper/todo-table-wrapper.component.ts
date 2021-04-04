@@ -61,7 +61,7 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
     }
 
     /** Opens task form dialog in READONLY mode. */
-    public onViewTask(task: Task): void {
+    public onViewTask(): void {
         this.showForm.next(true);
         this.formMode.next(Mode.READONLY);
     }
@@ -87,7 +87,7 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
     }
 
     /** Sends selected task to the store.  */
-    public onSelectTask(event: Task | null): void {        
+    public onSelectTask(event: Task | undefined): void {        
         this.todoFacade.selectTask(event);
     }
 
