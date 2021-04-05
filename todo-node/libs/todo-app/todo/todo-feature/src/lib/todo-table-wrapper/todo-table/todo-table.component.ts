@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 
 //libs imports
-import { dd_MM_yyyy, Task } from '@todo-node/shared/utils';
+import { dd_MM_yyyy, Task, TaskRequestPayload } from '@todo-node/shared/utils';
 import { LazyLoadEvent } from 'primeng/api';
 import { SelectableRow, Table } from 'primeng/table';
 import { fromEvent } from 'rxjs';
@@ -37,7 +37,8 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
     @Output() deleteTask: EventEmitter<string> = new EventEmitter<string>();
     @Output() editTask: EventEmitter<void> = new EventEmitter<void>();
     @Output() createTask: EventEmitter<void> = new EventEmitter<void>();
-    @Output() viewTask: EventEmitter<string> = new EventEmitter<string>();
+    @Output() viewTask: EventEmitter<void> = new EventEmitter<void>();
+    @Output() fetchTasks: EventEmitter<TaskRequestPayload> = new EventEmitter<TaskRequestPayload>();
 
     @ViewChild(Table) table: Table;
     @ViewChild('search') searchInput: ElementRef;
@@ -60,12 +61,15 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
 
     /**
      * Updates data on the table by calling splice on the original data source.
-     * @param event
+     * @param event - event with filters to be applied on datasource
      */
-    public loadTasks(event: LazyLoadEvent) {
-        this.loading = true;       
-        this.data = [...this.tasks].splice(event.first, event.rows);        
-        this.loading = false;
+    public loadTasks(event: LazyLoadEvent) {        
+        this.fetchTasks.emit({
+            first: event.first,
+            rows: event.rows,
+            sortField: event.sortField,
+            sortOrder: event.sortOrder
+        });
     }
 
     /** Tells parent what task has been selected. */
@@ -75,7 +79,7 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
 
     /** Tells parent to clear task selection. */
     public onRowUnselect() {
-        this.selectTask.emit(null);
+        this.selectTask.emit(undefined);
     }
 
     /** Emits event to the parent to show dialog in ADD mode. */
@@ -106,6 +110,7 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
     }
 
     /** Handles search input value change. */
+    //TODO: change it to use fetchTasks @Output
     private onSearchChange(): void {
         fromEvent(this?.searchInput?.nativeElement, 'keyup')
             .pipe(
@@ -125,10 +130,7 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
      * @param data Task[] emitted in onChanges
      */
     private handleDataSourceChange(data: Task[]): void {
-        this?.table?.onLazyLoad.emit({
-            first: this?.table?._first,
-            rows: 10,
-        });
+        this.data = [...this.tasks].splice(this?.table?.first, this?.table?.rows);
         this.totalRecords = data.length;
     }
 }

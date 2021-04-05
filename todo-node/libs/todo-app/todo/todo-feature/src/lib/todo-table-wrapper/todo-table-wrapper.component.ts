@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SaveTaskEvent } from '@todo-node/todo-app/todo/domain';
-import { Task, Mode, EventBusService, Action, SUCCESS_EMOJI } from '@todo-node/shared/utils';
+import { Task, Mode, EventBusService, Action, SUCCESS_EMOJI, TaskRequestPayload } from '@todo-node/shared/utils';
 import { TodoFacadeService } from '@todo-node/todo-app/todo/data-access';
 
 
@@ -74,6 +74,14 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
         event.action === Mode.ADD
             ? this.todoFacade.createTask(event.task)
             : this.todoFacade.editTask(event.task);
+    }
+
+    /**
+     * Initializes HTTP request to fetch tasks from the backend with filters applied.
+     * @param payload - paylad with filters to be applied on the datasource
+     */
+    public onFetchTasks(payload: TaskRequestPayload): void {
+        this.todoFacade.fetchTasks(payload);
     }
 
     /** Sends filter value to the store to get tasks containing search phrase. */

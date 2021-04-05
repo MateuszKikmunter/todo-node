@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 
 //libs imports
-import { DD_MM_YYYY, Mode } from '@todo-node/shared/utils';
+import { DD_MM_YYYY, Mode, TaskRequestPayload } from '@todo-node/shared/utils';
 import { Task } from '@todo-node/shared/utils';
 import * as dayjs from 'dayjs';
 import * as customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -53,6 +53,13 @@ export class TodoFacadeService {
      */
     public createTask(task: Task): void {        
         this.createOrUpdateTask(task, Mode.ADD);
+    }
+
+    /** Initializes HTTP call to fetch tasks.
+     * @param payload - request options to get tasks with filters applied
+     */
+    public fetchTasks(payload: TaskRequestPayload): void {
+        this.store.getUserTasks(payload);
     }
 
     /** 
