@@ -41,11 +41,11 @@ export class TodoFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.formMode) {
-      this.onModeChange(changes.formMode.currentValue);
+      this.onModeChange();
     }
 
     if(changes.task && changes.task.currentValue) {
-      this.todoForm?.patchValue(changes.task.currentValue);
+      this.patchForm();
     }
   }
 
@@ -58,7 +58,7 @@ export class TodoFormComponent implements OnInit, OnChanges {
    * * Clears the form on dialog close if formMode === ADD.
    */
   public hideDialog(): void {
-    this.clearFormIfAddMode();
+    this.patchForm();
     this.dialogClosed.emit();
   }
 
@@ -69,7 +69,7 @@ export class TodoFormComponent implements OnInit, OnChanges {
   public submit(): void {
     if(this.todoForm.valid) {
       this.saveTask.emit(this.buildPayload());
-      this.clearFormIfAddMode();
+      this.patchForm();
       this.dialogClosed.emit();
     }
   }  
@@ -90,20 +90,26 @@ export class TodoFormComponent implements OnInit, OnChanges {
    * Enables/disables/clears/patches form whenever formMode inout value changes.
    * @param mode current formMode value
   */
-  private onModeChange(mode: Mode): void {
-    this.clearFormIfAddMode();
+  private onModeChange(): void {
+    this.patchForm();
     
-    mode === Mode.READONLY
+    this.formMode === Mode.READONLY
       ? this.todoForm?.disable()
       : this.todoForm?.enable();
   }
 
-  /** Clears the form with default values if formMode === ADD. */
-  private clearFormIfAddMode(): void {
+  /**
+   * * Patches form based on the @Input values. 
+   * * Clears the form with default values if formMode === ADD.
+   * * Otherwise sets form value to the current task @Input
+   * */
+  private patchForm(): void {
     if(this.formMode === Mode.ADD) {        
       //primeNG dialog is not destroyed on close
-      //so we have to reset form when in ADD mode
-      this.todoForm?.reset({ completed: false });      
+      //so we have to reset form when in ADD mode      
+      this.todoForm?.reset({ completed: false });   
+    } else {
+      this.todoForm?.patchValue(this?.task);
     }
   }
 
