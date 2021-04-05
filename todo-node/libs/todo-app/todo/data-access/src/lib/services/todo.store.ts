@@ -59,6 +59,11 @@ export class TodoStore {
             if(item.id === task.id) {
               this._tasks.value[index] = { ...task };
               this._tasks.next([ ...this._tasks.value ]);
+              
+              if(this._selectedTask.value?.id === task?.id) {
+                this._selectedTask.next({ ...task });
+              }
+
               this.eventBus.emit({ action: Action.TASK_SAVED });
             }
           });
