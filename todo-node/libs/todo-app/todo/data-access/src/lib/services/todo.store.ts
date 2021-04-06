@@ -1,5 +1,5 @@
 //Angular imports
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 
 //libs imports
@@ -107,12 +107,14 @@ export class TodoStore {
       error => console.log(error));
     }
 
-    /** Gets currently logged in user tasks via HTTP and saves the result in the store. */
-  public getUserTasks(requestConfig: TaskRequestPayload): void {    
+  /** Gets currently logged in user tasks via HTTP and saves the result in the store. */
+  //TODO: add requestConfig to the HTTP as params
+  //TODO: remove any, use real type
+  public getUserTasks(requestConfig: any): void {    
     this.authFacade.getCurrentUser().pipe(
       withLatestFrom((user: CurrentUser) => user?.id),
-      switchMap((userID: string) => {
-        return userID ? this.http.get<Task[]>(`${this.taskApiUrl}/user/${userID}`) : of([])
+      switchMap((userID: string) => {        
+        return userID ? this.http.get<Task[]>(`${this.taskApiUrl}/user/${userID}`, { params: requestConfig }) : of([])
       })
     ).subscribe((tasks: Task[]) => this._tasks.next(tasks));
     

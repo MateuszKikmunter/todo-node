@@ -67,7 +67,7 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
         this.fetchTasks.emit({
             first: event.first,
             rows: event.rows,
-            sortField: event.sortField,
+            sortField: event.sortField ?? 'name',
             sortOrder: event.sortOrder
         });
     }

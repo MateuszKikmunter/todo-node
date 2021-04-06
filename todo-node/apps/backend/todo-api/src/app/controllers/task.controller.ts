@@ -1,6 +1,6 @@
 //libs imports
 import { Task, User } from '@todo-node/server/database';
-import { HttpCode } from '@todo-node/shared/utils';
+import { HttpCode, SortOrder } from '@todo-node/shared/utils';
 import { Request, Response } from 'express';
 import { getConnection } from 'typeorm';
 
@@ -107,12 +107,17 @@ export class TaskController {
      */
     public getUserTasks = async (req: Request, res: Response): Promise<Response> => {
 
-        try {                     
+        try {
             const tasks = await getConnection('sqlite')
                 .getRepository(Task)
                 .createQueryBuilder('task')
                 .where('userId = :id', { id: req.params.id })
+                .orderBy(req.query.sortField.toString(), +req.query.sortOrder === SortOrder.ASC ? 'ASC' : 'DESC')
+                .skip(+req.query.first)
+                .take(+req.query.rows)
                 .getMany();
+
+                //TODO: return also total records for pagination
                 
             if(!tasks) {
                 return res.status(HttpCode.NOT_FOUND).json({ error: messages.userHasNoTasks });
