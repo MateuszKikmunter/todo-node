@@ -109,23 +109,25 @@ export class TaskController {
         //TODO: fix ordering by completed
         //TODO: fix ordering by date
         try {
-            const tasks = await getConnection('sqlite')
+            let query = getConnection('sqlite')
                 .getRepository(Task)
                 .createQueryBuilder('task')
                 .where('userId = :id', { id: req.params.id })
                 .orderBy(req.query.sortField.toString(), +req.query.sortOrder === SortOrder.ASC ? 'ASC' : 'DESC')
                 .skip(+req.query.first)
-                .take(+req.query.rows)
-                .getMany();
+                .take(+req.query.rows);
+                
+                if(req.query?.search) {
+                    query = query.andWhere("LOWER(name) LIKE :name", { name: `%${ req.query?.search?.toString().toLowerCase() }%` });
+                }
             
+                const tasks = await query.getMany();
+
                 const totalRecords = await getConnection('sqlite')
                 .getRepository(Task)
                 .createQueryBuilder('task')
                 .where('userId = :id', { id: req.params.id })
                 .getCount();
-
-            console.log('xount', totalRecords);
-                
             if(!tasks) {
                 return res.status(HttpCode.NOT_FOUND).json({ error: messages.userHasNoTasks });
             }          

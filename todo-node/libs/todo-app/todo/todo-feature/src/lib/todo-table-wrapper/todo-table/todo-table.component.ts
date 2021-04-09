@@ -110,7 +110,6 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
     }
 
     /** Handles search input value change. */
-    //TODO: change it to use fetchTasks @Output
     private onSearchChange(): void {
         fromEvent(this?.searchInput?.nativeElement, 'keyup')
             .pipe(
@@ -118,9 +117,17 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
                 map((search: any) => search.target.value)
             )
             .subscribe((value: string) => {
-                if (value?.trim()) {
-                    this.filterTasks.emit(value);
-                }
+                const payload = {
+                    first: this.table.first,
+                    rows: this.table.rows,
+                    sortField: this.table.sortField ?? 'name',
+                    sortOrder: this.table.sortOrder                    
+                };
+
+                //when value === '' do not send search param
+                value?.trim()
+                    ? this.fetchTasks.emit({ ...payload, search: value })
+                    : this.fetchTasks.emit(payload);
             });
     }
 
