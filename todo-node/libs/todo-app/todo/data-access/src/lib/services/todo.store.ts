@@ -1,5 +1,5 @@
 //Angular imports
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 
 //libs imports
@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { BehaviorSubject, of } from 'rxjs';
 import { switchMap, withLatestFrom } from 'rxjs/operators';
 import { AuthFacadeService } from '@todo-node/todo-app/auth/data-access';
-import { Task, EventBusService, CurrentUser, Action, DEFAULT_TASK_REQUEST_PAYLOAD_CONFIG, TaskRequestPayload } from '@todo-node/shared/utils';
+import { Task, EventBusService, CurrentUser, Action, DEFAULT_TASK_REQUEST_PAYLOAD_CONFIG, TaskRequestPayload, Recordset } from '@todo-node/shared/utils';
 
 
 @Injectable({
@@ -17,11 +17,11 @@ export class TodoStore {
 
   private readonly taskApiUrl = 'http://localhost:4000/api/task';
 
-  private _tasks: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>([]);
-  public readonly tasks$: Observable<Task[]> = this._tasks.asObservable();
+  private _tasks: BehaviorSubject<Recordset<Task>> = new BehaviorSubject<Recordset<Task>>({ data: [], totalRecords: 0 });
+  public readonly tasks$: Observable<Recordset<Task>> = this._tasks.asObservable();
 
   private _selectedTask: BehaviorSubject<Task> = new BehaviorSubject<Task>(null);
-  public readonly selectedTask$: Observable<Task> = this._selectedTask.asObservable();
+  public readonly selectedTask$: Observable<Task> = this._selectedTask.asObservable();  
 
   constructor(private http: HttpClient,
     private authFacade: AuthFacadeService,
@@ -39,54 +39,66 @@ export class TodoStore {
      * Sends POST request to the server and emits new values on success.
      * @param task - task to create
     */
-    public createTask(task: Task): void {
-      this.http.post<{ id: string }>(`${this.taskApiUrl}`, task).subscribe(
-        (result: { id: string }) => {          
-          this.eventBus.emit({ action: Action.TASK_SAVED });
-          this._tasks.next([ ...this._tasks.getValue(), { ...task, id: result.id }]);          
-        },
-        //TODO: handle error (show toast), if validation errors, emit with event bus
-        error => console.log(error));
-    }
+  public createTask(task: Task): void {
+    this.http.post<{ id: string }>(`${this.taskApiUrl}`, task).subscribe(
+      (result: { id: string }) => {
+        this.eventBus.emit({ action: Action.TASK_SAVED });
+        this._tasks.next(
+          {
+            data: [...this._tasks.value.data, { ...task, id: result.id }],
+            totalRecords: this._tasks.value.totalRecords + 1
+          });
+      },
+      //TODO: handle error (show toast), if validation errors, emit with event bus
+      error => console.log(error));
+  }
 
     /** 
      * Sends PUT request to the server and emits new values on success.
      * @param task - task to update
     */
-    public editTask(task: Task): void {
-      this.http.put<void>(`${this.taskApiUrl}/${task?.id}`, task).subscribe(
-        () => {          
-          this._tasks.getValue().forEach((item, index) => {
-            if(item.id === task.id) {
-              this._tasks.value[index] = { ...task };
-              this._tasks.next([ ...this._tasks.value ]);
-              
-              if(this._selectedTask.value?.id === task?.id) {
-                this._selectedTask.next({ ...task });
-              }
+  public editTask(task: Task): void {
+    this.http.put<void>(`${this.taskApiUrl}/${task?.id}`, task).subscribe(
+      () => {
+        this._tasks.value.data.forEach((item, index) => {
+          if (item.id === task.id) {
+            this._tasks.value.data[index] = { ...task };
+            this._tasks.next(
+              {
+                data: [...this._tasks.value.data],
+                totalRecords: this._tasks.value.totalRecords
+              });
 
-              this.eventBus.emit({ action: Action.TASK_SAVED });
+            if (this._selectedTask.value?.id === task?.id) {
+              this._selectedTask.next({ ...task });
             }
-          });
-        },
-        //TODO: handle error (show toast), if validation errors, emit with event bus
-        error => console.log(error));
-    }
 
-    /** 
-     * Sends DELETE request to the server and clears current selection on success.
-     * @param taskId - id of task to delete
-    */
-    public deleteTask(taskId: string): void {
-      this.http.delete<void>(`${this.taskApiUrl}/${taskId}`).subscribe(
-        () => {
-          this._tasks.next(this._tasks.value.filter(task => task.id !== taskId));
-          this._selectedTask.next(undefined);
-          this.eventBus.emit({ action: Action.TASK_SAVED });
-        },        
-        //TODO: handle error (show toast)
-        error => console.log(error));
-    }
+            this.eventBus.emit({ action: Action.TASK_SAVED });
+          }
+        });
+      },
+      //TODO: handle error (show toast), if validation errors, emit with event bus
+      error => console.log(error));
+  }
+
+  /** 
+   * Sends DELETE request to the server and clears current selection on success.
+   * @param taskId - id of task to delete
+  */
+  public deleteTask(taskId: string): void {
+    this.http.delete<void>(`${this.taskApiUrl}/${taskId}`).subscribe(
+      () => {
+        this._tasks.next(
+          {
+            data: this._tasks.value.data.filter(task => task.id !== taskId),
+            totalRecords: this._tasks.value.totalRecords - 1
+          });
+        this._selectedTask.next(undefined);
+        this.eventBus.emit({ action: Action.TASK_SAVED });
+      },
+      //TODO: handle error (show toast)
+      error => console.log(error));
+  }
 
     /** 
      * * Sends PUT request to the server and emits new values on success.
@@ -95,12 +107,12 @@ export class TodoStore {
     */
     public changeTaskState(taskId: string): void {
       this.http.put<void>(`${this.taskApiUrl}/change-state/${taskId}`, null).subscribe(() => {
-        this._tasks.value.forEach((task: Task) => {
+        this._tasks.value.data.forEach((task: Task) => {
           if(task.id === taskId) {
             task.completed = !task.completed;
             task.lastModified = new Date().toDateString();
           }
-          this._tasks.next([...this._tasks.value]);
+          this._tasks.next({ ...this._tasks.value });
         });
       },
       //TODO: handle error (show toast)
@@ -114,9 +126,8 @@ export class TodoStore {
     this.authFacade.getCurrentUser().pipe(
       withLatestFrom((user: CurrentUser) => user?.id),
       switchMap((userID: string) => {        
-        return userID ? this.http.get<Task[]>(`${this.taskApiUrl}/user/${userID}`, { params: requestConfig }) : of([])
+        return userID ? this.http.get<Recordset<Task>>(`${this.taskApiUrl}/user/${userID}`, { params: requestConfig }) : of([])
       })
-    ).subscribe((tasks: Task[]) => this._tasks.next(tasks));
-    
+    ).subscribe((result: Recordset<Task>) => this._tasks.next({ ...result }));
   }
 }

@@ -23,7 +23,7 @@ export class TaskController {
                 user: await getConnection('sqlite').getRepository(User).findOne({ id: req?.user.id })
             } as Task;
 
-            const result = await getConnection('sqlite').getRepository(Task).insert(task);                    
+            const result = await getConnection('sqlite').getRepository(Task).insert(task);               
             return res.status(HttpCode.OK).send(result.identifiers[0]);
             
         } catch (err) {
@@ -116,14 +116,20 @@ export class TaskController {
                 .skip(+req.query.first)
                 .take(+req.query.rows)
                 .getMany();
+            
+                const totalRecords = await getConnection('sqlite')
+                .getRepository(Task)
+                .createQueryBuilder('task')
+                .where('userId = :id', { id: req.params.id })
+                .getCount();
 
-                //TODO: return also total records for pagination
+            console.log('xount', totalRecords);
                 
             if(!tasks) {
                 return res.status(HttpCode.NOT_FOUND).json({ error: messages.userHasNoTasks });
             }          
 
-            return res.status(HttpCode.OK).json(tasks);
+            return res.status(HttpCode.OK).json({ data: tasks, totalRecords: totalRecords });
         } catch (err) {
             console.log(err);
             return res.status(HttpCode.BAD_REQUEST).json({ error: err.message });

@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 
 //libs imports
-import { dd_MM_yyyy, Task, TaskRequestPayload } from '@todo-node/shared/utils';
+import { dd_MM_yyyy, Task, TaskRequestPayload, Recordset } from '@todo-node/shared/utils';
 import { LazyLoadEvent } from 'primeng/api';
 import { SelectableRow, Table } from 'primeng/table';
 import { fromEvent } from 'rxjs';
@@ -28,7 +28,7 @@ import { debounceTime, map } from 'rxjs/operators';
 })
 export class TodoTableComponent implements OnChanges, AfterViewInit {
 
-    @Input() tasks: Task[];
+    @Input() tasks: Recordset<Task>;
     @Input() selectedTask: Task;
 
     @Output() selectTask: EventEmitter<Task> = new EventEmitter<Task>();
@@ -127,10 +127,10 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
     /**
      * * Triggers LazyLoadEvent on the table.
      * * PrimeNG table does not refresh automatically on data change so it has to be triggered manually.
-     * @param data Task[] emitted in onChanges
+     * @param dataset Task[] emitted in onChanges
      */
-    private handleDataSourceChange(data: Task[]): void {
-        this.data = [...this.tasks].splice(this?.table?.first, this?.table?.rows);
-        this.totalRecords = data.length;
+    private handleDataSourceChange(dataset: Recordset<Task>): void {
+        this.data = dataset.data;
+        this.totalRecords = dataset.totalRecords;
     }
 }
