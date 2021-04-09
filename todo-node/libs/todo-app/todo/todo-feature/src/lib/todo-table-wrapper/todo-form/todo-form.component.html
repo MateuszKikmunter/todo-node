@@ -21,7 +21,7 @@
                 <div class="p-field">
                     <label for="deadline">Deadline</label>
                     <p-calendar id="deadline" appendTo="body" [minDate]="minDate" dateFormat="dd/mm/yy" placeholder="DD/MM/YYYY" formControlName="deadline"></p-calendar>
-                    <small class="p-error" *ngIf="deadline?.touched && name?.errors?.required">Deadline is required.</small>                    
+                    <small class="p-error" *ngIf="deadline?.touched && deadline?.errors?.required">Deadline is required.</small>                    
                 </div>
             </div>
     
