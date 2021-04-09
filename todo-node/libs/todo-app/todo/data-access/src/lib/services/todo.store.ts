@@ -1,13 +1,13 @@
 //Angular imports
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 //libs imports
 import { Observable } from 'rxjs';
 import { BehaviorSubject, of } from 'rxjs';
 import { switchMap, withLatestFrom } from 'rxjs/operators';
 import { AuthFacadeService } from '@todo-node/todo-app/auth/data-access';
-import { Task, EventBusService, CurrentUser, Action, DEFAULT_TASK_REQUEST_PAYLOAD_CONFIG, TaskRequestPayload, Recordset } from '@todo-node/shared/utils';
+import { Task, EventBusService, CurrentUser, Action, Recordset } from '@todo-node/shared/utils';
 
 
 @Injectable({
@@ -25,9 +25,7 @@ export class TodoStore {
 
   constructor(private http: HttpClient,
     private authFacade: AuthFacadeService,
-    private eventBus: EventBusService,
-    @Inject(DEFAULT_TASK_REQUEST_PAYLOAD_CONFIG) private initialRequestConfig: TaskRequestPayload) {      
-      this.getUserTasks(this.initialRequestConfig);
+    private eventBus: EventBusService) {      
     }
 
     /** Sets currently selected task in the store. */

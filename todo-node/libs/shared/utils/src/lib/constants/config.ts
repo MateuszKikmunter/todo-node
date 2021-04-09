@@ -10,10 +10,3 @@ export const dd_MM_yyyy = 'dd/MM/yyyy';
 
 /** Success emoji 🎉 */
 export const SUCCESS_EMOJI = '🎉';
-
-export const DEFAULT_TASK_REQUEST_PAYLOAD: TaskRequestPayload = {
-    first: 0,
-    rows: 10,
-    sortField: 'name',
-    sortOrder: SortOrder.ASC
-}

@@ -12,4 +12,3 @@ export * from './lib/services/local-storage.service';
 export * from './lib/services/event-bus.service';
 export * from './lib/interfaces/task';
 export * from './lib/interfaces/task-request.payload';
-export * from './lib/tokens/default-task-payload.config';
