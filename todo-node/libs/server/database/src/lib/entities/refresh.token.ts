@@ -16,8 +16,6 @@ export class RefreshToken {
     @Index()
     token: string;
 
-    //TODO: add device print in the future
-
     @Column({ type: 'datetime', default: new Date().toUTCString() })
     creationDate: string;
 }
