@@ -82,12 +82,7 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
      */
     public onFetchTasks(payload: TaskRequestPayload): void {
         this.todoFacade.fetchTasks(payload);
-    }
-
-    /** Sends filter value to the store to get tasks containing search phrase. */
-    public onTasksFilter(search: string): void {
-        //TODO: to implement
-    }
+    }    
 
     /** Sends taskId to the store so it's completion state can be changed. */
     public onTaskStateChange(taskId: string): void {
