@@ -106,8 +106,9 @@ export class TaskController {
      * @param res response
      */
     public getUserTasks = async (req: Request, res: Response): Promise<Response> => {
-        //TODO: fix ordering by completed
-        //TODO: fix ordering by date
+        //TODO: fix sorting by completed
+        //TODO: fix sorting by date
+        //TODO: fix sorting when numeric names
         try {
             let query = getConnection('sqlite')
                 .getRepository(Task)
