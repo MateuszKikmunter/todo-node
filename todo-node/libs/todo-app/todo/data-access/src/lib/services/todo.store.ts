@@ -108,7 +108,7 @@ export class TodoStore {
         this._tasks.value.data.forEach((task: Task) => {
           if(task.id === taskId) {
             task.completed = !task.completed;
-            task.lastModified = new Date().toDateString();
+            task.lastModified = new Date();
           }
           this._tasks.next({ ...this._tasks.value });
         });

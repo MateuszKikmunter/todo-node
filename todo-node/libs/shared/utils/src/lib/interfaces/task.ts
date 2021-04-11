@@ -3,6 +3,6 @@ export interface Task {
     name: string;
     additionalDetails: string;
     completed: boolean;
-    deadline: string;
-    lastModified: string;
+    deadline: Date;
+    lastModified: Date;
 }

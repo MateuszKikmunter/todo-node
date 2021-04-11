@@ -45,7 +45,7 @@
             <ng-template pTemplate="body" let-task>
                 <tr [pSelectableRow]="task">
                     <td>{{ task.name }}</td>
-                    <td [taskPastDeadline]="task.deadline">{{ task.deadline }}</td>
+                    <td [taskPastDeadline]="task.deadline">{{ task.deadline | date: dateFormat }}</td>
                     <td>{{ task.lastModified | date: dateFormat }}</td>
                     <td>
                         <i class="ml-35" 

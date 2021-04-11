@@ -109,7 +109,9 @@ export class TodoFormComponent implements OnInit, OnChanges {
       //so we have to reset form when in ADD mode      
       this.todoForm?.reset({ completed: false });   
     } else {
-      this.todoForm?.patchValue(this?.task);
+      //hack to get p-calendar working corretly with object literals and dates
+      const newFormValue = { ...this.task, deadline: new Date(this.task.deadline) };
+      this.todoForm.patchValue(newFormValue);
     }
   }
 
@@ -118,6 +120,8 @@ export class TodoFormComponent implements OnInit, OnChanges {
     return {
       task: {
         ...this.todoForm.value,
+        //hack to get p-calendar working correctly with object literals and dates
+        deadline: new Date(this.deadline.value),
         id: this.formMode === Mode.ADD ? undefined : this.task?.id
       },
       action: this.formMode

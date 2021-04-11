@@ -62,18 +62,6 @@ export class TodoFacadeService {
         this.store.getUserTasks(payload);
     }
 
-    /** 
-     * * Sets task deadline to DD/MM/YYYY
-     * * Deadline comes either as string or object depending if user updated it in the form.
-     * @param deadline - passing deadline as any as any so dayjs can access it as param in the constructor but it's string | object
-     */
-    private formatDeadline(deadline: any): string {
-        dayjs.extend(customParseFormat);
-        return typeof deadline === 'object' 
-            ? dayjs(deadline).format(DD_MM_YYYY) 
-            : dayjs(deadline, DD_MM_YYYY).format(DD_MM_YYYY);
-    }
-
 
     /**
      * Creates or updates task based on the provided mode (ADD/EDIT)
@@ -81,7 +69,7 @@ export class TodoFacadeService {
      * @param mode - action mode (ADD/EDIT)
      */
     private createOrUpdateTask(task: Task, mode: Mode): void {
-        const payload = { ...task, deadline: this.formatDeadline(task.deadline), lastModified: new Date().toDateString() };
+        const payload = { ...task, lastModified: new Date() };
         mode === Mode.ADD
             ? this.store.createTask(payload)
             : this.store.editTask(payload);
