@@ -10,7 +10,7 @@ import { DeadlineValidatorService } from './../services/deadline-validator.servi
 })
 export class PastDeadlineDirective implements OnInit {
 
-  @Input('taskPastDeadline') deadline: string;
+  @Input('taskPastDeadline') deadline: Date;
 
   constructor(
     private elementRef: ElementRef,
