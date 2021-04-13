@@ -2,10 +2,8 @@
 import { Injectable } from '@angular/core';
 
 //libs imports
-import { DD_MM_YYYY, Mode, TaskRequestPayload } from '@todo-node/shared/utils';
+import { Mode, TaskRequestPayload } from '@todo-node/shared/utils';
 import { Task } from '@todo-node/shared/utils';
-import * as dayjs from 'dayjs';
-import * as customParseFormat from 'dayjs/plugin/customParseFormat';
 
 //local imports
 import { TodoStore } from './todo.store';

@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 
 //libs imports
 import * as dayjs from 'dayjs';
-import * as customParseFormat from 'dayjs/plugin/customParseFormat';
 
 
 @Injectable({
@@ -16,7 +15,6 @@ export class DeadlineValidatorService {
    * * Deadline is missed if it's before today's date.
    */
     public isDeadlineMissed(deadline: Date): boolean {
-      dayjs.extend(customParseFormat);
       return dayjs().isAfter(deadline, 'days');
     }
 }
