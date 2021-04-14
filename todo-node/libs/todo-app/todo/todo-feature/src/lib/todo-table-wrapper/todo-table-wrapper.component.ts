@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SaveTaskEvent } from '@todo-node/todo-app/todo/domain';
-import { Task, Mode, EventBusService, Action, SUCCESS_EMOJI, TaskRequestPayload } from '@todo-node/shared/utils';
+import { Task, Mode, EventBusService, Action, SUCCESS_EMOJI, TaskRequestPayload, SKULL_EMOJI } from '@todo-node/shared/utils';
 import { TodoFacadeService } from '@todo-node/todo-app/todo/data-access';
 
 
@@ -36,7 +36,8 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
         private eventBus: EventBusService) {}
 
     ngOnInit(): void {
-        this.onTaskCreateSuccess();
+        this.onActionSuccess();
+        this.onActionFailure();
     }
 
     ngOnDestroy(): void {
@@ -115,15 +116,28 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
     }
 
     /** 
-     * * Shows success toast on successful task creation.
+     * * Shows success toast on successful task operation like add/edit/delete.
      * * Tells table component to refresh its data.
     */
-    private onTaskCreateSuccess(): void {        
+    private onActionSuccess(): void {        
         this.subSink.add(            
             this.eventBus.on(Action.TASK_SAVED, () => {
                 this.messageService.add({
                     severity: 'success',
                     summary: `Success!${ SUCCESS_EMOJI }`,
+                });
+            })
+        );
+    }
+
+    /** Shows error toast on task failure for operations like add/edit/delete. */
+    private onActionFailure() {
+        this.subSink.add(            
+            this.eventBus.on(Action.ACTION_FAILED, () => {
+                this.messageService.add({
+                    severity: 'error',
+                    detail: 'Something went wrong, please try again...',
+                    summary: `Error!${ SKULL_EMOJI }`,
                 });
             })
         );

@@ -40,15 +40,17 @@ export class TodoStore {
   public createTask(task: Task): void {
     this.http.post<{ id: string }>(`${this.taskApiUrl}`, task).subscribe(
       (result: { id: string }) => {
-        this.eventBus.emit({ action: Action.TASK_SAVED });
+        this.emitSuccess();
         this._tasks.next(
           {
             data: [...this._tasks.value.data, { ...task, id: result.id }],
             totalRecords: this._tasks.value.totalRecords + 1
           });
       },
-      //TODO: handle error (show toast), if validation errors, emit with event bus
-      error => console.log(error));
+      error => {
+        console.log(error);
+        this.emitFailure();
+      });
   }
 
     /** 
@@ -71,12 +73,14 @@ export class TodoStore {
               this._selectedTask.next({ ...task });
             }
 
-            this.eventBus.emit({ action: Action.TASK_SAVED });
+            this.emitSuccess();
           }
         });
       },
-      //TODO: handle error (show toast), if validation errors, emit with event bus
-      error => console.log(error));
+      error => {
+        console.log(error);
+        this.emitFailure();
+      });
   }
 
   /** 
@@ -92,10 +96,12 @@ export class TodoStore {
             totalRecords: this._tasks.value.totalRecords - 1
           });
         this._selectedTask.next(undefined);
-        this.eventBus.emit({ action: Action.TASK_SAVED });
+        this.emitSuccess();
       },
-      //TODO: handle error (show toast)
-      error => console.log(error));
+      error => {
+        console.log(error);
+        this.emitFailure();
+      });
   }
 
     /** 
@@ -113,19 +119,35 @@ export class TodoStore {
           this._tasks.next({ ...this._tasks.value });
         });
       },
-      //TODO: handle error (show toast)
-      error => console.log(error));
+      error => {
+        console.log(error);
+        this.emitFailure();
+      });
     }
 
   /** Gets currently logged in user tasks via HTTP and saves the result in the store. */
-  //TODO: add requestConfig to the HTTP as params
-  //TODO: remove any, use real type
   public getUserTasks(requestConfig: any): void {    
     this.authFacade.getCurrentUser().pipe(
       withLatestFrom((user: CurrentUser) => user?.id),
       switchMap((userID: string) => {        
         return userID ? this.http.get<Recordset<Task>>(`${this.taskApiUrl}/user/${userID}`, { params: requestConfig }) : of([])
       })
-    ).subscribe((result: Recordset<Task>) => this._tasks.next({ ...result }));
+    ).subscribe(
+      (result: Recordset<Task>) => this._tasks.next({ ...result }),
+      error => {
+        console.log(error);
+        this.emitFailure();
+      }
+    );
+  }
+
+  /** Emits success if task has been successfully saved. */
+  private emitSuccess(): void {
+    this.eventBus.emit({ action: Action.TASK_SAVED });
+  }
+
+  /** Emits failure if action failed. */
+  private emitFailure(): void {
+    this.eventBus.emit({ action: Action.ACTION_FAILED });
   }
 }
