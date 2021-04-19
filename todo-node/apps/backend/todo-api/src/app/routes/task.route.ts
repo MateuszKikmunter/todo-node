@@ -43,5 +43,7 @@ export class TaskRoute implements Route {
 
         this._router.get(`${ this._url }/user/:id`, this._jwtMiddleware.validateJwtToken, this._taskController.getUserTasks );
         this._router.delete(`${ this._url }/:id`, this._jwtMiddleware.validateJwtToken, this._taskController.deleteTask);
+
+        this._router.post(`${ this._url }/seed`, this._jwtMiddleware.validateJwtToken, this._taskController.seed);
     }
 }

@@ -1,6 +1,7 @@
 //libs imports
 import { Task, User } from '@todo-node/server/database';
 import { HttpCode, SortOrder } from '@todo-node/shared/utils';
+import * as dayjs from 'dayjs';
 import { Request, Response } from 'express';
 import { getConnection } from 'typeorm';
 
@@ -135,6 +136,34 @@ export class TaskController {
             console.log(err);
             return res.status(HttpCode.BAD_REQUEST).json({ error: err.message });
         }    
+    }
+
+    /**
+     * 
+     * Temporary seed method to work with some initial data during development.
+     * @param req 
+     * @param res 
+     */
+    public seed = async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const tasks = [];
+            const user = await getConnection('sqlite').getRepository(User).findOne({ id: req?.user.id });
+            for (let i = 0; i <= 15; i++) {
+                tasks.push({
+                    user: user,
+                    deadline: dayjs().add(i, 'day').toDate(),
+                    name: `Task number ${i}`,
+                    additionalDetals: 'Task created in seed process',
+                    completed: i % 2 === 0
+                });
+            }
+
+            await getConnection('sqlite').getRepository(Task).insert(tasks);
+            return res.status(HttpCode.OK).json({ message: 'Success!' });
+        } catch (err) {
+            console.log(err);
+            return res.status(HttpCode.SERVER_ERROR).json({ ...err });
+        }
     }
 
     /**
