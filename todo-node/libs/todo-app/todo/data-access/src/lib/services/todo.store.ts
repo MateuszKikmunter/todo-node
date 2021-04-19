@@ -1,6 +1,6 @@
 //Angular imports
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 //libs imports
 import { Observable } from 'rxjs';
@@ -8,6 +8,7 @@ import { BehaviorSubject, of } from 'rxjs';
 import { switchMap, withLatestFrom } from 'rxjs/operators';
 import { AuthFacadeService } from '@todo-node/todo-app/auth/data-access';
 import { Task, EventBusService, CurrentUser, Action, Recordset } from '@todo-node/shared/utils';
+import { DEFAULT_TABLE_CONFIG, TableConfig } from '@todo-node/todo-app/todo/domain';
 
 
 @Injectable({
@@ -25,8 +26,9 @@ export class TodoStore {
 
   constructor(private http: HttpClient,
     private authFacade: AuthFacadeService,
-    private eventBus: EventBusService) {      
-    }
+    private eventBus: EventBusService,
+    @Inject(DEFAULT_TABLE_CONFIG) private defaultConfig: TableConfig)
+    {}
 
     /** Sets currently selected task in the store. */
     public selectTask(task: Task | undefined): void {     
@@ -43,7 +45,9 @@ export class TodoStore {
         this.emitSuccess();
         this._tasks.next(
           {
-            data: [...this._tasks.value.data, { ...task, id: result.id }],
+            data:  this._tasks.value.data.length < this.defaultConfig.rows
+              ? [...this._tasks.value.data, { ...task, id: result.id }]
+              : [...this._tasks.value.data],
             totalRecords: this._tasks.value.totalRecords + 1
           });
       },

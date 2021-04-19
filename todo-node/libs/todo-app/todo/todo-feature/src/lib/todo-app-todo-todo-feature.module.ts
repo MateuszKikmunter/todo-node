@@ -50,6 +50,6 @@ import { PastDeadlineDirective } from './directives/past-deadline.directive';
         TodoTableWrapperComponent,
         TodoFormComponent,
         PastDeadlineDirective        
-    ],
+    ]
 })
 export class TodoAppTodoTodoFeatureModule {}

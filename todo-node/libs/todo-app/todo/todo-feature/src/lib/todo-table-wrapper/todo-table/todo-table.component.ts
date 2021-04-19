@@ -9,15 +9,17 @@ import {
     ElementRef,
     AfterViewInit,
     OnChanges,
-    SimpleChanges
+    SimpleChanges,
+    Inject
 } from '@angular/core';
 
 //libs imports
-import { dd_MM_yyyy, Task, TaskRequestPayload, Recordset } from '@todo-node/shared/utils';
 import { LazyLoadEvent } from 'primeng/api';
 import { SelectableRow, Table } from 'primeng/table';
 import { fromEvent } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
+import { dd_MM_yyyy, Task, TaskRequestPayload, Recordset } from '@todo-node/shared/utils';
+import { DEFAULT_TABLE_CONFIG, TableConfig } from '@todo-node/todo-app/todo/domain';
 
 
 @Component({
@@ -49,6 +51,8 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
 
     readonly dateFormat = dd_MM_yyyy;
 
+    constructor(@Inject(DEFAULT_TABLE_CONFIG) readonly tableConfig: TableConfig) {}
+
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.tasks && changes.tasks.currentValue) {
             this.handleDataSourceChange(changes.tasks.currentValue);
@@ -63,7 +67,7 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
      * Updates data on the table by calling splice on the original data source.
      * @param event - event with filters to be applied on datasource
      */
-    public loadTasks(event: LazyLoadEvent) {        
+    public loadTasks(event: LazyLoadEvent) {
         this.fetchTasks.emit({
             first: event.first,
             rows: event.rows,
