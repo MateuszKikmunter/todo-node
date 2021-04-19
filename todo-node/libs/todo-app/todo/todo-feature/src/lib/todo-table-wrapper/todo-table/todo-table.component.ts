@@ -9,6 +9,7 @@ import {
     ElementRef,
     AfterViewInit,
     OnChanges,
+    OnDestroy,
     SimpleChanges,
     Inject
 } from '@angular/core';
@@ -17,6 +18,7 @@ import {
 import { LazyLoadEvent } from 'primeng/api';
 import { SelectableRow, Table } from 'primeng/table';
 import { fromEvent } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 import { dd_MM_yyyy, Task, TaskRequestPayload, Recordset } from '@todo-node/shared/utils';
 import { DEFAULT_TABLE_CONFIG, TableConfig } from '@todo-node/todo-app/todo/domain';
@@ -28,7 +30,7 @@ import { DEFAULT_TABLE_CONFIG, TableConfig } from '@todo-node/todo-app/todo/doma
     styleUrls: ['./todo-table.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TodoTableComponent implements OnChanges, AfterViewInit {
+export class TodoTableComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     @Input() tasks: Recordset<Task>;
     @Input() selectedTask: Task;
@@ -51,6 +53,8 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
 
     readonly dateFormat = dd_MM_yyyy;
 
+    private subSink: Subscription = new Subscription();
+
     constructor(@Inject(DEFAULT_TABLE_CONFIG) readonly tableConfig: TableConfig) {}
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -61,6 +65,10 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.onSearchChange();
+    }
+
+    ngOnDestroy(): void {
+        this.subSink.unsubscribe();
     }
 
     /**
@@ -115,24 +123,26 @@ export class TodoTableComponent implements OnChanges, AfterViewInit {
 
     /** Handles search input value change. */
     private onSearchChange(): void {
-        fromEvent(this?.searchInput?.nativeElement, 'keyup')
-            .pipe(
-                debounceTime(500),
-                map((search: any) => search.target.value)
-            )
-            .subscribe((value: string) => {
-                const payload = {
-                    first: this.table.first,
-                    rows: this.table.rows,
-                    sortField: this.table.sortField ?? 'name',
-                    sortOrder: this.table.sortOrder                    
-                };
+        this.subSink.add(
+            fromEvent(this?.searchInput?.nativeElement, 'keyup')
+                .pipe(
+                    debounceTime(500),
+                    map((search: any) => search.target.value)
+                )
+                .subscribe((value: string) => {
+                    const payload = {
+                        first: this.table.first,
+                        rows: this.table.rows,
+                        sortField: this.table.sortField ?? 'name',
+                        sortOrder: this.table.sortOrder
+                    };
 
-                //when value === '' do not send search param
-                value?.trim()
-                    ? this.fetchTasks.emit({ ...payload, search: value })
-                    : this.fetchTasks.emit(payload);
-            });
+                    //when value === '' do not send search param
+                    value?.trim()
+                        ? this.fetchTasks.emit({ ...payload, search: value })
+                        : this.fetchTasks.emit(payload);
+                })
+        );
     }
 
     /**
