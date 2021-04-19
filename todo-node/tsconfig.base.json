@@ -50,6 +50,9 @@
             ],
             "@todo-node/todo-app/todo/data-access": [
                 "libs/todo-app/todo/data-access/src/index.ts"
+            ],
+            "@todo-node/todo-app/todo/domain": [
+                "libs/todo-app/todo/domain/src/index.ts"
             ]
         }
     },

@@ -1,8 +1,8 @@
 export interface Task {
-    id: string;
+    id?: string;
     name: string;
     additionalDetails: string;
     completed: boolean;
-    deadline: string;
-    lastModified: string;
+    deadline: Date;
+    lastModified: Date;
 }

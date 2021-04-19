@@ -3,10 +3,6 @@ import { HttpCode } from '@todo-node/shared/utils';
 import { NextFunction, Request, Response } from 'express';
 import { validationResult, check } from 'express-validator';
 import * as dayjs from 'dayjs';
-import * as customParseFormat from 'dayjs/plugin/customParseFormat';
-
-//local imports
-import { DD_MM_YYYY } from '../../utils/config';
 
 
 /**
@@ -16,16 +12,9 @@ export const taskValidationRules = [
     check('name').notEmpty().withMessage('Name is required.'),
     check('name').isLength({ max: 255 }).withMessage('Maximum 255 characters allowed.'),
     check('completed').notEmpty().withMessage('Task completion state is required.'),
-    check('deadline').notEmpty().withMessage('Deadline is required.'),      
-    check('deadline').isDate({ format: DD_MM_YYYY.toLowerCase() }).withMessage('Please enter a valid date.'),
-    check('deadline').custom(deadlineDateString => {
-        //extend dayjs with custom parse format plugin
-        //so it supports custom formats of input strings
-        dayjs.extend(customParseFormat);
-        const deadline = dayjs(deadlineDateString, DD_MM_YYYY);
-        const todaydayjs = dayjs(dayjs().format(DD_MM_YYYY), DD_MM_YYYY);
-
-        return !deadline.isBefore(todaydayjs);
+    check('deadline').notEmpty().withMessage('Deadline is required.'),    
+    check('deadline').custom((deadline: string) => {    
+        return !dayjs().isAfter(new Date(deadline), 'days');        
     }).withMessage('Deadline can\'t be in the past.')
 ];
 

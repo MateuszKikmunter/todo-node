@@ -1,11 +1,23 @@
 <todo-table 
     [tasks]="todoFacade?.tasks$ | async"
-    [selectedTask]="todoFacade?.selectedTask$ | async"
-    (filterTasks)="onTasksFilter($event)"
+    [selectedTask]="todoFacade?.selectedTask$ | async" 
     (taskStateChange)="onTaskStateChange($event)"
-    (selectTask)="onTaskSelect($event)"
-    (editTask)="onTaskEdit($event)"
-    (deleteTask)="onTaskDelete($event)">
+    (selectTask)="onSelectTask($event)"
+    (createTask)="onCreateTask()"
+    (editTask)="onEditTask()"
+    (viewTask)="onViewTask()"
+    (deleteTask)="onDeleteTask($event)"
+    (fetchTasks)="onFetchTasks($event)">
 </todo-table>
 
 <p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+
+<node-todo-form 
+    [formVisible]="showForm$ | async"
+    [formMode]="formMode$ | async"
+    [task]="todoFacade?.selectedTask$ | async"
+    (saveTask)="onSaveTask($event)"
+    (dialogClosed)="onDialogClose()">
+</node-todo-form>
+
+<p-toast></p-toast>

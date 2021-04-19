@@ -1,8 +1,10 @@
 //libs imports
 import { Task, User } from '@todo-node/server/database';
-import { HttpCode } from '@todo-node/shared/utils';
+import { HttpCode, SortOrder } from '@todo-node/shared/utils';
+import * as dayjs from 'dayjs';
 import { Request, Response } from 'express';
 import { getConnection } from 'typeorm';
+
 
 //local imports
 import { messages } from './../utils/config';
@@ -20,10 +22,10 @@ export class TaskController {
             const task = {         
                 ...req.body,
                 user: await getConnection('sqlite').getRepository(User).findOne({ id: req?.user.id })
-            } as Task;      
+            } as Task;
 
-            await getConnection('sqlite').getRepository(Task).insert(task);
-            return res.sendStatus(HttpCode.OK);
+            const result = await getConnection('sqlite').getRepository(Task).insert(task);               
+            return res.status(HttpCode.OK).send(result.identifiers[0]);
             
         } catch (err) {
             console.log(err);
@@ -47,7 +49,7 @@ export class TaskController {
             this.isUserAuthorizedToAccessTask(req, res, task);
 
             await getConnection('sqlite').getRepository(Task).save({ ...task, ...req.body });
-            return res.sendStatus(HttpCode.OK);
+            return res.status(HttpCode.OK).send();
         } catch (err) {
             console.log(err);
             return res.status(HttpCode.BAD_REQUEST).json({ error: err.message });
@@ -55,12 +57,11 @@ export class TaskController {
     }
 
     /**
-     * Returns task by id.
+     * Updates task completion state.
      * @param req request
      * @param res response
      */
-    public getById = async (req: Request, res: Response): Promise<Response> => {
-
+    public changeTaskState = async(req: Request, res: Response): Promise<Response> => {
         try {
             const task = await getConnection('sqlite').getRepository(Task).findOne({where: { id: req.params.id }, relations: [ 'user' ] });
             if(!task) {
@@ -68,14 +69,13 @@ export class TaskController {
             }
 
             this.isUserAuthorizedToAccessTask(req, res, task);
-
-            //return only task properties and skip user
-            const { ['user']: remove, ...taskProps } = task;            
-            return res.status(HttpCode.OK).json(taskProps);
+            
+            await getConnection('sqlite').getRepository(Task).save({ ...task, completed: !task.completed, lastModified: new Date() });
+            return res.status(HttpCode.OK).send();
         } catch (err) {
             console.log(err);
             return res.status(HttpCode.BAD_REQUEST).json({ error: err.message });
-        }    
+        }
     }
 
     /**
@@ -94,7 +94,7 @@ export class TaskController {
             this.isUserAuthorizedToAccessTask(req, res, task);
 
             await getConnection('sqlite').getRepository(Task).delete({ id: task.id });
-            return res.sendStatus(HttpCode.OK);
+            return res.status(HttpCode.OK).send();
         } catch (err) {
             console.log(err);
             return res.status(HttpCode.BAD_REQUEST).json({ error: err.message });
@@ -106,24 +106,64 @@ export class TaskController {
      * @param req request
      * @param res response
      */
-    public getUserTasks = async (req: Request, res: Response): Promise<Response> => {
-
-        try {                     
-            const tasks = await getConnection('sqlite')
+    public getUserTasks = async (req: Request, res: Response): Promise<Response> => {        
+        try {
+            let query = getConnection('sqlite')
                 .getRepository(Task)
                 .createQueryBuilder('task')
                 .where('userId = :id', { id: req.params.id })
-                .getMany();
+                .orderBy(req.query.sortField.toString(), +req.query.sortOrder === SortOrder.ASC ? 'ASC' : 'DESC')
+                .skip(+req.query.first)
+                .take(+req.query.rows);
                 
+                if(req.query?.search) {
+                    query = query.andWhere("LOWER(name) LIKE :name", { name: `%${ req.query?.search?.toString().toLowerCase() }%` });
+                }
+            
+                const tasks = await query.getMany();
+
+                const totalRecords = await getConnection('sqlite')
+                .getRepository(Task)
+                .createQueryBuilder('task')
+                .where('userId = :id', { id: req.params.id })
+                .getCount();
             if(!tasks) {
                 return res.status(HttpCode.NOT_FOUND).json({ error: messages.userHasNoTasks });
             }          
 
-            return res.status(HttpCode.OK).json(tasks);
+            return res.status(HttpCode.OK).json({ data: tasks, totalRecords: totalRecords });
         } catch (err) {
             console.log(err);
             return res.status(HttpCode.BAD_REQUEST).json({ error: err.message });
         }    
+    }
+
+    /**
+     * 
+     * Temporary seed method to work with some initial data during development.
+     * @param req 
+     * @param res 
+     */
+    public seed = async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const tasks = [];
+            const user = await getConnection('sqlite').getRepository(User).findOne({ id: req?.user.id });
+            for (let i = 0; i <= 15; i++) {
+                tasks.push({
+                    user: user,
+                    deadline: dayjs().add(i, 'day').toDate(),
+                    name: `Task number ${i}`,
+                    additionalDetals: 'Task created in seed process',
+                    completed: i % 2 === 0
+                });
+            }
+
+            await getConnection('sqlite').getRepository(Task).insert(tasks);
+            return res.status(HttpCode.OK).json({ message: 'Success!' });
+        } catch (err) {
+            console.log(err);
+            return res.status(HttpCode.SERVER_ERROR).json({ ...err });
+        }
     }
 
     /**

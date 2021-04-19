@@ -68,6 +68,9 @@
         },
         "todo-app-todo-data-access": {
             "tags": []
+        },
+        "todo-app-todo-domain": {
+            "tags": []
         }
     }
 }

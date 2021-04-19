@@ -1,12 +1,13 @@
-<ng-container *ngIf="tasks?.length > 0">
+<ng-container *ngIf="tasks">
 
     <p-card header="Manage Tasks">
         <p-toolbar styleClass="p-mb-4">
             <div class="p-toolbar-group-left">
                 <span class="p-buttonset">
-                    <button pButton type="button" label="New" icon="pi pi-check"></button>
+                    <button pButton type="button" label="New" icon="pi pi-check" (click)="add()"></button>
+                    <button pButton type="button" label="Inspect" icon="pi pi-search" [disabled]="!selectedTask" (click)="view()"></button>
                     <button pButton type="button" label="Edit" icon="pi pi-pencil" [disabled]="!selectedTask" (click)="edit()"></button>
-                    <button pButton type="button" label="Delete" icon="pi pi-trash" [disabled]="!selectedTask" (click)="delete()"></button>
+                    <button pButton type="button" label="Delete" icon="pi pi-trash" [disabled]="!selectedTask" (click)="delete()"></button>                    
                 </span>
             </div>
             <div class="p-toolbar-group-right">
@@ -17,14 +18,14 @@
             </div>
         </p-toolbar>
 
-        <p-table [value]="tasks" 
-            [lazy]="true" 
-            [paginator]="true" 
-            [rows]="10" 
+        <p-table [value]="data" 
+            [lazy]="tableConfig.lazy" 
+            [paginator]="tableConfig.paginator" 
+            [rows]="tableConfig.rows"
+            [selectionMode]="tableConfig.selectionMode" 
+            [dataKey]="tableConfig.dataKey"
             [totalRecords]="totalRecords"
-            [loading]="loading" 
-            selectionMode="single" 
-            dataKey="id"
+            [loading]="loading"         
             [globalFilterFields]="['name','deadline', 'lastModified', 'completed']" 
             (onRowSelect)="onRowSelect($event)"
             (onRowUnselect)="onRowUnselect($event)" 
@@ -37,17 +38,20 @@
                     </th>
                     <th pSortableColumn="lastModified">Last Modified <p-sortIcon field="lastModified"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="comleted">Completed <p-sortIcon field="completed"></p-sortIcon>
+                    <th pSortableColumn="completed">Completed <p-sortIcon field="completed"></p-sortIcon>
                     </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-task>
                 <tr [pSelectableRow]="task">
                     <td>{{ task.name }}</td>
-                    <td>{{ task.deadline }}</td>
-                    <td>{{ task.lastModified }}</td>
-                    <td (click)="changeTaskState(task.id)">
-                        <i class="ml-35" [ngClass]="(task.completed) ? 'pi pi-thumbs-up success' : 'pi pi-thumbs-down warning'"></i>
+                    <td [taskPastDeadline]="task.deadline">{{ task.deadline | date: dateFormat }}</td>
+                    <td>{{ task.lastModified | date: dateFormat }}</td>
+                    <td>
+                        <i class="ml-35" 
+                            (click)="changeTaskState(task.id)" 
+                            [ngClass]="(task.completed) ? 'pi pi-thumbs-up success' : 'pi pi-thumbs-down warning'">
+                        </i>
                     </td>
                 </tr>
             </ng-template>

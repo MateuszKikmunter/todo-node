@@ -3,19 +3,23 @@ import {
     ChangeDetectionStrategy,
     Component,
     Input,
-    OnInit,
     Output,
     EventEmitter,
     ViewChild,
     ElementRef,
-    AfterViewInit
+    AfterViewInit,
+    OnChanges,
+    SimpleChanges,
+    Inject
 } from '@angular/core';
 
 //libs imports
-import { Task } from '@todo-node/shared/utils';
 import { LazyLoadEvent } from 'primeng/api';
+import { SelectableRow, Table } from 'primeng/table';
 import { fromEvent } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
+import { dd_MM_yyyy, Task, TaskRequestPayload, Recordset } from '@todo-node/shared/utils';
+import { DEFAULT_TABLE_CONFIG, TableConfig } from '@todo-node/todo-app/todo/domain';
 
 
 @Component({
@@ -24,76 +28,120 @@ import { debounceTime, map } from 'rxjs/operators';
     styleUrls: ['./todo-table.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TodoTableComponent implements OnInit, AfterViewInit {
-    
-    @Input() tasks: Task[];
+export class TodoTableComponent implements OnChanges, AfterViewInit {
+
+    @Input() tasks: Recordset<Task>;
     @Input() selectedTask: Task;
 
     @Output() selectTask: EventEmitter<Task> = new EventEmitter<Task>();
     @Output() filterTasks: EventEmitter<string> = new EventEmitter<string>();
     @Output() taskStateChange: EventEmitter<string> = new EventEmitter<string>();
     @Output() deleteTask: EventEmitter<string> = new EventEmitter<string>();
-    @Output() editTask: EventEmitter<string> = new EventEmitter<string>();
-    @Output() createTask: EventEmitter<void> = new EventEmitter<void>();  
-    
+    @Output() editTask: EventEmitter<void> = new EventEmitter<void>();
+    @Output() createTask: EventEmitter<void> = new EventEmitter<void>();
+    @Output() viewTask: EventEmitter<void> = new EventEmitter<void>();
+    @Output() fetchTasks: EventEmitter<TaskRequestPayload> = new EventEmitter<TaskRequestPayload>();
+
+    @ViewChild(Table) table: Table;
     @ViewChild('search') searchInput: ElementRef;
 
+    public data: Task[];
     public loading: boolean;
     public totalRecords: number;
 
-    ngOnInit(): void {}
+    readonly dateFormat = dd_MM_yyyy;
 
-    ngAfterViewInit(): void {
-      this.onSearchChange();
+    constructor(@Inject(DEFAULT_TABLE_CONFIG) readonly tableConfig: TableConfig) {}
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.tasks && changes.tasks.currentValue) {
+            this.handleDataSourceChange(changes.tasks.currentValue);
+        }
     }
 
-    loadTasks(event: LazyLoadEvent) {        
-      console.log('in lazy load')
-        this.loading = true;
-        this.loading = false;
+    ngAfterViewInit(): void {
+        this.onSearchChange();
+    }
+
+    /**
+     * Updates data on the table by calling splice on the original data source.
+     * @param event - event with filters to be applied on datasource
+     */
+    public loadTasks(event: LazyLoadEvent) {
+        this.fetchTasks.emit({
+            first: event.first,
+            rows: event.rows,
+            sortField: event.sortField ?? 'name',
+            sortOrder: event.sortOrder
+        });
     }
 
     /** Tells parent what task has been selected. */
-    public onRowSelect(event) {
+    public onRowSelect(event: SelectableRow) {
         this.selectTask.emit(event.data);
     }
 
     /** Tells parent to clear task selection. */
     public onRowUnselect() {
-        this.selectTask.emit(null);
+        this.selectTask.emit(undefined);
     }
 
-    //TODO: to implement
-    public openNew(): void {
-
+    /** Emits event to the parent to show dialog in ADD mode. */
+    public add(): void {
+        this.createTask.emit();
     }
-
-    //TODO: to implement
+    
+    /** Emits event to the parent to show dialog in EDIT mode. */
     public edit(): void {
+        this.editTask.emit();
+    }
 
+    /** Emits event to the parent to show dialog in READONLY mode. */
+    public view(): void {
+        this.viewTask.emit();
     }
 
     /** Tells parent that task's completion state changed. */
     public changeTaskState(taskId: string): void {
-      this.taskStateChange.emit(taskId);
+        this.taskStateChange.emit(taskId);
     }
 
     /** Tells parent what task should be deleted. */
     public delete(): void {
-      if(this.selectedTask) {
-        this.deleteTask.emit(this.selectedTask.id);
-      }      
+        if (this.selectedTask) {
+            this.deleteTask.emit(this.selectedTask.id);
+        }
     }
 
     /** Handles search input value change. */
     private onSearchChange(): void {
-      fromEvent(this?.searchInput?.nativeElement, 'keyup').pipe(
-        debounceTime(500),        
-        map((search: any) => search.target.value)
-      ).subscribe((value: string) => {       
-        if(value?.trim()) {          
-          this.filterTasks.emit(value);
-        } 
-      });
+        fromEvent(this?.searchInput?.nativeElement, 'keyup')
+            .pipe(
+                debounceTime(500),
+                map((search: any) => search.target.value)
+            )
+            .subscribe((value: string) => {
+                const payload = {
+                    first: this.table.first,
+                    rows: this.table.rows,
+                    sortField: this.table.sortField ?? 'name',
+                    sortOrder: this.table.sortOrder                    
+                };
+
+                //when value === '' do not send search param
+                value?.trim()
+                    ? this.fetchTasks.emit({ ...payload, search: value })
+                    : this.fetchTasks.emit(payload);
+            });
+    }
+
+    /**
+     * * Triggers LazyLoadEvent on the table.
+     * * PrimeNG table does not refresh automatically on data change so it has to be triggered manually.
+     * @param dataset Task[] emitted in onChanges
+     */
+    private handleDataSourceChange(dataset: Recordset<Task>): void {
+        this.data = dataset.data;
+        this.totalRecords = dataset.totalRecords;
     }
 }

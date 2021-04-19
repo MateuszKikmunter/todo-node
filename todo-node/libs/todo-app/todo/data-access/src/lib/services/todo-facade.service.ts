@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 
 //libs imports
+import { Mode, TaskRequestPayload } from '@todo-node/shared/utils';
 import { Task } from '@todo-node/shared/utils';
 
 //local imports
@@ -22,22 +23,53 @@ export class TodoFacadeService {
     readonly selectedTask$ = this.store.selectedTask$;
 
     /** Sets/clears currently selected task in the store. */
-    public selectTask(task: Task): void {
+    public selectTask(task: Task | undefined): void {
         this.store.selectTask(task);
     }
 
     /** Changes task completion state. */
     public changeTaskState(taskId: string): void {
-      this.store.changeTaskState(taskId);
+        this.store.changeTaskState(taskId);
     }
 
-    //TODO: to implent
+    /** Sends request to the server to remove selected task.
+     * @param taskId id of task to delete
+     */
     public deleteTask(taskId: string): void {
-
+        this.store.deleteTask(taskId);
     }
 
-    //TODO: to implement
-    public createTask(task: Task): void {
+    /** Sends request to the server and saves task in the store on success.
+     * @param task task to edit
+     */
+    public editTask(task: Task): void {
+        this.createOrUpdateTask(task, Mode.EDIT);
+    }
 
+    /** Sends request to the server and saves task in the store on success.
+     * @param task task to save
+     */
+    public createTask(task: Task): void {        
+        this.createOrUpdateTask(task, Mode.ADD);
+    }
+
+    /** Initializes HTTP call to fetch tasks.
+     * @param payload - request options to get tasks with filters applied
+     */
+    public fetchTasks(payload: TaskRequestPayload): void {
+        this.store.getUserTasks(payload);
+    }
+
+
+    /**
+     * Creates or updates task based on the provided mode (ADD/EDIT)
+     * @param task - task to add/edit
+     * @param mode - action mode (ADD/EDIT)
+     */
+    private createOrUpdateTask(task: Task, mode: Mode): void {
+        const payload = { ...task, lastModified: new Date() };
+        mode === Mode.ADD
+            ? this.store.createTask(payload)
+            : this.store.editTask(payload);
     }
 }
