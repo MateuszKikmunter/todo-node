@@ -23,11 +23,13 @@ export class HeaderComponent implements OnInit {
         this.initializeManuItems();
     }
 
+    /** Log out the user and navigate to login screen. */
     public logout(): void {
         this.authFacade.logout();
         this.router.navigateByUrl('/account/login');
     }
 
+    /** Initializes menu items displayed in the menu. */
     private initializeManuItems(): void {
         this.items = [
             { label: 'Home', icon: PrimeIcons.HOME },

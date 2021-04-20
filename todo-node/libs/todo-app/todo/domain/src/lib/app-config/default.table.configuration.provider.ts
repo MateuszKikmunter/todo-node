@@ -5,6 +5,7 @@ import { ValueProvider } from '@angular/core';
 import { DEFAULT_TABLE_CONFIG } from '@todo-node/todo-app/todo/domain';
 
 
+/** Provider for default todo table configuration. */
 export const getDefaultTableConfiguration = (): ValueProvider => ({
     provide: DEFAULT_TABLE_CONFIG,
     useValue: {

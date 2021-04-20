@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authFacade.login(payload);
   }
 
+  /** Shows success message and navigates to tasks screen when LOGIN_SUCCESSFUL event occurs. */
   private onLoginSuccess(): void {
     this.subSink.add(
       this.eventBus.on(Action.LOGIN_SUCCESSFUL, () => {

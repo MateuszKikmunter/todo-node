@@ -18,6 +18,11 @@ export class PastDeadlineDirective implements OnInit {
     private deadlineValidator: DeadlineValidatorService) { }
 
   ngOnInit(): void {
+    this.hightlightMissedDealine();
+  }
+
+  /** Changes deadline color to orange if task deadline has been missed.  */
+  private hightlightMissedDealine(): void {
     if(this.deadlineValidator.isDeadlineMissed(this.deadline)) {
       this.renderer.setStyle(this.elementRef.nativeElement, 'color', 'orange');      
     }

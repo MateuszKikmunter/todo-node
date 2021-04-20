@@ -43,6 +43,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.authFacade.register(payload);
   }
 
+  /** Shows success message and navigates to login screen when REGISTER_SUCCESSFUL event occurs. */
   private onRegistrationSuccess(): void {
     this.subSink.add(
       this.eventBus.on(Action.REGISTER_SUCCESSFUL, () => {
