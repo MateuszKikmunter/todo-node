@@ -119,6 +119,8 @@ export class TodoStore {
           if(task.id === taskId) {
             task.completed = !task.completed;
             task.lastModified = new Date();
+
+            this._selectedTask.next({ ...task });
           }
           this._tasks.next({ ...this._tasks.value });
         });
