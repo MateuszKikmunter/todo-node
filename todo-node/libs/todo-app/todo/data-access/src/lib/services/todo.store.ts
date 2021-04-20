@@ -114,7 +114,7 @@ export class TodoStore {
      * @param taskId - id of task to change
     */
     public changeTaskState(taskId: string): void {
-      this.http.put<void>(`${this.taskApiUrl}/change-state/${taskId}`, null).subscribe(() => {
+      this.http.put<void>(`${this.taskApiUrl}/${taskId}/change-state`, null).subscribe(() => {
         this._tasks.value.data.forEach((task: Task) => {
           if(task.id === taskId) {
             task.completed = !task.completed;
