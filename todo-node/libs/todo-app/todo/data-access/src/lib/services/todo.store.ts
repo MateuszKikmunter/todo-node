@@ -1,11 +1,12 @@
 //Angular imports
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 
 //libs imports
 import { Observable } from 'rxjs';
 import { BehaviorSubject, of } from 'rxjs';
 import { switchMap, withLatestFrom } from 'rxjs/operators';
+import { HttpCode } from '@todo-node/shared/utils';
 import { AuthFacadeService } from '@todo-node/todo-app/auth/data-access';
 import { Task, EventBusService, CurrentUser, Action, Recordset } from '@todo-node/shared/utils';
 import { DEFAULT_TABLE_CONFIG, TableConfig } from '@todo-node/todo-app/todo/domain';
@@ -53,7 +54,7 @@ export class TodoStore {
       },
       error => {
         console.log(error);
-        this.emitFailure();
+        this.emitFailure(error);
       });
   }
 
@@ -83,7 +84,7 @@ export class TodoStore {
       },
       error => {
         console.log(error);
-        this.emitFailure();
+        this.emitFailure(error);
       });
   }
 
@@ -127,7 +128,7 @@ export class TodoStore {
       },
       error => {
         console.log(error);
-        this.emitFailure();
+        this.emitFailure(error);
       });
     }
 
@@ -142,7 +143,7 @@ export class TodoStore {
       (result: Recordset<Task>) => this._tasks.next({ ...result }),
       error => {
         console.log(error);
-        this.emitFailure();
+        this.emitFailure(error);
       }
     );
   }
@@ -153,7 +154,10 @@ export class TodoStore {
   }
 
   /** Emits failure if action failed. */
-  private emitFailure(): void {
-    this.eventBus.emit({ action: Action.ACTION_FAILED });
+  private emitFailure(error?: HttpErrorResponse): void {
+      this.eventBus.emit({ 
+        action: Action.ACTION_FAILED,
+        value: error?.error?.errors
+      });
   }
 }

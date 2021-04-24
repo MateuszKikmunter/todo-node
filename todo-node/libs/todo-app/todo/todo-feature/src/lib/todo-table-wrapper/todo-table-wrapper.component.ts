@@ -133,10 +133,10 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
     /** Shows error toast on task failure for operations like add/edit/delete. */
     private onActionFailure() {
         this.subSink.add(            
-            this.eventBus.on(Action.ACTION_FAILED, () => {
+            this.eventBus.on(Action.ACTION_FAILED, (value) => {
                 this.messageService.add({
                     severity: 'error',
-                    detail: 'Something went wrong, please try again...',
+                    detail: value ?? 'Something went wrong, please try again...',
                     summary: `Error!${ SKULL_EMOJI }`,
                 });
             })
