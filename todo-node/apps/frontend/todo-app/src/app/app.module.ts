@@ -5,11 +5,13 @@ import { NgModule } from '@angular/core';
 //libs imports
 import { TodoAppCoreModule } from '@todo-node/todo-app/core';
 import { TokenInterceptor } from '@todo-node/todo-app/auth/data-access';
+import { HttpInProgressInterceptor } from '@todo-node/shared/utils';
 
 //application imports
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { getDefaultTableConfiguration } from '@todo-node/todo-app/todo/domain';
+
 
 @NgModule({
     declarations: [AppComponent],
@@ -19,6 +21,11 @@ import { getDefaultTableConfiguration } from '@todo-node/todo-app/todo/domain';
     ],
     bootstrap: [AppComponent],
     providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpInProgressInterceptor,
+            multi: true,
+        },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,

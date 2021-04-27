@@ -25,7 +25,7 @@
             [selectionMode]="tableConfig.selectionMode" 
             [dataKey]="tableConfig.dataKey"
             [totalRecords]="totalRecords"
-            [loading]="loading"         
+            [loading]="isLoading"         
             [globalFilterFields]="['name','deadline', 'lastModified', 'completed']" 
             (onRowSelect)="onRowSelect($event)"
             (onRowUnselect)="onRowUnselect($event)" 

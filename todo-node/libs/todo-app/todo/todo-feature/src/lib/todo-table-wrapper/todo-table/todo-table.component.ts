@@ -34,6 +34,7 @@ export class TodoTableComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     @Input() tasks: Recordset<Task>;
     @Input() selectedTask: Task;
+    @Input() isLoading: boolean;
 
     @Output() selectTask: EventEmitter<Task> = new EventEmitter<Task>();
     @Output() filterTasks: EventEmitter<string> = new EventEmitter<string>();
@@ -48,7 +49,6 @@ export class TodoTableComponent implements OnChanges, AfterViewInit, OnDestroy {
     @ViewChild('search') searchInput: ElementRef;
 
     public data: Task[];
-    public loading: boolean;
     public totalRecords: number;
 
     readonly dateFormat = dd_MM_yyyy;
