@@ -9,7 +9,9 @@
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
             "parserOptions": {
-                "project": ["libs/todo-app/shared/ui-welcome/tsconfig.*?.json"]
+                "project": [
+                    "libs/todo-app/todo/welcome-feature/tsconfig.*?.json"
+                ]
             },
             "rules": {
                 "@angular-eslint/directive-selector": [

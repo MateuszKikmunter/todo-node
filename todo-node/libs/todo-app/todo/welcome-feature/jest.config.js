@@ -1,5 +1,5 @@
 module.exports = {
-    displayName: 'todo-app-shared-ui-welcome',
+    displayName: 'todo-app-todo-welcome-feature',
     preset: '../../../../jest.preset.js',
     setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
     globals: {
@@ -14,7 +14,8 @@ module.exports = {
             },
         },
     },
-    coverageDirectory: '../../../../coverage/libs/todo-app/shared/ui-welcome',
+    coverageDirectory:
+        '../../../../coverage/libs/todo-app/todo/welcome-feature',
     snapshotSerializers: [
         'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
         'jest-preset-angular/build/AngularSnapshotSerializer.js',

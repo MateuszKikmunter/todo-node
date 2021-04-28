@@ -37,6 +37,6 @@
         "todo-app-auth-domain": { "tags": [] },
         "todo-app-todo-data-access": { "tags": [] },
         "todo-app-todo-domain": { "tags": [] },
-        "todo-app-shared-ui-welcome": { "tags": [] }
+        "todo-app-todo-welcome-feature": { "tags": [] }
     }
 }

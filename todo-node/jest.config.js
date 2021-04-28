@@ -20,6 +20,6 @@ module.exports = {
         '<rootDir>/libs/todo-app/auth/domain',
         '<rootDir>/libs/todo-app/todo/data-access',
         '<rootDir>/libs/todo-app/todo/domain',
-        '<rootDir>/libs/todo-app/shared/ui-welcome',
+        '<rootDir>/libs/todo-app/todo/welcome-feature',
     ],
 };

@@ -54,8 +54,8 @@
             "@todo-node/todo-app/todo/domain": [
                 "libs/todo-app/todo/domain/src/index.ts"
             ],
-            "@todo-node/todo-app/shared/ui-welcome": [
-                "libs/todo-app/shared/ui-welcome/src/index.ts"
+            "@todo-node/todo-app/todo/welcome-feature": [
+                "libs/todo-app/todo/welcome-feature/src/index.ts"
             ]
         }
     },
