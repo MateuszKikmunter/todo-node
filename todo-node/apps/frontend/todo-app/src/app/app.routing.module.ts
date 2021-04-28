@@ -9,8 +9,7 @@ import { AuthGuard } from '@todo-node/todo-app/auth/data-access';
 const routes: Routes = [
     {
         path: '',
-        redirectTo: '/welcome',
-        pathMatch: 'full'
+        loadChildren: () => import('@todo-node/todo-app/todo/welcome-feature').then((m) => m.TodoAppTodoWelcomeFeatureModule)
     },
     {
         path: 'todo',
