@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;600&display=swap');
+
 //component styles
 .container {
     background-color: #383838;
@@ -5,6 +7,7 @@
     display: grid;
     grid-template-columns: 35% 1fr;
     height: 100%;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 }
 
 .container-nav {
@@ -17,17 +20,23 @@
     border-bottom: 1px solid #FFD54F;
 }
 
-.container-nav-item {
+.container-nav-list {
+    margin: 0;
+    padding: 0;
+}
+
+.container-nav-list-item {
     list-style-type: none;
+    padding-top: .2rem;
     color: #FFD54F;
 }
 
-.container-nav-item a {
+.container-nav-list-item a {
     color: white;
     text-decoration: none;
 }
 
-.container-nav-item a:hover {
+.container-nav-list-item a:hover {
     color: #FFD54F;
 }
 
