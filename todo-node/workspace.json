@@ -574,7 +574,7 @@
                     "options": {
                         "lintFilePatterns": [
                             "libs/todo-app/todo/welcome-feature/src/**/*.ts",
-                            "libs/todo-app/todo/welcome-feature/src/**/*.html"                            
+                            "libs/todo-app/todo/welcome-feature/src/**/*.html"
                         ]
                     }
                 },
@@ -583,6 +583,31 @@
                     "outputs": ["coverage/libs/todo-app/todo/welcome-feature"],
                     "options": {
                         "jestConfig": "libs/todo-app/todo/welcome-feature/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            }
+        },
+        "todo-app-todo-about-feature": {
+            "projectType": "library",
+            "root": "libs/todo-app/todo/about-feature",
+            "sourceRoot": "libs/todo-app/todo/about-feature/src",
+            "prefix": "todo-node",
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "libs/todo-app/todo/about-feature/src/**/*.ts",
+                            "libs/todo-app/todo/about-feature/src/**/*.html"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/todo-app/todo/about-feature"],
+                    "options": {
+                        "jestConfig": "libs/todo-app/todo/about-feature/jest.config.js",
                         "passWithNoTests": true
                     }
                 }
