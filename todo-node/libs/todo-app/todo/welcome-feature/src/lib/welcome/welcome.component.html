@@ -4,13 +4,13 @@
         <p>The place where you can plan your tasks so you can focus on other things</p>
         <ul class="container-nav-list">
             <li class="container-nav-list-item">
-                <a href="#">Log In</a> or <a href="#">Sign Up</a>
+                <a [routerLink]="['/account/login']">Log In</a> or <a [routerLink]="['/account/register']">Sign Up</a>
             </li>
             <li class="container-nav-list-item">
-                <a href="#">View tasks</a>
+                <a [routerLink]="['/todo/all']">View tasks</a>
             </li>
             <li class="container-nav-list-item">
-                <a href="#">About this project</a>
+                <a [routerLink]="['/about']">About this project</a>
             </li>
         </ul>
     </div>

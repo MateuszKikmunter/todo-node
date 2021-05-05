@@ -28,6 +28,10 @@
 .container-nav-list-item {
     list-style-type: none;
     padding-top: .2rem;
+
+    &::before {
+        content: '- ';
+    }
 }
 
 .container-nav-list-item a {
