@@ -32,9 +32,9 @@ export class HeaderComponent implements OnInit {
     /** Initializes menu items displayed in the menu. */
     private initializeManuItems(): void {
         this.items = [
-            { label: 'Home', icon: PrimeIcons.HOME },
-            { label: 'Todos', icon: PrimeIcons.PENCIL },
-            { label: 'About', icon: PrimeIcons.QUESTION_CIRCLE }
+            { label: 'Home', icon: PrimeIcons.HOME, url: '/welcome' },
+            { label: 'Todos', icon: PrimeIcons.PENCIL, url: '/todo/all' },
+            { label: 'About', icon: PrimeIcons.QUESTION_CIRCLE, url: '/about' }
         ];
     }
 }
