@@ -1,0 +1,41 @@
+{
+    "extends": ["../../../../.eslintrc.json"],
+    "ignorePatterns": ["!**/*"],
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "extends": [
+                "plugin:@nrwl/nx/angular",
+                "plugin:@angular-eslint/template/process-inline-templates"
+            ],
+            "parserOptions": {
+                "project": [
+                    "libs/todo-app/todo/welcome-feature/tsconfig.*?.json"
+                ]
+            },
+            "rules": {
+                "@angular-eslint/directive-selector": [
+                    "error",
+                    {
+                        "type": "attribute",
+                        "prefix": "todoNode",
+                        "style": "camelCase"
+                    }
+                ],
+                "@angular-eslint/component-selector": [
+                    "error",
+                    {
+                        "type": "element",
+                        "prefix": "todo-node",
+                        "style": "kebab-case"
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["*.html"],
+            "extends": ["plugin:@nrwl/nx/angular-template"],
+            "rules": {}
+        }
+    ]
+}

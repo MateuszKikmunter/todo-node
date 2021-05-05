@@ -1,6 +1,7 @@
 <todo-table 
     [tasks]="todoFacade?.tasks$ | async"
-    [selectedTask]="todoFacade?.selectedTask$ | async" 
+    [selectedTask]="todoFacade?.selectedTask$ | async"
+    [isLoading]="isLoading$ | async"
     (taskStateChange)="onTaskStateChange($event)"
     (selectTask)="onSelectTask($event)"
     (createTask)="onCreateTask()"

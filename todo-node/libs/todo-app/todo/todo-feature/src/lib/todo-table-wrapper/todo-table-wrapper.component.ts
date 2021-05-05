@@ -1,5 +1,5 @@
 //Angular imports
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 
 //libs imports
 import { Observable } from 'rxjs';
@@ -19,7 +19,7 @@ import { TodoFacadeService } from '@todo-node/todo-app/todo/data-access';
         MessageService
     ]
 })
-export class TodoTableWrapperComponent implements OnInit, OnDestroy {
+export class TodoTableWrapperComponent implements OnInit, OnDestroy, AfterViewInit {
     
     private showForm: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     readonly showForm$: Observable<boolean> = this.showForm.asObservable();
@@ -27,17 +27,27 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
     private formMode: BehaviorSubject<Mode> = new BehaviorSubject<Mode>(Mode.ADD);
     readonly formMode$: Observable<Mode> = this.formMode.asObservable();
 
+    private isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    readonly isLoading$: Observable<boolean> = this.isLoading.asObservable();
+
     private subSink: Subscription = new Subscription();
 
     constructor(
         readonly todoFacade: TodoFacadeService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
-        private eventBus: EventBusService) {}
+        private eventBus: EventBusService,
+        private changeDetector: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         this.onActionSuccess();
         this.onActionFailure();
+        this.onLoading();
+    }
+
+    ngAfterViewInit(): void {
+        //trigger change detection to remove ExpressionChangedAfterItHasBeenCheckedError coming from the child
+        this.changeDetector.detectChanges();
     }
 
     ngOnDestroy(): void {
@@ -139,6 +149,15 @@ export class TodoTableWrapperComponent implements OnInit, OnDestroy {
                     detail: value ?? 'Something went wrong, please try again...',
                     summary: `Error!${ SKULL_EMOJI }`,
                 });
+            })
+        );
+    }
+
+    /** Emits loading event to the child components so it can show loader. */
+    private onLoading(): void {
+        this.subSink.add(
+            this.eventBus.on(Action.LOADING, (value: boolean) => {
+                this.isLoading.next(value);
             })
         );
     }

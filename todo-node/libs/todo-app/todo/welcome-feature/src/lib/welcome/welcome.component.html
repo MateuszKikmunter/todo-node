@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="container-nav">
+        <h1 class="container-nav-banner">Welcome to the Node TODO-App!</h1>
+        <p>The place where you can plan your tasks so you can focus on other things</p>
+        <ul class="container-nav-list">
+            <li class="container-nav-list-item">
+                <a [routerLink]="['/account/login']">Log In</a> or <a [routerLink]="['/account/register']">Sign Up</a>
+            </li>
+            <li class="container-nav-list-item">
+                <a [routerLink]="['/todo/all']">View tasks</a>
+            </li>
+            <li class="container-nav-list-item">
+                <a [routerLink]="['/about']">About this project</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container-image-item">
+        <img alt="man with a todo list" src="/assets/todo-man.jpg">
+    </div>
+</div>

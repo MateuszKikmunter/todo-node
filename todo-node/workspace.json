@@ -23,7 +23,12 @@
                         "aot": true,
                         "assets": [
                             "apps/frontend/todo-app/src/favicon.ico",
-                            "apps/frontend/todo-app/src/assets"
+                            "apps/frontend/todo-app/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "libs/todo-app/todo/welcome-feature/src/assets",
+                                "output": "./assets/"
+                            }
                         ],
                         "styles": [
                             "apps/frontend/todo-app/src/styles.scss",
@@ -251,39 +256,6 @@
                     "builder": "@nrwl/jest:jest",
                     "options": {
                         "jestConfig": "libs/todo-app/core/jest.config.js",
-                        "passWithNoTests": true
-                    }
-                }
-            },
-            "schematics": {
-                "@schematics/angular:component": {
-                    "style": "scss"
-                }
-            }
-        },
-        "todo-app-shared-util": {
-            "projectType": "library",
-            "root": "libs/todo-app/shared/util",
-            "sourceRoot": "libs/todo-app/shared/util/src",
-            "prefix": "todo-node",
-            "architect": {
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "libs/todo-app/shared/util/tsconfig.lib.json",
-                            "libs/todo-app/shared/util/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**",
-                            "!libs/todo-app/shared/util/**/*"
-                        ]
-                    }
-                },
-                "test": {
-                    "builder": "@nrwl/jest:jest",
-                    "options": {
-                        "jestConfig": "libs/todo-app/shared/util/jest.config.js",
                         "passWithNoTests": true
                     }
                 }
@@ -590,6 +562,31 @@
                     "style": "scss"
                 }
             }
+        },
+        "todo-app-todo-welcome-feature": {
+            "projectType": "library",
+            "root": "libs/todo-app/todo/welcome-feature",
+            "sourceRoot": "libs/todo-app/todo/welcome-feature/src",
+            "prefix": "todo-node",
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "libs/todo-app/todo/welcome-feature/src/**/*.ts",
+                            "libs/todo-app/todo/welcome-feature/src/**/*.html"                            
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/todo-app/todo/welcome-feature"],
+                    "options": {
+                        "jestConfig": "libs/todo-app/todo/welcome-feature/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            }
         }
     },
     "cli": {
@@ -597,11 +594,18 @@
     },
     "schematics": {
         "@nrwl/angular:application": {
+            "style": "scss",
+            "linter": "eslint",
             "unitTestRunner": "jest",
             "e2eTestRunner": "cypress"
         },
         "@nrwl/angular:library": {
+            "style": "scss",
+            "linter": "eslint",
             "unitTestRunner": "jest"
+        },
+        "@nrwl/angular:component": {
+            "style": "scss"
         }
     },
     "defaultProject": "frontend-todo-app"

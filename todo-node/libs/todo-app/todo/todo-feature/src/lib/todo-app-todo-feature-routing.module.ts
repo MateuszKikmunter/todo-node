@@ -15,9 +15,9 @@ const routes: Routes = [
             {
                 path: 'all',
                 component: TodoTableWrapperComponent
-            }
+            }            
         ]
-    },
+    }
 ];
 
 @NgModule({

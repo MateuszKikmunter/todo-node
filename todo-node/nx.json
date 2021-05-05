@@ -1,14 +1,9 @@
 {
     "npmScope": "todo-node",
-    "affected": {
-        "defaultBase": "master"
-    },
+    "affected": { "defaultBase": "master" },
     "implicitDependencies": {
         "workspace.json": "*",
-        "package.json": {
-            "dependencies": "*",
-            "devDependencies": "*"
-        },
+        "package.json": { "dependencies": "*", "devDependencies": "*" },
         "tsconfig.base.json": "*",
         "tslint.json": "*",
         ".eslintrc.json": "*",
@@ -23,54 +18,24 @@
         }
     },
     "projects": {
-        "frontend-todo-app": {
-            "tags": []
-        },
+        "frontend-todo-app": { "tags": [] },
         "frontend/todo-app-e2e": {
             "tags": [],
             "implicitDependencies": ["frontend-todo-app"]
         },
-        "backend-todo-api": {
-            "tags": []
-        },
-        "server-database": {
-            "tags": []
-        },
-        "shared-utils": {
-            "tags": []
-        },
-        "todo-app-core": {
-            "tags": []
-        },
-        "todo-app-shared-util": {
-            "tags": []
-        },
-        "todo-app-shared-ui-footer": {
-            "tags": []
-        },
-        "todo-app-shared-ui-header": {
-            "tags": []
-        },
-        "todo-app-shared-ui-layout": {
-            "tags": []
-        },
-        "todo-app-todo-todo-feature": {
-            "tags": []
-        },
-        "todo-app-auth-login-feature": {
-            "tags": []
-        },
-        "todo-app-auth-data-access": {
-            "tags": []
-        },
-        "todo-app-auth-domain": {
-            "tags": []
-        },
-        "todo-app-todo-data-access": {
-            "tags": []
-        },
-        "todo-app-todo-domain": {
-            "tags": []
-        }
+        "backend-todo-api": { "tags": [] },
+        "server-database": { "tags": [] },
+        "shared-utils": { "tags": [] },
+        "todo-app-core": { "tags": [] },
+        "todo-app-shared-ui-footer": { "tags": [] },
+        "todo-app-shared-ui-header": { "tags": [] },
+        "todo-app-shared-ui-layout": { "tags": [] },
+        "todo-app-todo-todo-feature": { "tags": [] },
+        "todo-app-auth-login-feature": { "tags": [] },
+        "todo-app-auth-data-access": { "tags": [] },
+        "todo-app-auth-domain": { "tags": [] },
+        "todo-app-todo-data-access": { "tags": [] },
+        "todo-app-todo-domain": { "tags": [] },
+        "todo-app-todo-welcome-feature": { "tags": [] }
     }
 }

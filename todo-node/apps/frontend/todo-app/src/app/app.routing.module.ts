@@ -9,17 +9,25 @@ import { AuthGuard } from '@todo-node/todo-app/auth/data-access';
 const routes: Routes = [
     {
         path: '',
-        children: [
-            {
-                path: 'todo',
-                canActivate: [ AuthGuard ],
-                loadChildren: () => import('@todo-node/todo-app/todo/todo-feature').then((m) => m.TodoAppTodoTodoFeatureModule)
-            },
-            {
-                path: 'account',
-                loadChildren: () => import('@todo-node/todo-app/auth/login-feature').then((m) => m.TodoAppAuthLoginFeatureModule)
-            }
-        ]
+        loadChildren: () => import('@todo-node/todo-app/todo/welcome-feature').then((m) => m.TodoAppTodoWelcomeFeatureModule)
+    },
+    {
+        path: 'todo',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('@todo-node/todo-app/todo/todo-feature').then((m) => m.TodoAppTodoTodoFeatureModule)
+    },
+    {
+        path: 'account',
+        loadChildren: () => import('@todo-node/todo-app/auth/login-feature').then((m) => m.TodoAppAuthLoginFeatureModule)
+    },
+    {
+        path: 'welcome',
+        loadChildren: () => import('@todo-node/todo-app/todo/welcome-feature').then((m) => m.TodoAppTodoWelcomeFeatureModule)
+    },
+    {
+        path: "**",
+        redirectTo: '/welcome',
+        pathMatch: 'full'
     }
 ];
 

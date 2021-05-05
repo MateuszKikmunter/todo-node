@@ -8,6 +8,7 @@ export * from './lib/interfaces/event.data';
 export * from './lib/interfaces/current.user';
 export * from './lib/interfaces/auth.payload';
 export * from './lib/interfaces/recordset';
+export * from './lib/interceptors/http-in-progress.interceptor';
 export * from './lib/services/local-storage.service';
 export * from './lib/services/event-bus.service';
 export * from './lib/interfaces/task';
