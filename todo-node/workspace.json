@@ -28,6 +28,11 @@
                                 "glob": "**/*",
                                 "input": "libs/todo-app/todo/welcome-feature/src/assets",
                                 "output": "./assets/"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "libs/todo-app/todo/about-feature/src/assets",
+                                "output": "./assets/"
                             }
                         ],
                         "styles": [
