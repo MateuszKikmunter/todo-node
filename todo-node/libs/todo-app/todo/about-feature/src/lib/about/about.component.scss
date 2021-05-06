@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;600&display=swap');
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    height: 100%;
+}
+
+.image-container {
+    //height: 100%;
+    background-color: white; 
+
+    img {
+        max-width: 100%;
+        margin-top: 20vh;
+    }
+}
+
+.content {
+    //height: 100%;
+    color: white;
+    background-color: #383838;
+    padding: 1em;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+}
+
+@media screen and (max-width: 1024px) {
+
+    .wrapper {
+        grid-template-columns: 1fr;
+    }
+    .image-container {
+        display: none;
+    }
+
+    .content {
+        width: 100% !important;
+        float: left
+    }
+}
