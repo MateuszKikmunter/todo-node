@@ -17,12 +17,27 @@
 }
 
 .content {
-    //height: 100%;
     color: white;
     background-color: #383838;
     padding: 1em;
     font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 }
+
+
+li {
+    //list-style-type: none;
+    padding-top: .5rem;
+}
+
+a {
+    color: #FFD54F;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+}
+
 
 @media screen and (max-width: 1024px) {
 

@@ -1,18 +1,149 @@
 <div class="wrapper">
-        <div class="image-container">
-            <img alt="man with a todo list" src="/assets/man-with-calendar.jpg">
-        </div>
-        <div class="content">
-            <div>        
-                <h1>project details => underline for each h1</h1>
-                <p>general description, purpose of creation, good practices listed</p>
-                <p>use emojis for each section</p>
-            </div>
-            <div>
-                project structure - mention that project is using nx, all libs are independent and reusable, code splitting, separtion of concerns, monorepo
-            </div>
-            <div>
-                technologies used and link to github and contact details
-            </div>
-        </div>
+    <div class="image-container">
+        <img alt="man with a todo list" src="/assets/man-with-calendar.jpg">
     </div>
+    <div class="content">
+        <section>
+            <h1 style="border-bottom: 1px solid #FFD54F;width: 45%;;">Project details 🔎</h1>
+            <p>This project has been created to improve my knowledge on backend development with TypeScript and Express
+                framework.</p>
+            <p>It started as a simple idea for a small app but it growed to something a bit more complex as it also has
+                authentication with JWT, database interaction and uses Nx to structure the code with libs and monorepo
+                approach.</p>
+
+            <p>The application itself is fully reposonsive and should look good in all browsers and devices. (well,
+                maybe except the table on the smallest devices)</p>
+            <p>While creating the app, it was also my purpose to follow good practices and write code which is easy to
+                understand and maintain.</p>
+
+            <p>So to achieve it, I splitted the app with Nx into small and feature oriented libs which are independent
+                and reusable.</p>
+            <p>In that way they're only concerned with a specific funtionality what ecourages separation of concerns.
+            </p>
+
+            <p>Additionally in the Angular app I'm following all the recommended practices to make the app better, e.g.:
+            </p>
+            <ul>
+                <li>
+                    <a href="https://angular.io/guide/lazy-loading-ngmodules">
+                        Lazy Loading
+                    </a>
+                </li>
+                <li>
+                    <a href="https://angular.io/guide/feature-modules">
+                        Feature, shared and core modules
+                    </a>
+                </li>
+                <li>
+                    <a href="https://angular.io/api/common/AsyncPipe">
+                        Async pipes used whenever possible
+                    </a>
+                </li>
+                <li>
+                    <a href="https://brianflove.com/2016-12-11/anguar-2-unsubscribe-observables/">
+                        Manual subscriptions cleared once a component is destroyed
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="https://medium.com/angular-in-depth/the-best-way-to-unsubscribe-rxjs-observable-in-the-angular-applications-d8f9aa42f6a0">No
+                        nested subscriptions - subs are composed with pipeable operators</a>
+                </li>
+                <li>
+                    <a href="https://christianlydemann.com/the-ten-commandments-of-angular-development/#one">Smart and
+                        dumb components</a>
+                </li>
+                <li>
+                    <a href="onPush change detection and immutability">
+                        OnPush change detection and immutability
+                    </a>
+                </li>
+                <li>
+                    <a href="https://coryrylan.com/blog/angular-observable-data-services">
+                        State management done with RXJS and one-way dataflow
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="https://blog.appverse.io/why-it-is-a-bad-idea-to-use-methods-in-the-html-templates-with-angular-2-30d49f0d3b16?gi=879fe54af715">
+                        No methods or complex logic in the templates
+                    </a>
+                </li>
+                <li>
+                    <a href="https://ultimatecourses.com/blog/classes-vs-interfaces-in-typescript">
+                        Using interfaces to strongly type entities
+                    </a>
+                </li>
+                <li>
+                    <a href="https://compodoc.app/">
+                        Compodoc as documentation tool
+                    </a>
+                </li>
+            </ul>
+
+            <p>For more practices it's also good to check <a href="https://angular-checklist.io/">Angular Checklist</a>.</p>
+        </section>
+
+        <section style="margin-top: 2rem;">
+            <h1 style="border-bottom: 1px solid #FFD54F;width: 45%;;">How to run the project ⚙️</h1>
+            
+            <ul>
+                <li>run <code>npm install</code> in the root of the project</li>
+                <li>to run frontend app - <code>run nx serve or npm start</code> </li>
+                <li>to run api project - <code> run npm start:api:dev</code></li>
+            </ul>
+        </section>
+
+        <section style="margin-top: 2rem;">
+            <h1 style="border-bottom: 1px solid #FFD54F;width: 45%;;">Technologies used 💻</h1>
+            
+            <ul>
+                <li>Monorepo:
+                    <ul>
+                        <li>
+                            <a href="https://nx.dev/">Nx</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>Frotend:
+                    <ul>
+                        <li>
+                            <a href="https://angular.io/">
+                                Angular
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.primefaces.org/primeng/">
+                                PrimeNG
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>Backend:
+                    <ul>
+                        <li>
+                            <a href="https://nodejs.org/en/">
+                                NodeJS
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://expressjs.com/">
+                                ExpressJS
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/typeorm/typeorm">
+                                TypeORM
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.sqlite.org/index.html">
+                                SQLite
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>            
+        </section>
+    </div>
+</div>
