@@ -4,7 +4,7 @@ Project to learn some TypeScript/JavaScript backend development.
 ## Project Details
 Code will be hosted in a monorepository created with [Nx](https://nx.dev/).
 
-Frontend part will be a simple project written in Angular with Clarity components.
+Frontend part will be a simple project written in Angular with [PrimeNG](https://www.primefaces.org/primeng/) components.
 
 Backend will be created with [NodeJS](https://nodejs.org/en/) and [Express](https://expressjs.com/).
 
