@@ -56,6 +56,9 @@
             ],
             "@todo-node/todo-app/todo/welcome-feature": [
                 "libs/todo-app/todo/welcome-feature/src/index.ts"
+            ],
+            "@todo-node/todo-app/todo/about-feature": [
+                "libs/todo-app/todo/about-feature/src/index.ts"
             ]
         }
     },

@@ -25,6 +25,10 @@ const routes: Routes = [
         loadChildren: () => import('@todo-node/todo-app/todo/welcome-feature').then((m) => m.TodoAppTodoWelcomeFeatureModule)
     },
     {
+        path: 'about',
+        loadChildren: () => import('@todo-node/todo-app/todo/about-feature').then((m) => m.TodoAppTodoAboutFeatureModule)
+    },
+    {
         path: "**",
         redirectTo: '/welcome',
         pathMatch: 'full'

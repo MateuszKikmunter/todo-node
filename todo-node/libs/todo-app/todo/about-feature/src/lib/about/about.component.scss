@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;600&display=swap');
+$todo-gold: #FFD54F;
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    height: 100%;
+}
+
+.image-container {
+    background-color: white; 
+
+    img {
+        max-width: 100%;
+        margin-top: 20vh;
+    }
+}
+
+.content {
+    color: white;
+    background-color: #383838;
+    padding: 1em 1em 1em 5em;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif; 
+
+    p {
+        width: 75%;
+    }
+}
+
+.content-banner {
+    border-bottom: 1px solid $todo-gold;
+    width: 45%; 
+    padding-bottom: .7em;
+}
+
+.content-section {
+    margin-top: 2em;
+}
+
+
+li {
+    padding-top: .5em;
+}
+
+a {
+    color: $todo-gold;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+}
+
+@media screen and (max-width: 1024px) {
+    .wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .image-container {
+        display: none;
+    }
+
+    .content {
+        width: 100% !important;
+    }
+}
