@@ -1,10 +1,10 @@
 <div class="wrapper">
     <div class="image-container">
-        <img alt="man with a todo list" src="/assets/man-with-calendar.jpg">
+        <img alt="man with calendar and todo list" src="/assets/man-with-calendar.jpg">
     </div>
     <div class="content">
         <section>
-            <h1 style="border-bottom: 1px solid #FFD54F;width: 45%;">Project details 🔎</h1>
+            <h1 class="content-banner">Project details 🔎</h1>
             <p>This project has been created to improve my knowledge on backend development with TypeScript and Express
                 framework.</p>
             <p>It started as a simple idea for a small app but it evolved into something a bit more complex as it
@@ -12,14 +12,14 @@
                 authentication with JWT, database interactions and uses Nx to structure the code with libs and monorepo
                 approach.</p>
 
-            <p>The application itself is fully reposonsive and should look good in all browsers and devices. (well,
-                maybe except the table component on the smallest devices)</p>
+            <p>The application itself is fully responsive and should look good in all browsers and devices. (well,
+                maybe except the table component on the smallest screens)</p>
             <p>While creating the app, my goal was to follow good practices and write code which is easy to
                 understand and maintain.</p>
 
             <p>So to achieve it, I splitted the app with Nx into small and feature oriented libs which are independent
                 and reusable.</p>
-            <p>In that way they're only concerned with a specific funtionality what ecourages separation of concerns.
+            <p>In that way they're only concerned with a specific functionality what encourages separation of concerns.
             </p>
 
             <p>Additionally in the Angular app I'm following most of the recommended practices to make the app better, e.g.:
@@ -88,19 +88,17 @@
             </p>
         </section>
 
-        <section style="margin-top: 2rem;">
-            <h1 style="border-bottom: 1px solid #FFD54F;width: 45%;">How to run the project ⚙️</h1>
-
+        <section class="content-section">
+            <h1 class="content-banner">How to run the project ⚙️</h1>
             <ul>
                 <li>run <code>npm install</code> in the root of the project</li>
-                <li>to run frontend app - <code>run nx serve or npm start</code> </li>
-                <li>to run api project - <code> run npm start:api:dev</code></li>
+                <li>to run frontend app execute<code> nx serve or npm start</code></li>
+                <li>to run api project execute<code> npm run start:api:dev</code></li>
             </ul>
         </section>
 
-        <section style="margin-top: 2rem;">
-            <h1 style="border-bottom: 1px solid #FFD54F;width: 45%;">Technologies used 💻</h1>
-
+        <section class="content-section">
+            <h1 class="content-banner">Technologies used 💻</h1>
             <ul>
                 <li>Monorepo:
                     <ul>
@@ -109,7 +107,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>Frotend:
+                <li>Frontend:
                     <ul>
                         <li>
                             <a href="https://angular.io/">
