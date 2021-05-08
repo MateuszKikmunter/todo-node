@@ -18,8 +18,12 @@
 .content {
     color: white;
     background-color: #383838;
-    padding: 1em;
-    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    padding: 1em 1em 1em 5em;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif; 
+
+    p {
+        width: 75%;
+    }
 }
 
 .content-banner {
